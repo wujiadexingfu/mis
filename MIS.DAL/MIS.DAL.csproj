@@ -43,6 +43,10 @@
     <Compile Include="SysUserDAL.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MIS.AdoNetDataSource\MIS.AdoNetDataSource.csproj">
+      <Project>{f50f50eb-d6d2-469a-846f-95455db497d3}</Project>
+      <Name>MIS.AdoNetDataSource</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MIS.IDAL\MIS.IDAL.csproj">
       <Project>{0f3bb477-57e9-46ee-b9eb-14b9cabca734}</Project>
       <Name>MIS.IDAL</Name>
