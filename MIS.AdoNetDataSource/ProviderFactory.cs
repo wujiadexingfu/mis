@@ -1,24 +1,36 @@
-﻿/*************************************************************************************
-* CLR版本：        4.0.30319.42000
-* 类 名 称：       ProviderFactory
-* 命名空间：       MIS.AdoNetDataSource
-* 文 件 名：       ProviderFactory
-* 创建时间：       2019/10/26 21:27:01
-* 作    者：       zhangyang
-* 说   明：
-* 修改时间：
-* 修 改 人：
-*************************************************************************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+
+
+/********************************************************************************
+
+** 类名称：  ProviderFactory
+
+** 描述：********
+
+** 作者： zhangyang
+
+** Version: 1.0
+
+** 创建时间：2019-11-24 19:49:03
+
+** 最后修改人：（无）
+
+** 最后修改时间：（无）
+
+** CLR版本：4.0.30319.42000      
+
+** 版权所有 (C) :zhangyang
+
+*********************************************************************************/
 
 namespace MIS.AdoNetDataSource
 {
-   public  class ProviderFactory
+ public    class ProviderFactory
     {
         /// <summary>
         /// 保存每种数据访问方式对应的程序集名称

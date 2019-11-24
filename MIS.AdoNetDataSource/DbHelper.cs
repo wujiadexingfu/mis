@@ -1,25 +1,37 @@
-﻿/*************************************************************************************
-* CLR版本：        4.0.30319.42000
-* 类 名 称：       DbHelper
-* 命名空间：       MIS.AdoNetDataSource
-* 文 件 名：       DbHelper
-* 创建时间：       2019/10/26 21:25:50
-* 作    者：       zhangyang
-* 说   明：
-* 修改时间：
-* 修 改 人：
-*************************************************************************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+
+
+/********************************************************************************
+
+** 类名称：  DbHelper
+
+** 描述：********
+
+** 作者： zhangyang
+
+** Version: 1.0
+
+** 创建时间：2019-11-24 19:47:00
+
+** 最后修改人：（无）
+
+** 最后修改时间：（无）
+
+** CLR版本：4.0.30319.42000      
+
+** 版权所有 (C) :zhangyang
+
+*********************************************************************************/
 
 namespace MIS.AdoNetDataSource
 {
-   public  class DbHelper
+    public class DbHelper
     {
         private DbProviderFactory _providerFactory;
         private string _connectionString = null; //保存连接字符串

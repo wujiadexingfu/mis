@@ -1,24 +1,36 @@
-﻿/*************************************************************************************
-* CLR版本：        4.0.30319.42000
-* 类 名 称：       Constant
-* 命名空间：       MIS.Utility
-* 文 件 名：       Constant
-* 创建时间：       2019/10/26 19:14:16
-* 作    者：       zhangyang
-* 说   明：
-* 修改时间：
-* 修 改 人：
-*************************************************************************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+
+
+/********************************************************************************
+
+** 类名称：  Constant
+
+** 描述：********
+
+** 作者： zhangyang
+
+** Version: 1.0
+
+** 创建时间：2019-11-24 19:37:50
+
+** 最后修改人：（无）
+
+** 最后修改时间：（无）
+
+** CLR版本：4.0.30319.42000      
+
+** 版权所有 (C) :zhangyang
+
+*********************************************************************************/
 
 namespace MIS.Utility
 {
-   public class Constant
+    public class Constant
     {
         /// <summary>
         /// xml文件名称
@@ -65,6 +77,5 @@ namespace MIS.Utility
             }
         }
         #endregion
-
     }
 }

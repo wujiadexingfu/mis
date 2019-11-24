@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E1EA1D63-95FA-4D7D-9410-DF2D0B64625A}</ProjectGuid>
+    <ProjectGuid>{2BC6D58E-96ED-4A27-807E-E22B773DA9B0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MIS.Utility</RootNamespace>
     <AssemblyName>MIS.Utility</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -41,10 +41,11 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="Constant.cs" />
-    <Compile Include="DateTimeFormatter.cs" />
+    <Compile Include="DateUtility\DateTimeFormatter.cs" />
+    <Compile Include="EnumUtility\SystemEnums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SystemEnums.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Utility.Config.xml" />
   </ItemGroup>
