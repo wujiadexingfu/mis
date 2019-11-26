@@ -66,11 +66,20 @@ namespace MIS.Model.Account
         /// </summary> 
         public int Sort { get; set; }
 
+       /// <summary>
+       /// 菜单数据
+       /// </summary>
         public List<AccountFuntion> ChildAccountFuntion { get; set; }
+
+       /// <summary>
+       ///操作权限
+       /// </summary>
+        public List<AccountFunctionOperation> AccountFunctionOperations { get; set; }
 
         public AccountFuntion()
         {
             ChildAccountFuntion = new List<AccountFuntion>();
+            AccountFunctionOperations = new List<AccountFunctionOperation>();
         }
 
     }

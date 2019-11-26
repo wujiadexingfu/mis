@@ -31,5 +31,37 @@ namespace MIS.Utility.EnumUtility
 {
  public   class SystemEnums
     {
+        public enum LoginStatus
+        {
+            /// <summary>
+            /// 非正常
+            /// </summary>
+            UnNormal,
+
+            /// <summary>
+            /// 正常
+            /// </summary>
+            Normal,
+
+            /// <summary>
+            /// 不存在
+            /// </summary>
+            NotExists,
+
+            /// <summary>
+            /// 不允许登录
+            /// </summary>
+            NotLogin,
+
+            /// <summary>
+            ///密码错误
+            /// </summary>
+            PasswordWrong,
+            /// <summary>
+            /// 有效期超期
+            /// </summary>
+            ExpiryDateWrong
+
+        }
     }
 }
