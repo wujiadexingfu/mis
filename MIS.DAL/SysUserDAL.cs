@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using MIS.Utility.EnumUtility;
 using MIS.EFDataSource;
+using MIS.IDAL;
+using MIS.Model.Result;
+using MIS.Model.Account;
 
 
 /********************************************************************************
@@ -31,12 +34,18 @@ using MIS.EFDataSource;
 
 namespace MIS.DAL
 {
-  public    class SysUserDAL
+  public    class SysUserDAL:ISysUserDAL
     {
+       /// <summary>
+       /// 登录
+       /// </summary>
+       /// <param name="Id">用户编号</param>
+       /// <param name="password">密码</param>
+       /// <returns></returns>
       public SystemEnums.LoginStatus Login(string Id, string password)
       {
 
-          MISEntities db = new MISEntities();
+            MISEntities db = new MISEntities();
             var result = SystemEnums.LoginStatus.NotExists;
 
             var user = db.Sys_User.Where(x => x.Id == Id).FirstOrDefault();
@@ -66,5 +75,27 @@ namespace MIS.DAL
 
             return SystemEnums.LoginStatus.Normal;  ///正常
       }
+
+        /// <summary>
+        /// 根据Id获取登录人员的信息
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public Account GetAccountById(string Id)
+        {
+
+            Account account = new Account();
+            MISEntities db = new MISEntities();
+            account = db.Sys_User.Where(x => x.Id == Id).Select(x => new Account()
+            {
+                 UniqueId=x.UniqueId,
+                 Id=x.Id,
+                 Name=x.Name,
+                 OrganizationUniqueId=x.OrganizationUniqueId,
+                 Title=x.Title
+            }).FirstOrDefault();
+
+            return account;
+        }
     }
 }

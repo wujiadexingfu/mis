@@ -31,5 +31,6 @@ namespace MIS.IBLL
 {
     public  interface ISysUserBLL
     {
+        
     }
 }

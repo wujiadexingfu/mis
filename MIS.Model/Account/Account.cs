@@ -36,6 +36,12 @@ namespace MIS.Model.Account
        /// </summary>
        public string UniqueId { get; set; }
 
+
+        /// <summary>
+        /// 编号
+        /// </summary>
+        public string Id { get; set; }
+
        /// <summary>
        /// 名称
        /// </summary>

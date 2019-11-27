@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MIS.Model.Account;
+using MIS.Utility.EnumUtility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,5 +33,19 @@ namespace MIS.IDAL
 {
    public  interface ISysUserDAL
     {
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="Id">用户编号</param>
+        /// <param name="password">密码</param>
+        /// <returns></returns>
+        SystemEnums.LoginStatus Login(string Id, string password);
+
+        /// <summary>
+        /// 根据编号，获取登录人员信息
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        Account GetAccountById(string Id);
     }
 }

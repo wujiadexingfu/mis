@@ -34,11 +34,6 @@ namespace MIS.Utility.EnumUtility
         public enum LoginStatus
         {
             /// <summary>
-            /// 非正常
-            /// </summary>
-            UnNormal,
-
-            /// <summary>
             /// 正常
             /// </summary>
             Normal,

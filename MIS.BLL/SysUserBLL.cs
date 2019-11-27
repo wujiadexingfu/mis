@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using MIS.IDAL;
+using MIS.Model.Account;
+using MIS.Model.Result;
+using MIS.Utility.EnumUtility;
 
 /********************************************************************************
 
@@ -29,7 +27,48 @@ using System.Threading.Tasks;
 
 namespace MIS.BLL
 {
-    class SysUserBLL
+    public  class SysUserBLL
     {
+        ISysUserDAL _sysUserDAL;
+        private SysUserBLL(ISysUserDAL sysUserDAL)
+        {
+            _sysUserDAL = sysUserDAL;
+        }
+
+        /// <summary>
+        /// 登录，
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public RequestResult Login(string Id, string password)
+        {
+            RequestResult result = new RequestResult();
+            var loginStatus= _sysUserDAL.Login(Id, password);
+
+            if (loginStatus == SystemEnums.LoginStatus.NotExists)
+            {
+                result.ReturnFailedMessage("该用户尚未注册！");
+            }
+            else if (loginStatus == SystemEnums.LoginStatus.NotLogin)
+            {
+                result.ReturnFailedMessage("该用户没有登录权限！");
+            }
+            else if (loginStatus == SystemEnums.LoginStatus.PasswordWrong)
+            {
+                result.ReturnFailedMessage("密码错误！");
+            }
+            else if (loginStatus == SystemEnums.LoginStatus.ExpiryDateWrong)
+            {
+                result.ReturnFailedMessage("有效期超期！");
+            }
+            else {
+                var account= _sysUserDAL.GetAccountById(Id);
+                result.ReturnData(account);
+
+            }
+            return result;
+        }
+
     }
 }
