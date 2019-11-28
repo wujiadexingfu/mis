@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Sys_Attachment">
           <Key>
             <PropertyRef Name="UniqueId" />
@@ -44,7 +44,7 @@
           <Property Name="Controller" Type="varchar" MaxLength="100" />
           <Property Name="Action" Type="varchar" MaxLength="100" />
           <Property Name="Icon" Type="varchar" MaxLength="50" />
-          <Property Name="Seq" Type="int" />
+          <Property Name="Sort" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="CreateUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
@@ -132,12 +132,12 @@
           <Property Name="BirthDay" Type="datetime" />
           <Property Name="Title" Type="varchar" MaxLength="20" />
           <Property Name="MobilePhone" Type="varchar" MaxLength="20" />
-          <Property Name="State" Type="varchar" MaxLength="20" />
+          <Property Name="Status" Type="varchar" MaxLength="20" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="CreateUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyTime" Type="datetime" />
-          <Property Name="Other" Type="varchar" MaxLength="2000" />
+          <Property Name="Remark" Type="varchar" MaxLength="2000" />
           <Property Name="StartExpiryDate" Type="datetime" />
           <Property Name="EndExpiryDate" Type="datetime" />
           <Property Name="IsLogin" Type="bit" Nullable="false" />
@@ -163,16 +163,28 @@
           <EntitySet Name="Sys_User" EntityType="Self.Sys_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_UserRole" EntityType="Self.Sys_UserRole" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MISEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Sys_Attachment" EntityType="MISModel.Sys_Attachment" />
+          <EntitySet Name="Sys_Code" EntityType="MISModel.Sys_Code" />
+          <EntitySet Name="Sys_Function" EntityType="MISModel.Sys_Function" />
+          <EntitySet Name="Sys_FunctionOperation" EntityType="MISModel.Sys_FunctionOperation" />
+          <EntitySet Name="Sys_ObjectAttachment" EntityType="MISModel.Sys_ObjectAttachment" />
+          <EntitySet Name="Sys_Operation" EntityType="MISModel.Sys_Operation" />
+          <EntitySet Name="Sys_Organization" EntityType="MISModel.Sys_Organization" />
+          <EntitySet Name="Sys_Role" EntityType="MISModel.Sys_Role" />
+          <EntitySet Name="Sys_RoleFunctionOperation" EntityType="MISModel.Sys_RoleFunctionOperation" />
+          <EntitySet Name="Sys_User" EntityType="MISModel.Sys_User" />
+          <EntitySet Name="Sys_UserRole" EntityType="MISModel.Sys_UserRole" />
+        </EntityContainer>
         <EntityType Name="Sys_Attachment">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FileSize" Type="Int32" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Path" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -187,7 +199,7 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CodeText" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="CodeValue" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ParentUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -201,25 +213,25 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ParentId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ParentId" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Area" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Controller" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Icon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Seq" Type="Int32" />
+          <Property Name="Sort" Type="Int32" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="IsDisplay" Type="Boolean" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Sys_FunctionOperation">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FunctionUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="OperationUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -227,7 +239,7 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AttachmentUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ObjectUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -235,7 +247,7 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
@@ -247,7 +259,7 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Icon" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -264,7 +276,7 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Id" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="IsDelete" Type="Boolean" />
@@ -277,7 +289,7 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RoleUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FunctionOperationUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -285,22 +297,22 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PassWord" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PassWord" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="OrganizationUniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Photo" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="BirthDay" Type="DateTime" Precision="3" />
           <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MobilePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
-          <Property Name="Other" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="StartExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="EndExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="IsLogin" Type="Boolean" Nullable="false" />
@@ -309,23 +321,10 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UserUniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RoleUniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="UserUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="RoleUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="MISEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Sys_Attachment" EntityType="Self.Sys_Attachment" />
-          <EntitySet Name="Sys_Code" EntityType="Self.Sys_Code" />
-          <EntitySet Name="Sys_Function" EntityType="Self.Sys_Function" />
-          <EntitySet Name="Sys_FunctionOperation" EntityType="Self.Sys_FunctionOperation" />
-          <EntitySet Name="Sys_ObjectAttachment" EntityType="Self.Sys_ObjectAttachment" />
-          <EntitySet Name="Sys_Operation" EntityType="Self.Sys_Operation" />
-          <EntitySet Name="Sys_Organization" EntityType="Self.Sys_Organization" />
-          <EntitySet Name="Sys_Role" EntityType="Self.Sys_Role" />
-          <EntitySet Name="Sys_RoleFunctionOperation" EntityType="Self.Sys_RoleFunctionOperation" />
-          <EntitySet Name="Sys_User" EntityType="Self.Sys_User" />
-          <EntitySet Name="Sys_UserRole" EntityType="Self.Sys_UserRole" />
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -335,156 +334,156 @@
           <EntitySetMapping Name="Sys_Attachment">
             <EntityTypeMapping TypeName="MISModel.Sys_Attachment">
               <MappingFragment StoreEntitySet="Sys_Attachment">
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Path" ColumnName="Path" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
-                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sys_Code">
             <EntityTypeMapping TypeName="MISModel.Sys_Code">
               <MappingFragment StoreEntitySet="Sys_Code">
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="CodeText" ColumnName="CodeText" />
-                <ScalarProperty Name="CodeValue" ColumnName="CodeValue" />
-                <ScalarProperty Name="ParentUniqueId" ColumnName="ParentUniqueId" />
-                <ScalarProperty Name="Sort" ColumnName="Sort" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="ParentUniqueId" ColumnName="ParentUniqueId" />
+                <ScalarProperty Name="CodeValue" ColumnName="CodeValue" />
+                <ScalarProperty Name="CodeText" ColumnName="CodeText" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sys_Function">
             <EntityTypeMapping TypeName="MISModel.Sys_Function">
               <MappingFragment StoreEntitySet="Sys_Function">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="Area" ColumnName="Area" />
-                <ScalarProperty Name="Controller" ColumnName="Controller" />
-                <ScalarProperty Name="Action" ColumnName="Action" />
-                <ScalarProperty Name="Icon" ColumnName="Icon" />
-                <ScalarProperty Name="Seq" ColumnName="Seq" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
-                <ScalarProperty Name="IsDisplay" ColumnName="IsDisplay" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsDisplay" ColumnName="IsDisplay" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sys_FunctionOperation">
             <EntityTypeMapping TypeName="MISModel.Sys_FunctionOperation">
               <MappingFragment StoreEntitySet="Sys_FunctionOperation">
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="FunctionUniqueId" ColumnName="FunctionUniqueId" />
                 <ScalarProperty Name="OperationUniqueId" ColumnName="OperationUniqueId" />
+                <ScalarProperty Name="FunctionUniqueId" ColumnName="FunctionUniqueId" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sys_ObjectAttachment">
             <EntityTypeMapping TypeName="MISModel.Sys_ObjectAttachment">
               <MappingFragment StoreEntitySet="Sys_ObjectAttachment">
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="AttachmentUniqueId" ColumnName="AttachmentUniqueId" />
                 <ScalarProperty Name="ObjectUniqueId" ColumnName="ObjectUniqueId" />
+                <ScalarProperty Name="AttachmentUniqueId" ColumnName="AttachmentUniqueId" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sys_Operation">
             <EntityTypeMapping TypeName="MISModel.Sys_Operation">
               <MappingFragment StoreEntitySet="Sys_Operation">
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sys_Organization">
             <EntityTypeMapping TypeName="MISModel.Sys_Organization">
               <MappingFragment StoreEntitySet="Sys_Organization">
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Icon" ColumnName="Icon" />
-                <ScalarProperty Name="ParentUniqueId" ColumnName="ParentUniqueId" />
-                <ScalarProperty Name="ManagerUniqueId" ColumnName="ManagerUniqueId" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="Seq" ColumnName="Seq" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="ManagerUniqueId" ColumnName="ManagerUniqueId" />
+                <ScalarProperty Name="ParentUniqueId" ColumnName="ParentUniqueId" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sys_Role">
             <EntityTypeMapping TypeName="MISModel.Sys_Role">
               <MappingFragment StoreEntitySet="Sys_Role">
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sys_RoleFunctionOperation">
             <EntityTypeMapping TypeName="MISModel.Sys_RoleFunctionOperation">
               <MappingFragment StoreEntitySet="Sys_RoleFunctionOperation">
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="RoleUniqueId" ColumnName="RoleUniqueId" />
                 <ScalarProperty Name="FunctionOperationUniqueId" ColumnName="FunctionOperationUniqueId" />
+                <ScalarProperty Name="RoleUniqueId" ColumnName="RoleUniqueId" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sys_User">
             <EntityTypeMapping TypeName="MISModel.Sys_User">
               <MappingFragment StoreEntitySet="Sys_User">
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
-                <ScalarProperty Name="OrganizationUniqueId" ColumnName="OrganizationUniqueId" />
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
-                <ScalarProperty Name="Other" ColumnName="Other" />
-                <ScalarProperty Name="StartExpiryDate" ColumnName="StartExpiryDate" />
-                <ScalarProperty Name="EndExpiryDate" ColumnName="EndExpiryDate" />
                 <ScalarProperty Name="IsLogin" ColumnName="IsLogin" />
+                <ScalarProperty Name="EndExpiryDate" ColumnName="EndExpiryDate" />
+                <ScalarProperty Name="StartExpiryDate" ColumnName="StartExpiryDate" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="OrganizationUniqueId" ColumnName="OrganizationUniqueId" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sys_UserRole">
             <EntityTypeMapping TypeName="MISModel.Sys_UserRole">
               <MappingFragment StoreEntitySet="Sys_UserRole">
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-                <ScalarProperty Name="UserUniqueId" ColumnName="UserUniqueId" />
                 <ScalarProperty Name="RoleUniqueId" ColumnName="RoleUniqueId" />
+                <ScalarProperty Name="UserUniqueId" ColumnName="UserUniqueId" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

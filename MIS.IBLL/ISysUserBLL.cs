@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MIS.Model.Result;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,7 @@ namespace MIS.IBLL
 {
     public  interface ISysUserBLL
     {
-        
+        RequestResult Login(string Id, string password);
+      
     }
 }

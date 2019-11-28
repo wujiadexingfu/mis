@@ -111,7 +111,9 @@
     <None Include="MISEntity.edmx.diagram">
       <DependentUpon>MISEntity.edmx</DependentUpon>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="MISEntity.Context.tt">

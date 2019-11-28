@@ -64,12 +64,38 @@ namespace MIS.Model.Account
         /// <summary> 
         /// 排序  
         /// </summary> 
-        public int Sort { get; set; }
+        public int? Sort { get; set; }
+
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string Description { get; set; }
+
+
+        public string Url
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Area))
+                {
+                    return  string.Format("/{0}/{1}",Controller,Action);
+                }
+                else
+                {
+                    return string.Format("/{0}/{1}/{2}",Area, Controller, Action);
+                }
+            }
+        }
 
        /// <summary>
        /// 菜单数据
        /// </summary>
         public List<AccountFuntion> ChildAccountFuntion { get; set; }
+
+
+
+
+
 
        /// <summary>
        ///操作权限

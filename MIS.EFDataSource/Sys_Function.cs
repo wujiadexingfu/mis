@@ -20,7 +20,7 @@ namespace MIS.EFDataSource
         public string Controller { get; set; }
         public string Action { get; set; }
         public string Icon { get; set; }
-        public Nullable<int> Seq { get; set; }
+        public Nullable<int> Sort { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public string CreateUser { get; set; }
         public string ModifyUser { get; set; }

@@ -10,24 +10,25 @@ using System.Web.Http;
 
 namespace MIS.UI.Areas.Sys.ApiControllers
 {
-    public class FunctionApiController : ApiController
+    public class UserApiController : ApiController
     {
-        private ISysFunctionBLL _sysFunctionBLL;
-
-        public FunctionApiController(ISysFunctionBLL sysFunctionBLL)
+        private ISysUserBLL _sysUserBLL;
+        public UserApiController(ISysUserBLL sysUserBLL)
         {
-            _sysFunctionBLL = sysFunctionBLL;
+            _sysUserBLL = sysUserBLL;
         }
 
-        [AcceptVerbs("get", "post")]
+        [HttpGet]
         [AllowAnonymous]
-        public HttpResponseMessage GetFunctionTreeByAccount()
+        public HttpResponseMessage Login(string Id,string password)
         {
-            var result = JosnNetHelper.ObjectToJson(_sysFunctionBLL.GetFunctionTreeByAccount()); 
+            var result = JosnNetHelper.ObjectToJson(_sysUserBLL.Login(Id,password));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
             };
         }
+
+
     }
 }

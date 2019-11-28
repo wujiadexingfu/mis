@@ -35,7 +35,7 @@ namespace MIS.Utility.Serialize
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static string ObjectToJson<T>(T t)
+        public static string ObjectToJson(object t)
         {
 
             IsoDateTimeConverter timeFormat = new IsoDateTimeConverter(); //设置日期的格式
@@ -61,6 +61,8 @@ namespace MIS.Utility.Serialize
         {
             return JsonConvert.DeserializeObject<T>(json);
         }
+
+    
 
     }
 }

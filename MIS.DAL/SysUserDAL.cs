@@ -55,7 +55,7 @@ namespace MIS.DAL
                 return result;
             }
 
-            if (user.IsLogin) //不允许登录
+            if (!user.IsLogin) //不允许登录
             {
                 result = SystemEnums.LoginStatus.NotLogin;
                 return result;

@@ -24,12 +24,12 @@ namespace MIS.EFDataSource
         public Nullable<System.DateTime> BirthDay { get; set; }
         public string Title { get; set; }
         public string MobilePhone { get; set; }
-        public string State { get; set; }
+        public string Status { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public string CreateUser { get; set; }
         public string ModifyUser { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
-        public string Other { get; set; }
+        public string Remark { get; set; }
         public Nullable<System.DateTime> StartExpiryDate { get; set; }
         public Nullable<System.DateTime> EndExpiryDate { get; set; }
         public bool IsLogin { get; set; }

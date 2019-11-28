@@ -1,6 +1,8 @@
-﻿using MIS.IDAL;
+﻿using MIS.IBLL;
+using MIS.IDAL;
 using MIS.Model.Account;
 using MIS.Model.Result;
+using MIS.Utility;
 using MIS.Utility.EnumUtility;
 
 /********************************************************************************
@@ -27,10 +29,10 @@ using MIS.Utility.EnumUtility;
 
 namespace MIS.BLL
 {
-    public  class SysUserBLL
+    public  class SysUserBLL: ISysUserBLL
     {
         ISysUserDAL _sysUserDAL;
-        private SysUserBLL(ISysUserDAL sysUserDAL)
+        public SysUserBLL(ISysUserDAL sysUserDAL)
         {
             _sysUserDAL = sysUserDAL;
         }
@@ -64,6 +66,7 @@ namespace MIS.BLL
             }
             else {
                 var account= _sysUserDAL.GetAccountById(Id);
+                System.Web.HttpContext.Current.Session[Constant.Account] = account;  //将用户数据放在Session中
                 result.ReturnData(account);
 
             }

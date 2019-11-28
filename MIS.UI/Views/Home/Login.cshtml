@@ -26,15 +26,15 @@
 
                 <div class="login-center-img"><img src="~/Content/login/img/name.png" /></div>
                 <div class="login-center-input">
-                    <input type="text" name="" value="" placeholder="请输入您的用户名" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的用户名'" />
-                    <div class="login-center-input-text">用户名</div>
+                    <input type="text" id="Id" value="" placeholder="请输入您的用户名" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的用户名'" />
+                    <div class="login-center-input-text">用户编号</div>
                 </div>
             </div>
             <div class="login-center clearfix">
 
                 <div class="login-center-img"><img src="~/Content/login/img/password.png" /></div>
                 <div class="login-center-input">
-                    <input type="password" name="" value="" placeholder="请输入您的密码" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的密码'" />
+                    <input type="password" id="password" name="" value="" placeholder="请输入您的密码" onfocus="this.placeholder=''" onblur="this.placeholder='请输入您的密码'" />
                     <div class="login-center-input-text">密码</div>
                 </div>
             </div>
@@ -50,40 +50,67 @@
 
 
     <script type="text/javascript">
-        layui.use(["layer", "table", "element", "form"], function () {
-            table = layui.table;
+        layui.use(["layer", "table", "element", "form", "jquery"], function () {
+            var $ = layui.$;
+            var table = layui.table;
             var form = layui.form;
+
+            $("#Id").val("admin");
+            $("#password").val("admin");
 
 
             $(".login-button").click(function () {
-                addClass(document.querySelector(".login"), "active");
 
-                setTimeout(function () {
-                    addClass(document.querySelector(".sk-rotating-plane"), "active")
-                    document.querySelector(".login").style.display = "none"
-                }, 800)
+                if (!$("#Id").val()) {
+                    layer.alert('用户编号不能为空！', {
+                        icon: 0
+                    });
+                    return false;
+                }
 
+                if (!$("#password").val()) {
+                    layer.alert('密码不能为空！', {
+                        icon: 0
+                    });
+                    return false;
+                }
+                var Id = $("#Id").val();
+                var password = $("#password").val();
+                var timeout = "";
+            
+                $.ajax({
+                    url: '@Url.Content("~/Api/Sys/User/Login")?Id=' + Id + "&password=" + password,
+                    type: "get",
+                    success: function (result) {
+                        if (result.IsSuccess) {
+                            window.location.href = "@Url.Content("~/Home/Index")";   
+                          
+                        } else {
+                            layer.msg(result.Message);
+                        }
 
+                        removeClass(document.querySelector(".login"), "active")
+                        removeClass(document.querySelector(".sk-rotating-plane"), "active")
+                        document.querySelector(".login").style.display = "block"
+                        clearTimeout(timeout);
 
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        addClass(document.querySelector(".login"), "active");
+
+                        timeout=  setTimeout(function () {
+                            addClass(document.querySelector(".sk-rotating-plane"), "active")
+                            document.querySelector(".login").style.display = "none"
+                        }, 800);   //调用本次ajax请求时传递的options参数
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        removeClass(document.querySelector(".login"), "active")
+                        removeClass(document.querySelector(".sk-rotating-plane"), "active")
+                        document.querySelector(".login").style.display = "block"
+                        clearTimeout(timeout);
+                    }
+                });
             });
-
-
-                 @*$.ajax({
-                        url: '@Url.Content("~/api/Device/GradeManagement/Delete")?Id=' + Id ,
-                        type: "get",
-                         success: function (result) {
-                          if (result.IsSuccess) {
-                              layer.msg('删除成功');
-                              refresh();
-                          } else {
-                              layer.msg(result.Message);
-                          }
-                    }*@
-
-
-
-
-
         });
 
 
@@ -108,7 +135,7 @@
                 ele.className = newClass.replace(/^\s+|\s+$/g, '');
             }
         }
-      
+
 
 
 
@@ -119,10 +146,7 @@
                 //        document.querySelector(".login").style.display = "none"
                 //    }, 800)
                 //    setTimeout(function () {
-                //        removeClass(document.querySelector(".login"), "active")
-                //        removeClass(document.querySelector(".sk-rotating-plane"), "active")
-                //        document.querySelector(".login").style.display = "block"
-                //        alert("登录成功")
+                //
 
                 //    }, 5000)
                 //}

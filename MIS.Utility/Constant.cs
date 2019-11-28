@@ -47,6 +47,8 @@ namespace MIS.Utility
         /// </summary>
         public const string VersionName = "2019.8.8";
 
+        public const string Account = "Account";
+
 
         #region  配置文件的目录
         public static string ConfigFile
