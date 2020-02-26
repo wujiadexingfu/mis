@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,12 +35,9 @@ namespace MIS.Model.Account
         /// <summary> 
         /// 编号  
         /// </summary> 
+        [JsonProperty("id")]
         public string Id { get; set; }
 
-        /// <summary> 
-        /// 父节点  
-        /// </summary> 
-        public string ParentId { get; set; }
 
         /// <summary> 
         /// 区域  
@@ -59,6 +57,7 @@ namespace MIS.Model.Account
         /// <summary> 
         /// 图标  
         /// </summary> 
+        [JsonProperty("icon")]
         public string Icon { get; set; }
 
         /// <summary> 
@@ -69,9 +68,11 @@ namespace MIS.Model.Account
         /// <summary>
         /// 描述
         /// </summary>
+        [JsonProperty("title")]
         public string Description { get; set; }
 
 
+        [JsonProperty("href")]
         public string Url
         {
             get
@@ -87,14 +88,11 @@ namespace MIS.Model.Account
             }
         }
 
-       /// <summary>
-       /// 菜单数据
-       /// </summary>
+        /// <summary>
+        /// 菜单数据
+        /// </summary>
+        [JsonProperty("children")]
         public List<AccountFuntion> ChildAccountFuntion { get; set; }
-
-
-
-
 
 
        /// <summary>

@@ -40,5 +40,10 @@ namespace MIS.Utility.DateUtility
         /// yyyy/MM/dd
         /// </summary>
         public static string YYYYMMDD = "yyyy/MM/dd";
+
+        /// <summary>
+        /// yyyy_MM_dd
+        /// </summary>
+        public static string YYYY_MM_DD = "yyyy-MM-dd";
     }
 }

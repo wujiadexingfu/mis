@@ -1,0 +1,176 @@
+﻿
+@{
+                ViewBag.Title = "InputForm";
+                Layout = null;
+}
+<form class="layui-form" action="" name="organizationForm" lay-filter="organizationForm">
+
+    <button type="submit" class="layui-btn" lay-submit lay-filter="save">提交</button>
+    <input type="hidden" name="Id" id="Id" />
+    <table class="layui-table">
+        <tr>
+            <th>显示值</th>
+            <td>
+                <input type="text" value="" name="CodeText" required lay-verify="required" placeholder="请输入显示值" autocomplete="off" class="layui-input" />
+            </td>
+            <th>数据</th>
+            <td>
+                <input type="text" value="" required lay-verify="required" name="CodeValue" placeholder="请输入数据" autocomplete="off" class="layui-input" />
+            </td>
+        </tr>
+
+        <tr>
+            <th>父节点</th>
+            <td>
+                @*<select id="ParentId" name="ParentId" lay-verify="required" lay-filter="ParentId">
+                        <option value="">请选择</option>
+                    </select>*@
+                <input type="text" name="ParentId" id="ParentId" lay-filter="parentIdTree" class="layui-input">
+
+            </td>
+            <th>排序</th>
+            <td>
+                <input type="text" value="" required lay-verify="required|number" name="Sort" placeholder="请输入排序" autocomplete="off" class="layui-input" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+<script>
+    layui.config({
+        base: '/Content/layui/lay/modules/',　
+    }).use(['form','treeSelect'], function () {
+        var form = layui.form;
+        var Id = "@ViewBag.Id";
+
+        var parentId= "@ViewBag.ParentId";
+        var treeSelect = layui.treeSelect;
+        //initParentIdSelectOption();
+
+
+
+          treeSelect.render({
+                // 选择器
+              elem: '#ParentId',
+                // 数据
+              data: '@Url.Content("~/Api/Sys/SysCode/QueryInputFormTree")',
+                // 异步加载方式：get/post，默认get
+                type: 'get',
+                // 占位符
+                placeholder: '请选择节点',
+                // 是否开启搜索功能：true/false，默认false
+                search: true,
+                // 点击回调
+                click: function (d) {
+                    console.log(d);
+                },
+                // 加载完成后的回调函数
+                success: function (d) {
+                    debugger
+
+                    if (parentId) {
+                        treeSelect.checkNode('parentIdTree', parentId);
+                    }
+                }
+            });
+
+
+
+
+
+        if (Id) {
+            $.ajax({
+                type: "Get",
+                url: '@Url.Content("~/Api/Sys/SysCode/GetSysCodeItem?Id=")' + Id,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (data) {
+                    //赋值
+                    form.val('form', data);
+                    if (Id) {
+                        treeSelect.checkNode('parentIdTree', data.ParentId);
+                    }
+
+
+
+                   }
+               });
+        }
+        form.on('submit(save)', function (data) {
+            var data = JSON.stringify(data.field);
+            if (Id) {
+                  $.ajax({
+                    url: '@Url.Content("~/api/Sys/SysCode/Edit")',
+                    type: "post",
+                    dataType: "json",
+                    headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                    data: data,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('修改成功');
+                              var index = parent.layer.getFrameIndex(window.name); //获取当前窗口的name
+                              parent.layer.close(index);		//关闭窗口
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+
+
+
+            } else {
+                debugger
+                  $.ajax({
+                    url: '@Url.Content("~/api/Sys/SysCode/Add")',
+                      type: "post",
+                      dataType: "json",
+                      headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                    data: data,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('新增成功');
+                              var index = parent.layer.getFrameIndex(window.name); //获取当前窗口的name
+                              parent.layer.close(index);		//关闭窗口
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+            }
+            return false;
+        });
+
+        function initParentIdSelectOption() {
+              $.ajax({
+                type: "Get",
+                url: '@Url.Content("~/Api/Sys/SysCode/QuerySysCodeList")',
+                contentType: "application/json; charset=utf-8",
+                  dataType: 'json',
+                  async: false,
+                success: function (data) {
+                    //赋值
+                    var html = "";
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<option value="' + data[i].Id + '" id="' + data[i].Id + '" >' + data[i].CodeText + '</option>';
+                    };
+                    $("#ParentId").append(html);
+                    form.render("select");            // 刷性select，显示出数据
+                   }
+            });
+
+
+
+
+    }
+
+
+    });
+
+</script>

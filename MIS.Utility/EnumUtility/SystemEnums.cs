@@ -58,5 +58,37 @@ namespace MIS.Utility.EnumUtility
             ExpiryDateWrong
 
         }
+        /// <summary>
+        /// 用户状态
+        /// </summary>
+
+        public enum UserStatus
+        {
+            /// <summary>
+            /// 新建
+            /// </summary>
+            New,
+
+            /// <summary>
+            /// 删除
+            /// </summary>
+            Delete
+
+        }
+
+        public enum Status
+        {
+            /// <summary>
+            /// 新建
+            /// </summary>
+            New,
+
+            /// <summary>
+            /// 删除
+            /// </summary>
+            Delete
+
+        }
+
     }
 }

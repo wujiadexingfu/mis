@@ -1,8 +1,233 @@
 ﻿
 @{
     ViewBag.Title = "Index";
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div style="padding: 20px;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <i class="layui-icon layui-icon-link"></i>
+                查询条件
+            </div>
+            <div class="layui-card-body">
+                <div class="layui-inline layui-show-xs-block">
+                    <input class="layui-input" autocomplete="off" placeholder="请输入关键字" name="userParameterKeyword" id="userParameterKeyword">
+                </div>
+
+                <div class="layui-inline layui-show-xs-block">
+                    <button class="layui-btn" lay-filter="btnUserQuery" id="btnUserQuery"><i class="layui-icon"></i></button>
+                    <button class="layui-btn" lay-filter="btnAddUser" id="btnAddUser"><i class="layui-icon"></i>添加</button>
+
+                    <button class="layui-btn" lay-filter="btnResetPassword" id="btnResetPassword"><img src="/Images/resetpassword.png" />重设密码</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+        
+    </div>
+
+<div class="layui-row layui-col-space15;" style="padding: 20px;">
+
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <i class="layui-icon layui-icon-table" style="font-size:20px"></i>
+            查询结果
+        </div>
+        <div class="layui-card-body layui-table-body layui-table-main">
+            <table id="userTable" class="layui-table layui-form" lay-filter="userTable"></table>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="switchIsLoginTpl">
+    <!-- 这里的 checked 的状态只是演示 -->
+    <input type="checkbox" name="IsLogin" value="{{d.IsLogin}}" lay-skin="switch" title="是否登录" {{ d.IsLogin =='true'  ? 'checked' : '' }} lay-text="是|否" lay-filter="IsLogin" disabled>
+</script>
+
+<script type="text/html" id="switchStatusTpl">
+    <!-- 这里的 checked 的状态只是演示 -->
+    <input type="checkbox" name="Status" value="{{d.Status}}" lay-skin="switch" title="是否删除" {{ d.Status =='Delete'  ? 'checked' : '' }} lay-text="是|否" lay-filter="Status" disabled>
+</script>
+
+@section scripts{
+    <script type="text/javascript">
+   var table = "";
+    layui.use(["layer", "table", "element"], function () {
+        table = layui.table;
+        var form = layui.form;
+        var treeSelect = layui.treeSelect;
+
+            table.render({
+                elem: '#userTable',
+                height: GLOBAL_TABLE_HEIGHT,
+
+                method: "post",
+                url: '@Url.Content("~/Api/Sys/User/Query")',
+                page: GLOBAL_TABLE_PAGE, //开启分页
+                cols: [[
+                    { checkbox: true, fixed: true }
+                    , { field: 'Id', title: '编号', width: 100, sort: true }
+                    , { field: 'Name', title: '姓名', width: 100, sort: true }
+                    , { field: 'Organization', title: '部门', width: 100, sort: true }
+                    , { field: 'Email', title: 'Email', width: 100, sort: true }
+                    , { field: 'Sex', title: '性别', sort: true, width: 80, sort: true }
+                    , { field: 'BirthDay', title: '生日', sort: true, width: 135 }
+                    , { field: 'Title', title: '职称', width: 80, sort: true }
+                    , { field: 'MobilePhone', title: '电话', sort: true, width: 135 }
+                    , { field: 'StartExpiryDate', title: '开始有效期', sort: true, width: 150 }
+                    , { field: 'EndExpiryDate', title: '结束有效期', sort: true, width: 150 }
+                    , { field: 'IsLogin', title: '是否登录', sort: true, width: 150, templet: '#switchIsLoginTpl'},
+                    , { field: 'IsDelete', title: '是否删除', sort: true,  templet: '#switchStatusTpl'}
+                    , { fixed: 'right', width: 150, title: "操作", align: 'center', toolbar: '#bar' }
+                ]],
+                where: { keyWord: $("#userParameterKeyword").val() },
+                toolbar: GLOBAL_TABLE_TOOBAR,
+                limit: GLOBAL_TABLE_LIMIT,
+                limits: GLOBAL_TABLE_LIMITS,
+                loading: true,
+                skin: GLOBAL_TABLE_SKIN, //行边框风格
+                even: GLOBAL_TABLE_EVEN //开启隔行背景
+            });
+
+            table.on('tool(userTable)', function (obj) {
+            debugger
+            var data = obj.data;
+            var uniqueId = data.UniqueId;
+            if (obj.event === 'edit') {
+
+             $.ajax({
+                     url: '@Url.Content("~/Sys/User/InputForm?uniqueId=")' + uniqueId,
+                     type: "get",
+                     dataType:"html",
+                     success: function (result) {
+                         layer.open({
+                         type: 1,
+                         title: "修改用户信息",
+                         content: result,
+                         area: ["800px", "500px"],
+                         shade: 0.3, //不显示遮罩
+                         end: function () {
+                         refreshUserTable();
+                         }
+                     });
+                 }
+             });
+            } else if (obj.event === 'delete') {
+                layer.confirm('是否删除数据', function (index) {
+
+                    $.ajax({
+                        url: '@Url.Content("~/api/Sys/User/Delete")?uniqueId=' + uniqueId ,
+                        type: "get",
+                         success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('删除成功');
+                              refreshUserTable();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+
+                });
+            }
+        });
+
+            $("#btnUserQuery").click(function () {
+                table.reload('userTable', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: { keyWord: $("#userParameterKeyword").val() },
+                }, 'data');
+
+
+            });
+
+            function refreshUserTable() {
+                table.reload('userTable', {
+                    where: { keyWord: $("#userParameterKeyword").val() },
+                }, 'data');
+            }
+
+            $("#btnAddUser").click(function () {
+                   $.ajax({
+                     url: '@Url.Content("~/Sys/User/InputForm?uniqueId=")'+"",
+                     type: "get",
+                     dataType:"html",
+                       success: function (result) {
+                           debugger
+
+                            layer.open({
+                                type:1,
+                                title: "新增用户信息",
+                                content: result ,
+                                area: ["800px", "500px"],
+                                shade: 0.3, //不显示遮罩
+                                end: function () {
+                                refreshUserTable();
+                        }
+                  });
+                 }
+             });
+
+            });
+
+
+
+            $("#btnResetPassword").click(function () {
+            debugger
+                var data = table.cache.userTable;
+            var selected = [];
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].LAY_CHECKED) {
+                    selected.push(data[i].UniqueId);
+                }
+
+                }
+                if (selected.length == 0) {
+                    layer.msg("请至少选中一条数据！");
+                    return false;
+                }
+
+
+                var data = JSON.stringify({ "selected": selected });
+
+
+                $.ajax({
+                    url: '@Url.Content("~/api/Sys/User/ResetPassword")',
+                    type: "post",
+                    dataType: "json",
+                    headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                    data: data,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('修改成功');
+                              var index = parent.layer.getFrameIndex(window.name); //获取当前窗口的name
+                              parent.layer.close(index);		//关闭窗口
+                              refreshUserTable();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+
+
+
+        });
+
+        form.render();
+
+        });
+
+
+    </script>
+
+
+}
 

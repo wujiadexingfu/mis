@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SysFunctionDAL.cs" />
+    <Compile Include="SysOrganizationDAL.cs" />
     <Compile Include="SysUserDAL.cs" />
   </ItemGroup>
   <ItemGroup>

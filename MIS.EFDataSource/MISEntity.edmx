@@ -90,12 +90,12 @@
           <Property Name="Icon" Type="varchar" MaxLength="10" />
           <Property Name="ParentUniqueId" Type="varchar" MaxLength="40" />
           <Property Name="ManagerUniqueId" Type="varchar" MaxLength="40" />
-          <Property Name="IsDelete" Type="bit" />
           <Property Name="CreateUser" Type="varchar" MaxLength="40" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="Seq" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Sys_Role">
           <Key>
@@ -265,12 +265,12 @@
           <Property Name="Icon" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="ParentUniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ManagerUniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="IsDelete" Type="Boolean" />
           <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="Seq" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Sys_Role">
           <Key>
@@ -325,7 +325,7 @@
           <Property Name="UserUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="RoleUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -415,12 +415,12 @@
           <EntitySetMapping Name="Sys_Organization">
             <EntityTypeMapping TypeName="MISModel.Sys_Organization">
               <MappingFragment StoreEntitySet="Sys_Organization">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Seq" ColumnName="Seq" />
                 <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="ManagerUniqueId" ColumnName="ManagerUniqueId" />
                 <ScalarProperty Name="ParentUniqueId" ColumnName="ParentUniqueId" />
                 <ScalarProperty Name="Icon" ColumnName="Icon" />

@@ -22,7 +22,7 @@ namespace MIS.DAL
             MISEntities db = new MISEntities();
             var allFunctionList = db.Sys_Function.ToList();
 
-            var functionList = GetFunctionTree("root", allFunctionList);
+            var functionList = GetFunctionTree("*", allFunctionList);
             result.ReturnData(functionList);
             return result;
 
@@ -50,7 +50,6 @@ namespace MIS.DAL
                 {
                     var model = new AccountFuntion();
                     model.Id = item.Id;
-                    model.ParentId = item.ParentId;
                     model.Area = item.Area;
                     model.Controller = item.Controller;
                     model.Action = item.Action;

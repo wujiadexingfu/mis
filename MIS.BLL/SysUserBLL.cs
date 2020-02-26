@@ -1,7 +1,9 @@
 ﻿using MIS.IBLL;
 using MIS.IDAL;
 using MIS.Model.Account;
+using MIS.Model.Page;
 using MIS.Model.Result;
+using MIS.Model.Sys.SysUser;
 using MIS.Utility;
 using MIS.Utility.EnumUtility;
 
@@ -73,5 +75,62 @@ namespace MIS.BLL
             return result;
         }
 
+
+        public PageData Query(SysUserParameter parameter)
+        {
+            return _sysUserDAL.Query(parameter);
+        }
+
+
+        /// <summary>
+        ///  根据UniqueId获取用户信息
+        /// </summary>
+        /// <param name="uniqueId"></param>
+        /// <returns></returns>
+        public SysUserInputForm GetUserByUniqueId(string uniqueId)
+        {
+            return _sysUserDAL.GetUserByUniqueId(uniqueId);
+        }
+
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        public RequestResult Add(SysUserInputForm inputForm)
+        {
+            return _sysUserDAL.Add(inputForm);
+        }
+
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        public  RequestResult Edit(SysUserInputForm inputForm)
+        {
+            return _sysUserDAL.Edit(inputForm);
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="uniqueId"></param>
+        /// <returns></returns>
+        public  RequestResult Delete(string uniqueId)
+        {
+            return _sysUserDAL.Delete(uniqueId);
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public RequestResult ResetPassword(SysUserResetModel model)
+        {
+            return _sysUserDAL.ResetPassword(model);
+        }
     }
 }

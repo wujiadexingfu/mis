@@ -8,6 +8,12 @@ using MIS.EFDataSource;
 using MIS.IDAL;
 using MIS.Model.Result;
 using MIS.Model.Account;
+using MIS.Model.Page;
+using MIS.Model.Sys.SysUser;
+using MIS.Utility.DateUtility;
+using MIS.Utility;
+using static MIS.Utility.EnumUtility.SystemEnums;
+using MIS.Utility.BoolUtility;
 
 
 /********************************************************************************
@@ -97,5 +103,226 @@ namespace MIS.DAL
 
             return account;
         }
+
+
+        public PageData Query(SysUserParameter parameter)
+        {
+            using (MISEntities db = new MISEntities())
+            {
+                var query = db.Sys_User.AsQueryable();
+                if (!string.IsNullOrEmpty(parameter.KeyWord))
+                {
+                    query = query.Where(x => x.Name.Contains(parameter.KeyWord) || x.Id.Contains(parameter.KeyWord));
+                }
+
+                var count = query.Count();
+                var data = query.OrderBy(x => x.Id).Skip((parameter.Page - 1) * parameter.Limit).Take(parameter.Limit).ToList();
+                List<SysUserGrid> list = new List<SysUserGrid>();
+                var organizationList = db.Sys_Organization.ToList();
+
+
+                foreach (var item in data)
+                {
+                    SysUserGrid model = new SysUserGrid();
+                    model.UniqueId = item.UniqueId;
+                    model.Id = item.Id;
+                    model.Name = item.Name;
+                    model.Organization = organizationList.Where(x => x.UniqueId == item.OrganizationUniqueId).FirstOrDefault().Name;
+                    model.Email = item.Email;
+                    model.BirthDay= item.BirthDay == null ? "" : item.BirthDay.Value.ToString(DateTimeFormatter.YYYYMMDD);
+                    model.Title = item.Title;
+                    model.MobilePhone = item.MobilePhone;
+                    model.Status = item.Status;
+                    model.Remark = item.Remark;
+                    model.StartExpiryDate = item.StartExpiryDate==null?"": item.StartExpiryDate.Value.ToString(DateTimeFormatter.YYYYMMDD);
+                    model.EndExpiryDate = item.EndExpiryDate == null ? "" : item.EndExpiryDate.Value.ToString(DateTimeFormatter.YYYYMMDD);
+                    model.IsLogin = item.IsLogin==true?"true":"";
+                    list.Add(model);
+                }
+                PageData pageData = new PageData(count, list);
+                return pageData;
+            }
+        }
+
+
+
+        /// <summary>
+        /// 根据UniqueId获取用户信息
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public SysUserInputForm GetUserByUniqueId(string uniqueId)
+        {
+            MISEntities db = new MISEntities();
+            var item = db.Sys_User.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
+            SysUserInputForm inputForm = new SysUserInputForm()
+            {
+                UniqueId = item.UniqueId,
+                BirthDay = DateTimeUtils.GetDateToStringYYYY_MM_DD(item.BirthDay),
+                Email = item.Email,
+                EndExpiryDate = DateTimeUtils.GetDateToStringYYYY_MM_DD(item.EndExpiryDate),
+                Id = item.Id,
+                IsLogin = BoolUtils.BoolToString(item.IsLogin),
+                MobilePhone = item.MobilePhone,
+                Name = item.Name,
+                OrganizationUniqueId = item.OrganizationUniqueId,
+                Remark = item.Remark,
+                StartExpiryDate = DateTimeUtils.GetDateToStringYYYY_MM_DD(item.StartExpiryDate),
+                Title = item.Title
+
+            };
+
+            return inputForm;
+
+        }
+
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        public RequestResult Add(SysUserInputForm inputForm)
+        {
+            RequestResult result = new RequestResult();
+
+            try
+            {
+                MISEntities db = new MISEntities();
+                if (db.Sys_User.Any(x => x.Id == inputForm.Id))
+                {
+                    result.ReturnFailedMessage("编号重复");
+                }
+                else
+                {
+                    Sys_User item = new Sys_User();
+                    item.UniqueId = Guid.NewGuid().ToString();
+                    item.Id = inputForm.Id;
+                    item.Name = inputForm.Name;
+                    item.PassWord = Constant.DefaultPassword;
+                    item.OrganizationUniqueId = inputForm.OrganizationUniqueId;
+                    item.Email = inputForm.Email;
+                    item.BirthDay = DateTimeUtils.StringToDateTime(inputForm.BirthDay);
+                    item.Title = inputForm.Title;
+                    item.MobilePhone = inputForm.MobilePhone;
+                    item.Email = inputForm.Email;
+                    item.Status = UserStatus.New.ToString() ;
+                    item.Remark = inputForm.Remark;
+                    item.StartExpiryDate = DateTimeUtils.StringToDateTime(inputForm.StartExpiryDate);
+                    item.EndExpiryDate = DateTimeUtils.StringToDateTime(inputForm.EndExpiryDate);
+                    item.IsLogin = BoolUtils.StringToBool(inputForm.IsLogin);
+                    item.CreateTime = DateTime.Now;
+                    item.CreateUser = SessionUtils.GetAccountUnqiueId();
+                    db.Sys_User.Add(item);
+                    db.SaveChanges();
+                    result.Success();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.ReturnFailedMessage(ex.Message);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        public RequestResult Edit(SysUserInputForm inputForm)
+        {
+            RequestResult result = new RequestResult();
+
+            try
+            {
+                MISEntities db = new MISEntities();
+                if (db.Sys_User.Any(x => x.Id == inputForm.Id&&x.UniqueId!=inputForm.UniqueId))
+                {
+                    result.ReturnFailedMessage("编号重复");
+                }
+                else
+                {
+                    Sys_User item = db.Sys_User.Where(x => x.UniqueId == inputForm.UniqueId).FirstOrDefault();
+                    item.Id = inputForm.Id;
+                    item.Name = inputForm.Name;
+                    item.OrganizationUniqueId = inputForm.OrganizationUniqueId;
+                    item.Email = inputForm.Email;
+                    item.BirthDay = DateTimeUtils.StringToDateTime(inputForm.BirthDay);
+                    item.Title = inputForm.Title;
+                    item.MobilePhone = inputForm.MobilePhone;
+                    item.Email = inputForm.Email;
+                    item.Remark = inputForm.Remark;
+                    item.StartExpiryDate = DateTimeUtils.StringToDateTime(inputForm.StartExpiryDate);
+                    item.EndExpiryDate = DateTimeUtils.StringToDateTime(inputForm.EndExpiryDate);
+                    item.IsLogin = BoolUtils.StringToBool(inputForm.IsLogin);
+                    item.ModifyTime = DateTime.Now;
+                    item.ModifyUser = SessionUtils.GetAccountUnqiueId();
+                    db.SaveChanges();
+                    result.Success();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.ReturnFailedMessage(ex.Message);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="uniqueId"></param>
+        /// <returns></returns>
+        public RequestResult Delete(string uniqueId)
+        {
+            RequestResult result = new RequestResult();
+
+            try
+            {
+                MISEntities db = new MISEntities();
+                var item = db.Sys_User.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
+                item.Status = UserStatus.Delete.ToString();
+                item.ModifyTime = DateTime.Now;
+                item.ModifyUser = SessionUtils.GetAccountUnqiueId();
+                db.SaveChanges();
+                result.Success();
+            }
+            catch (Exception ex)
+            {
+                result.ReturnFailedMessage(ex.Message);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="model">需要修改的人员信息</param>
+        /// <returns></returns>
+        public RequestResult ResetPassword(SysUserResetModel model)
+        {
+            RequestResult result = new RequestResult();
+
+            try
+            {
+                MISEntities db = new MISEntities();
+                var userList = db.Sys_User.Where(x => model.selected.Contains(x.UniqueId)).ToList();
+                foreach (var item in userList)
+                {
+                    item.PassWord = Constant.DefaultPassword;
+                }
+                db.SaveChanges();
+               result.Success();
+            }
+            catch (Exception ex)
+            {
+                result.ReturnFailedMessage(ex.Message);
+            }
+            return result;
+        }
+
+
     }
 }

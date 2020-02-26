@@ -20,11 +20,11 @@ namespace MIS.EFDataSource
         public string Icon { get; set; }
         public string ParentUniqueId { get; set; }
         public string ManagerUniqueId { get; set; }
-        public Nullable<bool> IsDelete { get; set; }
         public string CreateUser { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public string ModifyUser { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
         public Nullable<int> Seq { get; set; }
+        public string Status { get; set; }
     }
 }

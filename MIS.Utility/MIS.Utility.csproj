@@ -42,6 +42,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,9 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoolUtility\BoolUtils.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="DateUtility\DateTimeFormatter.cs" />
+    <Compile Include="DateUtility\DateTimeUtils.cs" />
     <Compile Include="DirectoryUtility\DirectoryHelper.cs" />
     <Compile Include="Encrypt\AESHelper.cs" />
     <Compile Include="Encrypt\DESHelper.cs" />
@@ -61,6 +64,7 @@
     <Compile Include="ListHelper\ListHepler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialize\JosnNetHelper.cs" />
+    <Compile Include="SessionUtils.cs" />
     <Compile Include="Zip\SharpZipHelper.cs" />
     <Compile Include="Zip\ZipFileHelper.cs" />
   </ItemGroup>
@@ -69,6 +73,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MIS.Model\MIS.Model.csproj">
+      <Project>{f4130bc2-b382-48b1-ab6b-f479307af027}</Project>
+      <Name>MIS.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

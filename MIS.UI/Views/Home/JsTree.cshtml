@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "JsTree";
+    Layout = null;
+}
+
+
+<div id="organizationTree"></div>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('#organizationTree').jstree({
+            'plugins': ["search", "themes", "types", "state", "line", "contextmenu"], 	//包含样式，选择框，图片等,
+            'types': {
+                'default': {
+                    'icon': true // 默认图标,可以写路径名，但是必须将themes的icons打开，否则没有地方展示图标
+                },
+            },
+            "contextmenu": {
+                select_node: false,
+                show_at_node: true,
+                items: {
+                    "新增": {
+                        "label": "新增",
+                        "icon": "layui-icon layui-icon-add-1",
+                        "action": function (data) {
+                            var inst = $.jstree.reference(data.reference),
+                                obj = inst.get_node(data.reference);
+                            var id = obj.id;
+
+
+
+
+                        }
+                    },
+                    "修改": {
+                        "label": "修改",
+                        "icon": "layui-icon layui-icon-edit",
+                        "action": function (data) {
+                            var inst = $.jstree.reference(data.reference),
+                                obj = inst.get_node(data.reference);
+                            var id = obj.id;
+
+
+                        }
+                    },
+                    "删除": {
+                        "label": "删除",
+                        "icon": "layui-icon layui-icon-delete",
+                        "action": function (data) {
+                            var inst = $.jstree.reference(data.reference),
+                                obj = inst.get_node(data.reference);
+                            var id = obj.id;
+
+
+                        }
+                    }
+                }
+            },
+
+            'core': { 'data': [{ "id": "ajson1", "parent": "#", "text": "Simple root node" }, { "id": "ajson2", "parent": "#", "text": "Root node 2" }, { "id": "ajson3", "parent": "ajson2", "text": "Child 1" }, { "id": "ajson4", "parent": "ajson2", "text": "Child 2" },] }
+        });
+
+    })
+
+
+</script>

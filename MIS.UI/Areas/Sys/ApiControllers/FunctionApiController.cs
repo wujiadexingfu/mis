@@ -29,5 +29,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
             };
         }
+
+       
     }
 }

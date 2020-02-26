@@ -79,5 +79,11 @@ namespace MIS.Utility
             }
         }
         #endregion
+
+        /// <summary>
+        /// 默认密码
+        /// </summary>
+        public const string DefaultPassword = "123456";
+
     }
 }

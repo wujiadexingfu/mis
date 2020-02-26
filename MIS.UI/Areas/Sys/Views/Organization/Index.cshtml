@@ -1,0 +1,210 @@
+﻿
+@{
+
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+
+<script src="~/Content/jsTree/jstree.js"></script>
+<link href="~/Content/jsTree/themes/default/style.css" rel="stylesheet" />
+
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <i class="layui-icon layui-icon-link"></i>
+                    查询条件
+                </div>
+                <div class="layui-card-body">
+                    <div id="divOrganizationTree">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header ">
+                    <div class="layui-row">
+                        <div class="layui-col-md10">
+                            <i class="layui-icon layui-icon-table pull-right" style="font-size:20px"></i>
+                            查询结果
+                        </div>
+                        <div class="layui-col-md2 ">   <button class="layui-btn " lay-filter="btnAddOrganization" id="btnAddOrganization"><i class="layui-icon"></i>添加</button></div>
+                    </div>
+
+
+
+                </div>
+                <div class="layui-card-body">
+                    <table id="organizationTable" class="layui-table layui-form" lay-filter="organizationTable"></table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+        layui.use(["layer", "table"], function () {
+            var organizationUniqueId = "";
+            table = layui.table;
+
+            table.render({
+                elem: '#organizationTable',
+                height: GLOBAL_TABLE_HEIGHT,
+
+                method: "post",
+                url: '@Url.Content("~/Api/Sys/Organization/Query")',
+                page: GLOBAL_TABLE_PAGE, //开启分页
+                cols: [[
+                    { checkbox: true, fixed: true }
+                    , { field: 'Id', title: '编号', sort: true }
+                    , { field: 'Name', title: '姓名', sort: true }
+                    , { field: 'Parent', title: '父节点', sort: true }
+                    , { field: 'Manager', title: '负责人', sort: true }
+                    , { field: 'Seq', title: '排序', sort: true, sort: true }
+                    , { fixed: 'right', width: 150, title: "操作", align: 'center', toolbar: '#bar' }
+                ]],
+                where: { UniqueId: organizationUniqueId },
+                toolbar: GLOBAL_TABLE_TOOBAR,
+                limit: GLOBAL_TABLE_LIMIT,
+                limits: GLOBAL_TABLE_LIMITS,
+                loading: true,
+                skin: GLOBAL_TABLE_SKIN, //行边框风格
+                even: GLOBAL_TABLE_EVEN //开启隔行背景
+            });
+
+
+
+            table.on('tool(organizationTable)', function (obj) {
+                debugger
+                var data = obj.data;
+                var uniqueId = data.UniqueId;
+                if (obj.event === 'edit') {
+
+                 $.ajax({
+                         url: '@Url.Content("~/Sys/Organization/InputForm?uniqueId=")' + uniqueId,
+                         type: "get",
+                         dataType:"html",
+                         success: function (result) {
+                             layer.open({
+                             type: 1,
+                             title: "修改用户信息",
+                             content: result,
+                             area: ["800px", "500px"],
+                             shade: 0.3, //不显示遮罩
+                             end: function () {
+                                 refreshOrganizationTable();
+                             }
+                         });
+                     }
+                 });
+                } else if (obj.event === 'delete') {
+                    layer.confirm('是否删除数据', function (index) {
+
+                        $.ajax({
+                            url: '@Url.Content("~/api/Sys/Organization/Delete")?uniqueId=' + uniqueId ,
+                            type: "get",
+                             success: function (result) {
+                              if (result.IsSuccess) {
+                                  layer.msg('删除成功');
+                                  refreshOrganizationTable();
+                              } else {
+                                  layer.msg(result.Message);
+                              }
+                        }
+                    });
+
+                    });
+                }
+            });
+
+
+
+            InitOrganizationTree();
+
+
+
+
+
+        });
+
+         function InitOrganizationTree() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Content("~/Sys/Organization/Tree")',
+                async: false,
+                dataType: "html",
+                success: function (data) {
+                    $("#divOrganizationTree").html(data);
+                }
+            });
+            };
+          function Add(uniqueId) {
+                 layer.open({
+                    type: 2,
+                    title:"新增部门",
+                     content: '@Url.Content("~/Sys/Organization/InputForm?uniqueId=")' + "" + "&parentUniqueId=" + uniqueId,
+                    area: ["800px", "500px"],
+                    shade: 0.3, //不显示遮罩
+                    end: function () {
+                        refresh();
+                        InitOrganizationTree();
+                    }
+                });
+
+            }
+
+            function Edit(uniqueId) {
+                 layer.open({
+                        type: 2,
+                        title: "修改参数信息",
+                     content: '@Url.Content("~/Sys/Organization/InputForm?uniqueId=")' + uniqueId + "&parentId= "  ,
+                        area: ["800px", "500px"],
+                        shade: 0.3, //不显示遮罩
+                        end: function () {
+                            refresh();
+                            InitOrganizationTree();
+                        }
+                    });
+            }
+
+            function Delete(uniqueId) {
+                  $.ajax({
+                      url: '@Url.Content("~/api/Sys/Organization/Delete")?uniqueId=' + uniqueId ,
+                            type: "get",
+                             success: function (result) {
+                              if (result.IsSuccess) {
+                                  layer.msg('删除成功');
+                                  refresh();
+                                  InitOrganizationTree();
+                              } else {
+                                  layer.msg(result.Message);
+                              }
+                        }
+                    });
+            }
+
+        function refreshOrganizationTable() {
+            debugger
+                table.reload('organizationTable', {
+                    where: { UniqueId: organizationUniqueId },
+                }, 'data');
+            }
+
+
+
+
+
+    </script>
+}
+
+
+
