@@ -9,6 +9,10 @@ namespace MIS.Utility
 {
    public   class SessionUtils
     {
+        /// <summary>
+        /// 获取登录人员的Account信息
+        /// </summary>
+        /// <returns></returns>
         public static Account GetAccount()
         {
 
@@ -22,10 +26,22 @@ namespace MIS.Utility
             }
         }
 
-
+        /// <summary>
+        /// 获取登录人员的唯一编码
+        /// </summary>
+        /// <returns></returns>
         public static string GetAccountUnqiueId()
         {
-            return GetAccount().UniqueId;
+            var account = GetAccount();
+            if (account != null)
+            {
+                return account.UniqueId;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
 
     }

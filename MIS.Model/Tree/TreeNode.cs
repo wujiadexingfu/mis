@@ -24,6 +24,13 @@ namespace MIS.Model.Tree
 
 
         /// <summary>
+        /// 名称
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+
+        /// <summary>
         /// 图标
         /// </summary>
         [JsonProperty(PropertyName = "icon")]

@@ -28,10 +28,14 @@ namespace MIS.Utility.DateUtility
             return GetDateToString(date, DateTimeFormatter.YYYY_MM_DD);
         }
 
-
+        /// <summary>
+        /// 将字符串变为日期类型的数据
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public static DateTime? StringToDateTime(string date)
         {
-            if (string.IsNullOrEmpty(date))
+            if (string.IsNullOrWhiteSpace(date))
             {
                 return null;
             }

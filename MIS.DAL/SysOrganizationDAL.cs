@@ -56,6 +56,7 @@ namespace MIS.DAL
                 {
                     Id=item.UniqueId,
                     Text =item.Name,
+                    Name=item.Name,
                     Icon= "layui-icon layui-icon-file-b",
                     Children = GetOrganizationChildTreeNodes(item.UniqueId, allOrganizationList),
                 });
