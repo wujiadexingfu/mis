@@ -2843,6 +2843,7 @@
     <Content Include="Content\okadmin\README.md" />
     <Content Include="Areas\Sys\Views\Operation\Index.cshtml" />
     <Content Include="Areas\Sys\Views\Operation\InputForm.cshtml" />
+    <Content Include="Areas\Sys\Views\Operation\OperationFunctionTree.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

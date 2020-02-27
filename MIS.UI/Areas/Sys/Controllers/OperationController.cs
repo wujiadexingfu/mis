@@ -20,6 +20,13 @@ namespace MIS.UI.Areas.Sys.Controllers
             ViewBag.UniqueId = uniqueId;
             return View();
         }
+
+        public ActionResult OperationFunctionTree(string uniqueId)
+        {
+            ViewBag.UniqueId = uniqueId;
+            return View();
+        }
+
     }
 
 }

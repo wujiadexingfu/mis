@@ -44,6 +44,7 @@
                 </div>
                 <div class="layui-card-body layui-table-body layui-table-main">
                     <button class="layui-btn" lay-filter="btnFunctionOperationSave" id="btnFunctionOperationSave"><i class="layui-icon"></i>保存</button>
+                    <div id="divOperationFunctionTree">1111</div>
                 </div>
             </div>
         </div>
@@ -123,6 +124,25 @@
                 });
             }
             });
+
+
+
+            table.on('row(operationTable)', function (obj) {
+                var data = obj.data;
+
+                $.ajax({
+                    url: '@Url.Content("~/Sys/Operation/OperationFunctionTree?uniqueId=")' + data.UniqueId,
+                     type: "get",
+                     dataType:"html",
+                       success: function (result) {
+                           $("#divOperationFunctionTree").html(result);
+                 }
+             });
+
+
+
+            });
+
 
 
             $("#btnOperationQuery").click(function () {
