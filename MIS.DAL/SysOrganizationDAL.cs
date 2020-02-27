@@ -32,7 +32,7 @@ namespace MIS.DAL
         public List<TreeNode> GetOrganizationTreeNodes(string  parentId)
         {
             MISEntities db = new MISEntities();
-            var allorganizationList = db.Sys_Organization.ToList();
+            var allorganizationList = db.Sys_Organization.Where(x=>x.Status!=Status.Delete.ToString()).ToList();
             var result = GetOrganizationChildTreeNodes(parentId, allorganizationList);
             return result;
 
@@ -85,7 +85,9 @@ namespace MIS.DAL
                 }
                 else
                 {
+           
                     var item = db.Sys_Organization.Where(x => x.UniqueId == inputForm.UniqueId).FirstOrDefault();
+                    item.Id = inputForm.Id;
                     item.Name = inputForm.Name;
                     item.ParentUniqueId = inputForm.ParentUniqueId;
                     item.ManagerUniqueId = inputForm.ManagerUniqueId;
@@ -183,6 +185,8 @@ namespace MIS.DAL
                 var allorganizationList = db.Sys_Organization.ToList();
                 var deleteOrganizationList= GetOrganizationListByParendId(uniqueId, allorganizationList);
 
+                deleteOrganizationList.Add(allorganizationList.Where(x => x.UniqueId == uniqueId).FirstOrDefault());
+
                 foreach (var item in deleteOrganizationList)
                 {
                     item.Status = Status.Delete.ToString();
@@ -226,25 +230,37 @@ namespace MIS.DAL
                 var query = db.Sys_Organization.AsQueryable();
               
 
-                query = query.Where(x => x.ParentUniqueId == parameter.UniqueId).AsQueryable();
+                query = query.Where(x => x.ParentUniqueId == parameter.UniqueId&&x.Status!=Status.Delete.ToString()).AsQueryable();
 
                 var count = query.Count();
                 var data = query.OrderBy(x => x.Seq).Skip((parameter.Page - 1) * parameter.Limit).Take(parameter.Limit).ToList();
                 List<SysOrganizationGrid> list = new List<SysOrganizationGrid>();
-             
+
+                var organizationList = db.Sys_Organization.ToList();
+                var userList = db.Sys_User.ToList();
+
+
 
                 foreach (var item in data)
                 {
                     SysOrganizationGrid model = new SysOrganizationGrid();
+
+                    var organizationItem = organizationList.Where(x => x.UniqueId == item.ParentUniqueId).FirstOrDefault();
+                    var userItem = userList.Where(x => x.UniqueId == item.ManagerUniqueId).FirstOrDefault();
+
                     model.UniqueId = item.UniqueId;
                     model.Id = item.Id;
                     model.Name = item.Name;
                     model.Icon = item.Icon;
-                    model.Parent = item.ParentUniqueId;
-                    model.Manager = item.ManagerUniqueId;
+                    model.Parent = organizationItem==null?"":organizationItem.Name;
+                    model.Manager = userItem==null?"":userItem.Name;
                     model.Seq = item.Seq;
                     list.Add(model);
                 }
+
+              
+
+
                 PageData pageData = new PageData(count, list);
                 return pageData;
             }

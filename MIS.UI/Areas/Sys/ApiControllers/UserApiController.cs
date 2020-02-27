@@ -20,7 +20,6 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public HttpResponseMessage Login(string Id,string password)
         {
             var result = JosnNetHelper.ObjectToJson(_sysUserBLL.Login(Id,password));
@@ -33,7 +32,6 @@ namespace MIS.UI.Areas.Sys.ApiControllers
 
         [HttpGet]
         [HttpPost]
-        [AllowAnonymous]
         public HttpResponseMessage Query(SysUserParameter parameter)
         {
             var result = JosnNetHelper.ObjectToJson(_sysUserBLL.Query(parameter));
@@ -52,7 +50,6 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
 
         [HttpPost]
-        [AllowAnonymous]
         public HttpResponseMessage Edit(SysUserInputForm inputForm)
         {
 
@@ -69,7 +66,6 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <param name="inputForm">新增参数</param>
         /// <returns></returns>
         [HttpPost]
-        [AllowAnonymous]
         public HttpResponseMessage Add(SysUserInputForm inputForm)
         {
             var result = JosnNetHelper.ObjectToJson(_sysUserBLL.Add(inputForm));
@@ -87,7 +83,6 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        [AllowAnonymous]
         public HttpResponseMessage GetUserByUniqueId(string  uniqueId)
         {
 
@@ -103,7 +98,6 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// </summary>
         /// <param name="uniqueId">唯一编码</param>
         /// <returns></returns>
-        [AllowAnonymous]
         [HttpGet]
         public HttpResponseMessage Delete(string uniqueId)
         {
@@ -122,7 +116,6 @@ namespace MIS.UI.Areas.Sys.ApiControllers
     /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        [AllowAnonymous]
         public HttpResponseMessage ResetPassword(SysUserResetModel selected)
         {
             var result = JosnNetHelper.ObjectToJson(_sysUserBLL.ResetPassword(selected));
@@ -132,7 +125,20 @@ namespace MIS.UI.Areas.Sys.ApiControllers
             };
         }
 
-
+        /// <summary>
+        /// 获取人员信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage QueryUserSelectItemList()
+        {
+            var result = JosnNetHelper.ObjectToJson(_sysUserBLL.QueryUserSelectItemList());
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
 
     }
 }

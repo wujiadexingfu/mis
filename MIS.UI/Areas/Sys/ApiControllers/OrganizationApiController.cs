@@ -27,7 +27,6 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        [AllowAnonymous]
         public HttpResponseMessage InitTree()
         {
             var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.InitTree());
@@ -44,7 +43,6 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        [AllowAnonymous]
         public HttpResponseMessage GetOrganizationTreeNodes()
         {
             string parentUniqueId = "*";
@@ -62,7 +60,6 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        [AllowAnonymous]
         public HttpResponseMessage Query(SysOrganizationParameter parameter)
         {
             var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.Query(parameter));
@@ -71,5 +68,75 @@ namespace MIS.UI.Areas.Sys.ApiControllers
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
             };
         }
+
+        /// <summary>
+        /// 根据唯一编码获取组织信息
+        /// </summary>
+        /// <param name="uniqueId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage GetItemByUniqueId(string uniqueId)
+        {
+
+            var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.GetItemByUniqueId(uniqueId));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+        /// <summary>
+        /// 修改组织信息
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage Edit(SysOrganizationInputForm inputForm)
+        {
+
+            var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.Edit(inputForm));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+        /// <summary>
+        /// 新增组织信息
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage Add(SysOrganizationInputForm inputForm)
+        {
+
+            var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.Add(inputForm));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="uniqueId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage Delete(string uniqueId)
+        {
+            var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.Delete(uniqueId));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+
+
+
     }
 }

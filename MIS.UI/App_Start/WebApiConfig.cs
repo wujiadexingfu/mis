@@ -53,7 +53,7 @@ namespace MIS.UI
                  defaults: new { id = RouteParameter.Optional }
              );
             ////增加webAPI权限配置
-            config.Filters.Add(new System.Web.Http.AuthorizeAttribute());
+            //config.Filters.Add(new System.Web.Http.AuthorizeAttribute());
             //增加日志记录
 
 

@@ -85,5 +85,11 @@ namespace MIS.IBLL
         /// <returns></returns>
         RequestResult ResetPassword(SysUserResetModel model);
 
+        /// <summary>
+        /// 获取所有人员信息
+        /// </summary>
+        /// <returns></returns>
+        List<UserSelectItem> QueryUserSelectItemList();
+
     }
 }

@@ -6,6 +6,7 @@ using MIS.Model.Result;
 using MIS.Model.Sys.SysUser;
 using MIS.Utility;
 using MIS.Utility.EnumUtility;
+using System.Collections.Generic;
 
 /********************************************************************************
 
@@ -131,6 +132,15 @@ namespace MIS.BLL
         public RequestResult ResetPassword(SysUserResetModel model)
         {
             return _sysUserDAL.ResetPassword(model);
+        }
+
+        /// <summary>
+        /// 获取所有人员信息
+        /// </summary>
+        /// <returns></returns>
+       public List<UserSelectItem> QueryUserSelectItemList()
+        {
+            return _sysUserDAL.QueryUserSelectItemList();
         }
     }
 }

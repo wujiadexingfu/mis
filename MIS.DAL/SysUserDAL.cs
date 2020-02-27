@@ -324,5 +324,16 @@ namespace MIS.DAL
         }
 
 
+        /// <summary>
+        /// 获取所有人员信息
+        /// </summary>
+        /// <returns></returns>
+        public List<UserSelectItem> QueryUserSelectItemList()
+        {
+            MISEntities db = new MISEntities();
+            return db.Sys_User.Where(x=>x.Status!=Status.Delete.ToString()).Select(x => new UserSelectItem() { Text = x.Id + "-" + x.Name, Value = x.UniqueId }).ToList();
+        }
+
+
     }
 }
