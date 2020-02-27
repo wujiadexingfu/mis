@@ -150,8 +150,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Sys\ApiControllers\FunctionApiController.cs" />
+    <Compile Include="Areas\Sys\ApiControllers\OperationApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\OrganizationApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\UserApiController.cs" />
+    <Compile Include="Areas\Sys\Controllers\OperationController.cs" />
     <Compile Include="Areas\Sys\Controllers\OrganizationController.cs" />
     <Compile Include="Areas\Sys\Controllers\UserController.cs" />
     <Compile Include="Areas\Sys\SysAreaRegistration.cs" />
@@ -2839,6 +2841,8 @@
     <Content Include="Content\okadmin\lib\wangEditor\src\less\text.less" />
     <Content Include="Content\okadmin\LICENSE" />
     <Content Include="Content\okadmin\README.md" />
+    <Content Include="Areas\Sys\Views\Operation\Index.cshtml" />
+    <Content Include="Areas\Sys\Views\Operation\InputForm.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

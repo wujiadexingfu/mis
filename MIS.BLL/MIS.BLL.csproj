@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SysFunctionBLL.cs" />
+    <Compile Include="SysOperationBLL.cs" />
     <Compile Include="SysOrganizationBLL.cs" />
     <Compile Include="SysUserBLL.cs" />
   </ItemGroup>

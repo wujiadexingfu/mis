@@ -1,4 +1,5 @@
 ﻿using MIS.EFDataSource;
+using MIS.IDAL;
 using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysOperation;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MIS.DAL
 {
-   public  class SysOperationDAL
+   public  class SysOperationDAL: ISysOperationDAL
     {
         /// <summary>
         /// 查询操作信息
@@ -85,6 +86,7 @@ namespace MIS.DAL
                     operation.Name = inputForm.Name;
                     operation.CreateTime = DateTime.Now;
                     operation.CreateUser = SessionUtils.GetAccountUnqiueId();
+                    db.Sys_Operation.Add(operation);
                     db.SaveChanges();
                     result.Success();
                 }
@@ -115,7 +117,7 @@ namespace MIS.DAL
                 }
                 else
                 {
-                    Sys_User item = db.Sys_User.Where(x => x.UniqueId == inputForm.UniqueId).FirstOrDefault();
+                    var  item = db.Sys_Operation.Where(x => x.UniqueId == inputForm.UniqueId).FirstOrDefault();
                     item.Id = inputForm.Id;
                     item.Name = inputForm.Name;
                     item.ModifyTime = DateTime.Now;

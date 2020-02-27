@@ -1,0 +1,173 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<div style="padding: 20px;">
+
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md4">
+            <div class="layui-card ">
+                <div class="layui-card-header">
+                    <i class="layui-icon layui-icon-link"></i>
+                    查询条件
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-inline layui-show-xs-block">
+                        <input class="layui-input" autocomplete="off" placeholder="请输入关键字" name="keyword" id="keyword">
+                    </div>
+
+                    <div class="layui-inline layui-show-xs-block">
+                        <button class="layui-btn" lay-filter="btnOperationQuery" id="btnOperationQuery" ><i class="layui-icon"></i></button>
+                        <button class="layui-btn" lay-filter="btnAddOperation" id="btnAddOperation"><i class="layui-icon"></i>添加</button>
+                    </div>
+
+                    <table id="operationTable" class="layui-table layui-form" lay-filter="operationTable"></table>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="layui-col-md8">
+            <div class="layui-card ">
+                <div class="layui-card-header">
+                    <i class="layui-icon layui-icon-table" style="font-size:20px"></i>
+                    查询结果
+                </div>
+                <div class="layui-card-body layui-table-body layui-table-main">
+                    <button class="layui-btn" lay-filter="btnFunctionOperationSave" id="btnFunctionOperationSave"><i class="layui-icon"></i>保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+    var table = "";
+        layui.use(["layer", "table", "element"], function () {
+            table = layui.table;
+            var form = layui.form;
+            table.render({
+                elem: '#operationTable',
+                height: GLOBAL_TABLE_HEIGHT,
+
+                method: "post",
+                url: '@Url.Content("~/Api/Sys/Operation/Query")',
+                page: GLOBAL_TABLE_PAGE, //开启分页
+                cols: [[
+                    { checkbox: true, fixed: true }
+                    , { field: 'Id', title: '编号', sort: true }
+                    , { field: 'Name', title: '名称', sort: true }
+                    , { fixed: 'right', width: 150, title: "操作", align: 'center', toolbar: '#bar' }
+                ]],
+                where: { keyWord: $("#userParameterKeyword").val() },
+                toolbar: GLOBAL_TABLE_TOOBAR,
+                limit: GLOBAL_TABLE_LIMIT,
+                limits: GLOBAL_TABLE_LIMITS,
+                loading: true,
+                skin: GLOBAL_TABLE_SKIN, //行边框风格
+                even: GLOBAL_TABLE_EVEN //开启隔行背景
+            });
+
+
+
+            table.on('tool(operationTable)', function (obj) {
+      
+            var data = obj.data;
+            var uniqueId = data.UniqueId;
+            if (obj.event === 'edit') {
+
+             $.ajax({
+                     url: '@Url.Content("~/Sys/Operation/InputForm?uniqueId=")' + uniqueId,
+                     type: "get",
+                     dataType:"html",
+                     success: function (result) {
+                         layer.open({
+                         type: 1,
+                         title: "修改操作信息",
+                         content: result,
+                         area: ["800px", "500px"],
+                         shade: 0.3, //不显示遮罩
+                         end: function () {
+                             refreshOperationTable();
+                         }
+                     });
+                 }
+             });
+            } else if (obj.event === 'delete') {
+                layer.confirm('是否删除数据', function (index) {
+
+                    $.ajax({
+                        url: '@Url.Content("~/api/Sys/Operation/Delete")?uniqueId=' + uniqueId ,
+                        type: "get",
+                         success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('删除成功');
+                              refreshOperationTable();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+
+                });
+            }
+            });
+
+
+            $("#btnOperationQuery").click(function () {
+                table.reload('operationTable', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: { keyWord: $("#keyword").val() },
+                }, 'data');
+
+
+            });
+
+
+            function refreshOperationTable() {
+                table.reload('operationTable', {
+                    where: { keyWord: $("#keyword").val() },
+                }, 'data');
+            }
+
+
+            $("#btnAddOperation").click(function () {
+                   $.ajax({
+                     url: '@Url.Content("~/Sys/Operation/InputForm?uniqueId=")'+"",
+                     type: "get",
+                     dataType:"html",
+                       success: function (result) {
+                           debugger
+
+                            layer.open({
+                                type:1,
+                                title: "新增操作信息",
+                                content: result ,
+                                area: ["800px", "500px"],
+                                shade: 0.3, //不显示遮罩
+                                end: function () {
+                                 refreshOperationTable();
+                        }
+                  });
+                 }
+             });
+
+            });
+        });
+    </script>
+
+
+}
