@@ -48,5 +48,13 @@ namespace MIS.IDAL
         /// <param name="uniqueId"></param>
         /// <returns></returns>
         RequestResult Delete(string uniqueId);
+
+
+        /// <summary>
+        /// 新增操作和菜单的关联
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        RequestResult AddOperationFunction(SysOperationFunctionInputForm inputForm);
     }
 }

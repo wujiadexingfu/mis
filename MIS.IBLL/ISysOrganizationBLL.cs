@@ -1,5 +1,6 @@
 ﻿using MIS.Model.Page;
 using MIS.Model.Result;
+using MIS.Model.Sys.SysFunction;
 using MIS.Model.Sys.SysOrganization;
 using MIS.Model.Tree;
 using System;
@@ -62,5 +63,8 @@ namespace MIS.IBLL
         /// <param name="parameter"></param>
         /// <returns></returns>
         PageData Query(SysOrganizationParameter parameter);
+
+
+     
     }
 }

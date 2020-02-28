@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Content/jsTree/jstree.js"></script>
+<link href="~/Content/jsTree/themes/default/style.css" rel="stylesheet" />
+
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">
+
+                    <i class="layui-icon layui-icon-link"></i>查询条件
+                </div>
+                <div class="layui-card-body">
+                    <div id="divFunctionTree">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header ">
+                    <div class="layui-row">
+                        <div class="layui-col-md11 layui-col-sm8 layui-col-xs8">
+                            <i class="layui-icon layui-icon-table pull-right" style="font-size:20px"></i>
+                            查询结果
+                        </div>
+                        <div class="layui-col-md1  layui-col-sm4  layui-col-xs4">   <button class="layui-btn " lay-filter="btnAddFunction" id="btnAddFunction" onclick="Add('')"><i class="layui-icon"></i>添加</button></div>
+                    </div>
+
+
+
+                </div>
+                <div class="layui-card-body">
+                    <table id="functionTable" class="layui-table layui-form" lay-filter="functionTable"></table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+        var Id = "";
+        layui.use(["layer", "table"], function () {
+
+            table = layui.table;
+
+            table.render({
+                elem: '#functionTable',
+                height: GLOBAL_TABLE_HEIGHT,
+
+                method: "post",
+                url: '@Url.Content("~/Api/Sys/Function/Query")',
+                page: GLOBAL_TABLE_PAGE, //开启分页
+                cols: [[
+                    { checkbox: true, fixed: true }
+                    , { field: 'Id', title: '编号', sort: true }
+                    , { field: 'Description', title: '描述', sort: true }
+                    , { field: 'Area', title: '区域', sort: true }
+                    , { field: 'Controller', title: '控制器', sort: true }
+                    , { field: 'Action', title: '方法', sort: true }
+                    , { field: 'IsDisplay', title: '是否显示', sort: true }
+                    , { field: 'Sort', title: '排序', sort: true, sort: true }
+                    , { fixed: 'right', width: 150, title: "操作", align: 'center', toolbar: '#bar' }
+                ]],
+                where: { Id: Id },
+                toolbar: GLOBAL_TABLE_TOOBAR,
+                limit: GLOBAL_TABLE_LIMIT,
+                limits: GLOBAL_TABLE_LIMITS,
+                loading: true,
+                skin: GLOBAL_TABLE_SKIN, //行边框风格
+                even: GLOBAL_TABLE_EVEN //开启隔行背景
+            });
+
+
+
+            table.on('tool(functionTable)', function (obj) {
+                debugger
+                var data = obj.data;
+                var id = data.Id;
+                if (obj.event === 'edit') {
+                    debugger
+                    Edit(id);
+                } else if (obj.event === 'delete') {
+                    Delete(id)
+                }
+            });
+
+            InitFunctionTree();
+        });
+
+         function InitFunctionTree() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Content("~/Sys/Function/Tree")',
+                async: false,
+                dataType: "html",
+                success: function (data) {
+                    $("#divFunctionTree").html(data);
+                }
+            });
+            };
+          function Add(Id) {
+                $.ajax({
+                    url: '@Url.Content("~/Sys/Function/InputForm?Id=")' + "" + "&ParentId=" + Id,
+                         type: "get",
+                         dataType:"html",
+                         success: function (result) {
+                             layer.open({
+                             type: 1,
+                             title: "新增菜单信息",
+                             content: result,
+                             area: ["800px", "500px"],
+                             shade: 0.3, //不显示遮罩
+                             end: function () {
+                                 RefreshFunctionTable();
+                                 InitFunctionTree();
+                             }
+                         });
+                     }
+                 });
+
+            }
+
+            function Edit(Id) {
+                   $.ajax({
+                         url: '@Url.Content("~/Sys/Function/InputForm?Id=")' + Id  ,
+                         type: "get",
+                         dataType:"html",
+                         success: function (result) {
+                             layer.open({
+                             type: 1,
+                             title: "修改菜单信息",
+                             content: result,
+                             area: ["800px", "500px"],
+                             shade: 0.3, //不显示遮罩
+                             end: function () {
+                                 RefreshFunctionTable();
+                                 InitFunctionTree();
+                             }
+                         });
+                     }
+                 });
+
+
+            }
+
+        function Delete(Id) {
+              layer.confirm('是否删除数据', function (index) {
+                        $.ajax({
+                            url: '@Url.Content("~/api/Sys/Function/Delete")?Id=' + Id ,
+                            type: "get",
+                             success: function (result) {
+                              if (result.IsSuccess) {
+                                  layer.msg('删除成功');
+                                  InitFunctionTree();
+                                  RefreshFunctionTable();
+                              } else {
+                                  layer.msg(result.Message);
+                              }
+                        }
+                    });
+
+                    });
+            }
+
+        function RefreshFunctionTable() {
+            debugger
+            table.reload('functionTable', {
+                    where: { Id: Id },
+                }, 'data');
+            }
+
+
+
+     
+
+    </script>
+}

@@ -50,17 +50,25 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result\RequestResult.cs" />
     <Compile Include="Sys\BaseSys\SelectItem.cs" />
+    <Compile Include="Sys\SysFunction\SysFunctionGrid.cs" />
+    <Compile Include="Sys\SysFunction\SysFunctionInputForm.cs" />
+    <Compile Include="Sys\SysFunction\SysFunctionParameter.cs" />
+    <Compile Include="Sys\SysOperation\SysOperationFunctionInputForm.cs" />
     <Compile Include="Sys\SysOperation\SysOperationGrid.cs" />
     <Compile Include="Sys\SysOperation\SysOperationInputForm.cs" />
     <Compile Include="Sys\SysOperation\SysOperationParameter.cs" />
     <Compile Include="Sys\SysOrganization\SysOrganizationGrid.cs" />
     <Compile Include="Sys\SysOrganization\SysOrganizationInputForm.cs" />
     <Compile Include="Sys\SysOrganization\SysOrganizationParameter.cs" />
+    <Compile Include="Sys\SysRole\SysRoleGrid.cs" />
+    <Compile Include="Sys\SysRole\SysRoleInputForm.cs" />
+    <Compile Include="Sys\SysRole\SysRoleParameter.cs" />
     <Compile Include="Sys\SysUser\SysUserGrid.cs" />
     <Compile Include="Sys\SysUser\SysUserInputForm.cs" />
     <Compile Include="Sys\SysUser\SysUserParameter.cs" />
     <Compile Include="Sys\SysUser\SysUserResetModel.cs" />
     <Compile Include="Sys\SysUser\UserSelectItem.cs" />
+    <Compile Include="Tree\LayuiTreeNode.cs" />
     <Compile Include="Tree\TreeNode.cs" />
     <Compile Include="Tree\TreeNodeState.cs" />
   </ItemGroup>

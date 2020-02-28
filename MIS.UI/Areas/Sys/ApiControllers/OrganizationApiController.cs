@@ -37,7 +37,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         }
 
         /// <summary>
-        /// 根据唯一编码获取用户信息
+        /// 获取部门组织树信息
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
@@ -54,7 +54,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         }
 
         /// <summary>
-        /// 
+        /// 查询
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>

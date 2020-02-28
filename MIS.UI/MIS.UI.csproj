@@ -152,9 +152,12 @@
     <Compile Include="Areas\Sys\ApiControllers\FunctionApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\OperationApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\OrganizationApiController.cs" />
+    <Compile Include="Areas\Sys\ApiControllers\RoleApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\UserApiController.cs" />
+    <Compile Include="Areas\Sys\Controllers\FunctionController.cs" />
     <Compile Include="Areas\Sys\Controllers\OperationController.cs" />
     <Compile Include="Areas\Sys\Controllers\OrganizationController.cs" />
+    <Compile Include="Areas\Sys\Controllers\RoleController.cs" />
     <Compile Include="Areas\Sys\Controllers\UserController.cs" />
     <Compile Include="Areas\Sys\SysAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2844,6 +2847,11 @@
     <Content Include="Areas\Sys\Views\Operation\Index.cshtml" />
     <Content Include="Areas\Sys\Views\Operation\InputForm.cshtml" />
     <Content Include="Areas\Sys\Views\Operation\OperationFunctionTree.cshtml" />
+    <Content Include="Areas\Sys\Views\Function\Index.cshtml" />
+    <Content Include="Areas\Sys\Views\Function\Tree.cshtml" />
+    <Content Include="Areas\Sys\Views\Function\InputForm.cshtml" />
+    <Content Include="Areas\Sys\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Sys\Views\Role\InputForm.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

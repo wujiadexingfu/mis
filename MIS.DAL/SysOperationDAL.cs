@@ -157,5 +157,42 @@ namespace MIS.DAL
             }
             return result;
         }
+
+        /// <summary>
+        /// 新增操作和菜单的关联
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        public RequestResult AddOperationFunction(SysOperationFunctionInputForm inputForm)
+        {
+            RequestResult result = new RequestResult();
+
+            try
+            {
+                MISEntities db = new MISEntities();
+                var deleteOperationFunctionList = db.Sys_OperationFunction.Where(x => x.OperationUniqueId == inputForm.OperationUnqiueId).ToList();
+                db.Sys_OperationFunction.RemoveRange(deleteOperationFunctionList); //首先删除原来的操作和菜单的数据
+
+                foreach (var item in inputForm.FunctionList)
+                {
+                    Sys_OperationFunction operationFunction = new Sys_OperationFunction();
+                    operationFunction.UniqueId = Guid.NewGuid().ToString();
+                    operationFunction.OperationUniqueId = inputForm.OperationUnqiueId;
+                    operationFunction.FunctionId = item;
+                    operationFunction.CreateUser = SessionUtils.GetAccountUnqiueId();
+                    operationFunction.CreateTime = DateTime.Now;
+                    db.Sys_OperationFunction.Add(operationFunction);
+                }
+                db.SaveChanges();
+                result.Success();
+            }
+            catch (Exception ex)
+            {
+                result.ReturnFailedMessage(ex.Message);
+            }
+            return result;
+        }
+
+
     }
 }

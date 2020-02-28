@@ -75,13 +75,13 @@
     <Compile Include="Sys_Function.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Sys_FunctionOperation.cs">
-      <DependentUpon>MISEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Sys_ObjectAttachment.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Sys_Operation.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sys_OperationFunction.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Sys_Organization.cs">

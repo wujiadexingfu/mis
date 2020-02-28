@@ -1,29 +1,30 @@
 ﻿using MIS.Model.Page;
 using MIS.Model.Result;
-using MIS.Model.Sys.SysOperation;
+using MIS.Model.Sys.SysRole;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MIS.IBLL
+namespace MIS.IDAL
 {
-    public interface ISysOperationBLL
+   public interface ISysRoleDAL
     {
         /// <summary>
-        /// 查询操作信息
+        /// 查询
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        PageData Query(SysOperationParameter parameter);
+        PageData Query(SysRoleParameter parameter);
 
-        /// <summary>
-        /// 根据UniqueId获取操作信息
+
+         /// <summary>
+        /// 根据UniqueId获取角色信息
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        SysOperationInputForm GetOperationByUniqueId(string uniqueId);
+        SysRoleInputForm GetItemByUniqueId(string uniqueId);
 
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="inputForm"></param>
         /// <returns></returns>
-        RequestResult Add(SysOperationInputForm inputForm);
+        RequestResult Add(SysRoleInputForm inputForm);
 
 
         /// <summary>
@@ -39,8 +40,7 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="inputForm"></param>
         /// <returns></returns>
-        RequestResult Edit(SysOperationInputForm inputForm);
-
+        RequestResult Edit(SysRoleInputForm inputForm);
 
         /// <summary>
         /// 删除
@@ -49,12 +49,5 @@ namespace MIS.IBLL
         /// <returns></returns>
         RequestResult Delete(string uniqueId);
 
-
-        /// <summary>
-        /// 新增操作和菜单的关联
-        /// </summary>
-        /// <param name="inputForm"></param>
-        /// <returns></returns>
-        RequestResult AddOperationFunction(SysOperationFunctionInputForm inputForm);
     }
 }

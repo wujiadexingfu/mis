@@ -8,14 +8,14 @@
         <EntityTypeShape EntityType="MISModel.Sys_Attachment" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="MISModel.Sys_Code" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="MISModel.Sys_Function" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MISModel.Sys_FunctionOperation" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="MISModel.Sys_ObjectAttachment" Width="1.5" PointX="2.75" PointY="5.75" />
-        <EntityTypeShape EntityType="MISModel.Sys_Operation" Width="1.5" PointX="4.75" PointY="5.75" />
+        <EntityTypeShape EntityType="MISModel.Sys_ObjectAttachment" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="MISModel.Sys_Operation" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="MISModel.Sys_OperationFunction" Width="1.5" PointX="4.75" PointY="5.75" />
         <EntityTypeShape EntityType="MISModel.Sys_Organization" Width="1.5" PointX="6.75" PointY="0.75" />
         <EntityTypeShape EntityType="MISModel.Sys_Role" Width="1.5" PointX="6.75" PointY="5.75" />
         <EntityTypeShape EntityType="MISModel.Sys_RoleFunctionOperation" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="MISModel.Sys_User" Width="1.5" PointX="0.75" PointY="8.75" />
-        <EntityTypeShape EntityType="MISModel.Sys_UserRole" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MISModel.Sys_User" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MISModel.Sys_UserRole" Width="1.5" PointX="0.75" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

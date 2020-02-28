@@ -73,5 +73,16 @@ namespace MIS.BLL
             return _sysOperationDAL.Delete(uniqueId);
         }
 
+
+        /// <summary>
+        /// 新增操作和菜单的关联
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        public RequestResult AddOperationFunction(SysOperationFunctionInputForm inputForm)
+        {
+            return _sysOperationDAL.AddOperationFunction(inputForm);
+        }
+
     }
 }

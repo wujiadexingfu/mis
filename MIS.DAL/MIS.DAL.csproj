@@ -53,6 +53,7 @@
     <Compile Include="SysFunctionDAL.cs" />
     <Compile Include="SysOperationDAL.cs" />
     <Compile Include="SysOrganizationDAL.cs" />
+    <Compile Include="SysRoleDAL.cs" />
     <Compile Include="SysUserDAL.cs" />
   </ItemGroup>
   <ItemGroup>

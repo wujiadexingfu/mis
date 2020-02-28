@@ -52,14 +52,6 @@
           <Property Name="IsDisplay" Type="bit" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="Sys_FunctionOperation">
-          <Key>
-            <PropertyRef Name="UniqueId" />
-          </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FunctionUniqueId" Type="varchar" MaxLength="50" />
-          <Property Name="OperationUniqueId" Type="varchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="Sys_ObjectAttachment">
           <Key>
             <PropertyRef Name="UniqueId" />
@@ -79,6 +71,16 @@
           <Property Name="CreateUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Sys_OperationFunction">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="OperationUniqueId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="FunctionId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Sys_Organization">
           <Key>
@@ -103,8 +105,7 @@
           </Key>
           <Property Name="UniqueId" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="Id" Type="varchar" MaxLength="40" />
-          <Property Name="Description" Type="varchar" MaxLength="40" />
-          <Property Name="IsDelete" Type="bit" />
+          <Property Name="Name" Type="varchar" MaxLength="40" />
           <Property Name="CreateUser" Type="varchar" MaxLength="40" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
@@ -154,9 +155,9 @@
           <EntitySet Name="Sys_Attachment" EntityType="Self.Sys_Attachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Code" EntityType="Self.Sys_Code" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Function" EntityType="Self.Sys_Function" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Sys_FunctionOperation" EntityType="Self.Sys_FunctionOperation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_ObjectAttachment" EntityType="Self.Sys_ObjectAttachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Operation" EntityType="Self.Sys_Operation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys_OperationFunction" EntityType="Self.Sys_OperationFunction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Organization" EntityType="Self.Sys_Organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Role" EntityType="Self.Sys_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_RoleFunctionOperation" EntityType="Self.Sys_RoleFunctionOperation" Schema="dbo" store:Type="Tables" />
@@ -171,9 +172,9 @@
           <EntitySet Name="Sys_Attachment" EntityType="MISModel.Sys_Attachment" />
           <EntitySet Name="Sys_Code" EntityType="MISModel.Sys_Code" />
           <EntitySet Name="Sys_Function" EntityType="MISModel.Sys_Function" />
-          <EntitySet Name="Sys_FunctionOperation" EntityType="MISModel.Sys_FunctionOperation" />
           <EntitySet Name="Sys_ObjectAttachment" EntityType="MISModel.Sys_ObjectAttachment" />
           <EntitySet Name="Sys_Operation" EntityType="MISModel.Sys_Operation" />
+          <EntitySet Name="Sys_OperationFunction" EntityType="MISModel.Sys_OperationFunction" />
           <EntitySet Name="Sys_Organization" EntityType="MISModel.Sys_Organization" />
           <EntitySet Name="Sys_Role" EntityType="MISModel.Sys_Role" />
           <EntitySet Name="Sys_RoleFunctionOperation" EntityType="MISModel.Sys_RoleFunctionOperation" />
@@ -227,14 +228,6 @@
           <Property Name="IsDisplay" Type="Boolean" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Sys_FunctionOperation">
-          <Key>
-            <PropertyRef Name="UniqueId" />
-          </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FunctionUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="OperationUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Sys_ObjectAttachment">
           <Key>
             <PropertyRef Name="UniqueId" />
@@ -254,6 +247,16 @@
           <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Sys_OperationFunction">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="OperationUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="FunctionId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Sys_Organization">
           <Key>
@@ -278,8 +281,7 @@
           </Key>
           <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Id" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="IsDelete" Type="Boolean" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
@@ -381,15 +383,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sys_FunctionOperation">
-            <EntityTypeMapping TypeName="MISModel.Sys_FunctionOperation">
-              <MappingFragment StoreEntitySet="Sys_FunctionOperation">
-                <ScalarProperty Name="OperationUniqueId" ColumnName="OperationUniqueId" />
-                <ScalarProperty Name="FunctionUniqueId" ColumnName="FunctionUniqueId" />
-                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Sys_ObjectAttachment">
             <EntityTypeMapping TypeName="MISModel.Sys_ObjectAttachment">
               <MappingFragment StoreEntitySet="Sys_ObjectAttachment">
@@ -408,6 +401,17 @@
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys_OperationFunction">
+            <EntityTypeMapping TypeName="MISModel.Sys_OperationFunction">
+              <MappingFragment StoreEntitySet="Sys_OperationFunction">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="FunctionId" ColumnName="FunctionId" />
+                <ScalarProperty Name="OperationUniqueId" ColumnName="OperationUniqueId" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -437,8 +441,7 @@
                 <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>

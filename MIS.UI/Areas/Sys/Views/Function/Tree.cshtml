@@ -1,16 +1,17 @@
 ﻿
 @{
-    Layout = null;
     ViewBag.Title = "Tree";
+    Layout = null;
 }
 
-<div id="organizationTree"></div>
+
+<div id="functionTree"></div>
 
 <script type="text/javascript">
 
     $(function () {
         //一般data从后台返回，调用这个方法显示视图
-        $('#organizationTree').jstree({
+        $('#functionTree').jstree({
             'plugins': ["search", "themes", "types", "state", "line", "contextmenu"], 	//包含样式，选择框，图片等
             'types': {
                 'default': {
@@ -63,7 +64,7 @@
                 'data': function (obj, callback) {
                     $.ajax({
                         type: "post",
-                        url: '@Url.Content("~/Api/Sys/Organization/InitTree")',
+                        url: '@Url.Content("~/Api/Sys/Function/InitTree")',
                         dataType: "json",
                         success: function (data) {
 
@@ -86,16 +87,16 @@
         }
         );
 
-        $('#organizationTree').bind("activate_node.jstree", function (obj, e) {
+        $('#functionTree').bind("activate_node.jstree", function (obj, e) {
 
             debugger;
             var currentNode = e.node;
-            var uniqueId = currentNode.id;
-            organizationUniqueId = uniqueId;
-            RefreshOrganizationTable();
+             Id = currentNode.id;
+            RefreshFunctionTable();
         });
     });
 
 
 </script>
+
 

@@ -44,6 +44,7 @@
     <Compile Include="SysFunctionBLL.cs" />
     <Compile Include="SysOperationBLL.cs" />
     <Compile Include="SysOrganizationBLL.cs" />
+    <Compile Include="SysRoleBLL.cs" />
     <Compile Include="SysUserBLL.cs" />
   </ItemGroup>
   <ItemGroup>

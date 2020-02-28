@@ -42,6 +42,7 @@
     <Compile Include="ISysFunctionDAL.cs" />
     <Compile Include="ISysOperationDAL.cs" />
     <Compile Include="ISysOrganizationDAL.cs" />
+    <Compile Include="ISysRoleDAL.cs" />
     <Compile Include="ISysUserDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

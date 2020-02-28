@@ -1,5 +1,5 @@
 ﻿using MIS.IBLL;
-using MIS.Model.Sys.SysOperation;
+using MIS.Model.Sys.SysRole;
 using MIS.Utility.Serialize;
 using System;
 using System.Collections.Generic;
@@ -11,12 +11,12 @@ using System.Web.Http;
 
 namespace MIS.UI.Areas.Sys.ApiControllers
 {
-    public class OperationApiController : ApiController
+    public class RoleApiController : ApiController
     {
-        private ISysOperationBLL _sysOperationBLL;
-        public OperationApiController(ISysOperationBLL sysOperationBLL)
+        private ISysRoleBLL _sysRoleBLL;
+        public RoleApiController(ISysRoleBLL sysRoleBLL)
         {
-            _sysOperationBLL = sysOperationBLL;
+            _sysRoleBLL = sysRoleBLL;
         }
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage Query(SysOperationParameter parameter)
+        public HttpResponseMessage Query(SysRoleParameter parameter)
         {
-            var result = JosnNetHelper.ObjectToJson(_sysOperationBLL.Query(parameter));
+            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.Query(parameter));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
@@ -44,10 +44,10 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
 
         [HttpPost]
-        public HttpResponseMessage Edit(SysOperationInputForm inputForm)
+        public HttpResponseMessage Edit(SysRoleInputForm inputForm)
         {
 
-            var result = JosnNetHelper.ObjectToJson(_sysOperationBLL.Edit(inputForm));
+            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.Edit(inputForm));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
@@ -60,9 +60,9 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <param name="inputForm">新增参数</param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage Add(SysOperationInputForm inputForm)
+        public HttpResponseMessage Add(SysRoleInputForm inputForm)
         {
-            var result = JosnNetHelper.ObjectToJson(_sysOperationBLL.Add(inputForm));
+            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.Add(inputForm));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
@@ -71,16 +71,16 @@ namespace MIS.UI.Areas.Sys.ApiControllers
 
 
         /// <summary>
-        /// 根据唯一编码获取操作信息
+        /// 根据唯一编码获取角色信息
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage GetOperationByUniqueId(string uniqueId)
+        public HttpResponseMessage GetItemByUniqueId(string uniqueId)
         {
 
-            var result = JosnNetHelper.ObjectToJson(_sysOperationBLL.GetOperationByUniqueId(uniqueId));
+            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.GetItemByUniqueId(uniqueId));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
@@ -95,7 +95,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         [HttpGet]
         public HttpResponseMessage Delete(string uniqueId)
         {
-            var result = JosnNetHelper.ObjectToJson(_sysOperationBLL.Delete(uniqueId));
+            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.Delete(uniqueId));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
@@ -104,23 +104,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
 
 
 
-        /// <summary>
-        ///  新增操作和菜单的关联
-        /// </summary>
-        /// <param name="inputForm"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [HttpPost]
-
-        public HttpResponseMessage AddOperationFunction(SysOperationFunctionInputForm inputForm)
-        {
-            var result = JosnNetHelper.ObjectToJson(_sysOperationBLL.AddOperationFunction(inputForm));
-            return new HttpResponseMessage()
-            {
-                Content = new StringContent(result, Encoding.UTF8, "application/json"),
-            };
-        }
-
+    
 
     }
 }

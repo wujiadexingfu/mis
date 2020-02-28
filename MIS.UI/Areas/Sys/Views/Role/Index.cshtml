@@ -1,12 +1,8 @@
 ﻿
 @{
-    /**/
-
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
-
 
 <div style="padding: 20px;">
 
@@ -23,11 +19,11 @@
                     </div>
 
                     <div class="layui-inline layui-show-xs-block">
-                        <button class="layui-btn" lay-filter="btnOperationQuery" id="btnOperationQuery" ><i class="layui-icon"></i></button>
-                        <button class="layui-btn" lay-filter="btnAddOperation" id="btnAddOperation"><i class="layui-icon"></i>添加</button>
+                        <button class="layui-btn" lay-filter="btnRoleQuery" id="btnRoleQuery"><i class="layui-icon"></i></button>
+                        <button class="layui-btn" lay-filter="btnAddRole" id="btnAddRole"><i class="layui-icon"></i>添加</button>
                     </div>
 
-                    <table id="operationTable" class="layui-table layui-form" lay-filter="operationTable"></table>
+                    <table id="roleTable" class="layui-table layui-form" lay-filter="roleTable"></table>
 
 
                 </div>
@@ -43,8 +39,25 @@
                     查询结果
                 </div>
                 <div class="layui-card-body layui-table-body layui-table-main">
-                    <button class="layui-btn" lay-filter="btnFunctionOperationSave" id="btnFunctionOperationSave"><i class="layui-icon"></i>保存</button>
-                    <div id="divOperationFunctionTree"></div>
+                  
+                    <div class="layui-tab">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">菜单</li>
+                            <li>人员</li>
+                        
+                          
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <button class="layui-btn" lay-filter="btnRoleFunctionSave" id="btnRoleFunctionSave"><i class="layui-icon"></i>保存</button>
+                            </div>
+                            <div class="layui-tab-item">
+                                <button class="layui-btn" lay-filter="btnRoleUserSave" id="btnRoleUserSave"><i class="layui-icon"></i>保存</button>
+
+                            </div>
+                           
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -59,11 +72,11 @@
             table = layui.table;
             var form = layui.form;
             table.render({
-                elem: '#operationTable',
+                elem: '#roleTable',
                 height: GLOBAL_TABLE_HEIGHT,
 
                 method: "post",
-                url: '@Url.Content("~/Api/Sys/Operation/Query")',
+                url: '@Url.Content("~/Api/Sys/Role/Query")',
                 page: GLOBAL_TABLE_PAGE, //开启分页
                 cols: [[
                     { checkbox: true, fixed: true }
@@ -82,25 +95,26 @@
 
 
 
-            table.on('tool(operationTable)', function (obj) {
-      
+            table.on('tool(roleTable)', function (obj) {
+
             var data = obj.data;
-            var uniqueId = data.UniqueId;
+                var uniqueId = data.UniqueId;
+                debugger
             if (obj.event === 'edit') {
 
              $.ajax({
-                     url: '@Url.Content("~/Sys/Operation/InputForm?uniqueId=")' + uniqueId,
+                     url: '@Url.Content("~/Sys/Role/InputForm?uniqueId=")' + uniqueId,
                      type: "get",
                      dataType:"html",
                      success: function (result) {
                          layer.open({
                          type: 1,
-                         title: "修改操作信息",
+                         title: "修改角色信息",
                          content: result,
                          area: ["800px", "500px"],
                          shade: 0.3, //不显示遮罩
                          end: function () {
-                             refreshOperationTable();
+                             refreshRoleTable();
                          }
                      });
                  }
@@ -109,12 +123,12 @@
                 layer.confirm('是否删除数据', function (index) {
 
                     $.ajax({
-                        url: '@Url.Content("~/api/Sys/Operation/Delete")?uniqueId=' + uniqueId ,
+                        url: '@Url.Content("~/api/Sys/Role/Delete")?uniqueId=' + uniqueId ,
                         type: "get",
                          success: function (result) {
                           if (result.IsSuccess) {
                               layer.msg('删除成功');
-                              refreshOperationTable();
+                              refreshRoleTable();
                           } else {
                               layer.msg(result.Message);
                           }
@@ -127,17 +141,17 @@
 
 
 
-            table.on('row(operationTable)', function (obj) {
+            table.on('row(roleTable)', function (obj) {
                 var data = obj.data;
 
-                $.ajax({
+                @*$.ajax({
                     url: '@Url.Content("~/Sys/Operation/OperationFunctionTree?uniqueId=")' + data.UniqueId,
                      type: "get",
                      dataType:"html",
                        success: function (result) {
                            $("#divOperationFunctionTree").html(result);
                  }
-             });
+             });*@
 
 
 
@@ -145,8 +159,8 @@
 
 
 
-            $("#btnOperationQuery").click(function () {
-                table.reload('operationTable', {
+            $("#btnRoleQuery").click(function () {
+                table.reload('roleTable', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     },
@@ -157,16 +171,16 @@
             });
 
 
-            function refreshOperationTable() {
-                table.reload('operationTable', {
+            function refreshRoleTable() {
+                table.reload('roleTable', {
                     where: { keyWord: $("#keyword").val() },
                 }, 'data');
             }
 
 
-            $("#btnAddOperation").click(function () {
+            $("#btnAddRole").click(function () {
                    $.ajax({
-                     url: '@Url.Content("~/Sys/Operation/InputForm?uniqueId=")'+"",
+                     url: '@Url.Content("~/Sys/Role/InputForm?uniqueId=")'+"",
                      type: "get",
                      dataType:"html",
                        success: function (result) {
@@ -174,12 +188,12 @@
 
                             layer.open({
                                 type:1,
-                                title: "新增操作信息",
+                                title: "新增角色信息",
                                 content: result ,
                                 area: ["800px", "500px"],
                                 shade: 0.3, //不显示遮罩
                                 end: function () {
-                                 refreshOperationTable();
+                                    refreshRoleTable();
                         }
                   });
                  }
@@ -192,3 +206,4 @@
 
 
 }
+

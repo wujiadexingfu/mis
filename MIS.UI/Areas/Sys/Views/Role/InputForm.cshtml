@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "InputForm";
+    Layout = null;
+}
+
+<form class="layui-form" action="" name="roleForm" lay-filter="roleForm">
+
+    <button type="submit" class="layui-btn" lay-submit lay-filter="save">提交</button>
+    <input type="hidden" name="UniqueId" id="UniqueId" />
+    <table class="layui-table">
+        <tr>
+            <th>编号</th>
+            <td>
+                <input type="text" value="" name="Id" required lay-verify="required" placeholder="请输入角色编号" autocomplete="off" class="layui-input" />
+            </td>
+            <th>名称</th>
+            <td>
+                <input type="text" value="" required lay-verify="required" name="Name" placeholder="请输入角色名称" autocomplete="off" class="layui-input" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script type="text/javascript">
+    layui.use(['form'], function () {
+        var form = layui.form;
+        var uniqueId = "@ViewBag.UniqueId";
+        if (uniqueId) {
+
+             $.ajax({
+                 type: "Get",
+                 url: '@Url.Content("~/Api/Sys/Role/GetItemByUniqueId?uniqueId=")' + uniqueId,
+                 contentType: "application/json; charset=utf-8",
+                 dataType: 'json',
+                 success: function (data) {
+                     //赋值
+                     form.val('roleForm', data);
+                 }
+             });
+        }
+
+
+        form.on('submit(save)', function (data) {
+            var data = JSON.stringify(data.field);
+            if (uniqueId) {
+                  $.ajax({
+                    url: '@Url.Content("~/api/Sys/Role/Edit")',
+                    type: "post",
+                    dataType: "json",
+                    headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                    data: data,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('修改成功');
+
+                              layer.closeAll();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+            } else {
+                debugger
+                  $.ajax({
+                    url: '@Url.Content("~/api/Sys/Role/Add")',
+                      type: "post",
+                      dataType: "json",
+                      headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                    data: data,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('新增成功');
+                              layer.closeAll();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+            }
+            return false;
+        });
+
+    });
+
+</script>
+
+
+
