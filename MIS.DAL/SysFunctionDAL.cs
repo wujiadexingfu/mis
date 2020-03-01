@@ -181,6 +181,7 @@ namespace MIS.DAL
                 item.Area = inputForm.Area;
                 item.Controller = inputForm.Controller;
                 item.Action = inputForm.Action;
+                item.Icon = inputForm.Icon;
                 item.IsDisplay = inputForm.IsDisplay=="on"?true:false;
                 item.Sort = inputForm.Sort;
                 item.ModifyTime = DateTime.Now;
@@ -226,6 +227,7 @@ namespace MIS.DAL
                     model.Area = inputForm.Area;
                     model.Controller = inputForm.Controller;
                     model.Action = inputForm.Action;
+                    model.Icon = inputForm.Icon;
                     model.IsDisplay = inputForm.IsDisplay=="on"?true:false;
                     model.Sort = inputForm.Sort;
                     model.CreateTime = DateTime.Now;

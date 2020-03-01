@@ -1,11 +1,6 @@
-﻿
-@{
-
-
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-
 }
 
 <script src="~/Content/jsTree/jstree.js"></script>
@@ -17,15 +12,15 @@
             <div class="layui-card">
                 <div class="layui-card-header">
 
-                <i class="layui-icon layui-icon-link"></i>查询条件
+                    <i class="layui-icon layui-icon-link"></i>查询条件
                 </div>
-                        <div class="layui-card-body">
-                            <div id="divOrganizationTree">
+                <div class="layui-card-body">
+                    <div id="divSysCodeTree">
 
-                            </div>
-                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
         <div class="layui-col-md8">
             <div class="layui-card">
                 <div class="layui-card-header ">
@@ -34,14 +29,14 @@
                             <i class="layui-icon layui-icon-table pull-right" style="font-size:20px"></i>
                             查询结果
                         </div>
-                        <div class="layui-col-md1  layui-col-sm4  layui-col-xs4">   <button class="layui-btn " lay-filter="btnAddOrganization" id="btnAddOrganization" onclick="Add('')"><i class="layui-icon"></i>添加</button></div>
+                        <div class="layui-col-md1  layui-col-sm4  layui-col-xs4">   <button class="layui-btn " lay-filter="btnAddSysCode" id="btnAddSysCode" onclick="Add('')"><i class="layui-icon"></i>添加</button></div>
                     </div>
 
 
 
                 </div>
                 <div class="layui-card-body">
-                    <table id="organizationTable" class="layui-table layui-form" lay-filter="organizationTable"></table>
+                    <table id="sysCodeTable" class="layui-table layui-form" lay-filter="sysCodeTable"></table>
                 </div>
             </div>
         </div>
@@ -52,28 +47,26 @@
 @section scripts{
 
     <script type="text/javascript">
-        var organizationUniqueId = "";
+        var sysCodeUniqueId = "";
         layui.use(["layer", "table"], function () {
-         
+
             table = layui.table;
 
             table.render({
-                elem: '#organizationTable',
+                elem: '#sysCodeTable',
                 height: GLOBAL_TABLE_HEIGHT,
 
                 method: "post",
-                url: '@Url.Content("~/Api/Sys/Organization/Query")',
+                url: '@Url.Content("~/Api/Sys/SysCode/Query")',
                 page: GLOBAL_TABLE_PAGE, //开启分页
                 cols: [[
-                  
-                     { field: 'Id', title: '编号', sort: true }
-                    , { field: 'Name', title: '姓名', sort: true }
-                    , { field: 'Parent', title: '父节点', sort: true }
-                    , { field: 'Manager', title: '负责人', sort: true }
-                    , { field: 'Seq', title: '排序', sort: true, sort: true }
+             
+                     { field: 'CodeValue', title: '值', sort: true }
+                    , { field: 'CodeText', title: '显示值', sort: true }
+                    , { field: 'Sort', title: '排序', sort: true, sort: true }
                     , { fixed: 'right', width: 150, title: "操作", align: 'center', toolbar: '#bar' }
                 ]],
-                where: { UniqueId: organizationUniqueId },
+                where: { UniqueId: sysCodeUniqueId },
                 toolbar: GLOBAL_TABLE_TOOBAR,
                 limit: GLOBAL_TABLE_LIMIT,
                 limits: GLOBAL_TABLE_LIMITS,
@@ -84,7 +77,7 @@
 
 
 
-            table.on('tool(organizationTable)', function (obj) {
+            table.on('tool(sysCodeTable)', function (obj) {
                 debugger
                 var data = obj.data;
                 var uniqueId = data.UniqueId;
@@ -95,35 +88,35 @@
                 }
             });
 
-            InitOrganizationTree();
+            InitSysCodeTree();
         });
 
-         function InitOrganizationTree() {
+         function InitSysCodeTree() {
             $.ajax({
                 type: "GET",
-                url: '@Url.Content("~/Sys/Organization/Tree")',
+                url: '@Url.Content("~/Sys/SysCode/Tree")',
                 async: false,
                 dataType: "html",
                 success: function (data) {
-                    $("#divOrganizationTree").html(data);
+                    $("#divSysCodeTree").html(data);
                 }
             });
             };
           function Add(uniqueId) {
                 $.ajax({
-                         url: '@Url.Content("~/Sys/Organization/InputForm?uniqueId=")' + "" + "&parentUniqueId=" + uniqueId,
+                         url: '@Url.Content("~/Sys/SysCode/InputForm?uniqueId=")' + "" + "&parentUniqueId=" + uniqueId,
                          type: "get",
                          dataType:"html",
                          success: function (result) {
                              layer.open({
                              type: 1,
-                             title: "新增部门信息",
+                             title: "新增参数信息",
                              content: result,
                              area: ["800px", "500px"],
                              shade: 0.3, //不显示遮罩
                              end: function () {
-                                 RefreshOrganizationTable();
-                                 InitOrganizationTree();
+                                 RefreshSysCodeTable();
+                                 InitSysCodeTree();
                              }
                          });
                      }
@@ -133,19 +126,19 @@
 
             function Edit(uniqueId) {
                    $.ajax({
-                         url: '@Url.Content("~/Sys/Organization/InputForm?uniqueId=")' + uniqueId  ,
+                         url: '@Url.Content("~/Sys/SysCode/InputForm?uniqueId=")' + uniqueId  ,
                          type: "get",
                          dataType:"html",
                          success: function (result) {
                              layer.open({
                              type: 1,
-                             title: "修改部门信息",
+                             title: "修改参数信息",
                              content: result,
                              area: ["800px", "500px"],
                              shade: 0.3, //不显示遮罩
                              end: function () {
-                                 RefreshOrganizationTable();
-                                 InitOrganizationTree();
+                                 RefreshSysCodeTable();
+                                 InitSysCodeTree();
                              }
                          });
                      }
@@ -157,13 +150,13 @@
         function Delete(uniqueId) {
               layer.confirm('是否删除数据', function (index) {
                         $.ajax({
-                            url: '@Url.Content("~/api/Sys/Organization/Delete")?uniqueId=' + uniqueId ,
+                            url: '@Url.Content("~/api/Sys/SysCode/Delete")?uniqueId=' + uniqueId ,
                             type: "get",
                              success: function (result) {
                               if (result.IsSuccess) {
                                   layer.msg('删除成功');
-                                  InitOrganizationTree();
-                                  RefreshOrganizationTable();
+                                  InitSysCodeTree();
+                                  RefreshSysCodeTable();
                               } else {
                                   layer.msg(result.Message);
                               }
@@ -173,10 +166,10 @@
                     });
             }
 
-        function RefreshOrganizationTable() {
+        function RefreshSysCodeTable() {
             debugger
-                table.reload('organizationTable', {
-                    where: { UniqueId: organizationUniqueId },
+            table.reload('sysCodeTable', {
+                where: { UniqueId: sysCodeUniqueId },
                 }, 'data');
             }
 
