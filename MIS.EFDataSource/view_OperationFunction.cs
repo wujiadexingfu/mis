@@ -12,12 +12,15 @@ namespace MIS.EFDataSource
     using System;
     using System.Collections.Generic;
     
-    public partial class Sys_UserRole
+    public partial class view_OperationFunction
     {
-        public string UniqueId { get; set; }
-        public string UserUniqueId { get; set; }
-        public string RoleUniqueId { get; set; }
-        public string CreateUser { get; set; }
-        public Nullable<System.DateTime> CreateTime { get; set; }
+        public string OperationFunctionUniqueId { get; set; }
+        public string OperationUniqueId { get; set; }
+        public string OperationId { get; set; }
+        public string OperationName { get; set; }
+        public string Id { get; set; }
+        public string FunctionId { get; set; }
+        public string FunctionName { get; set; }
+        public string Controller { get; set; }
     }
 }

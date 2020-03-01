@@ -19,5 +19,20 @@ namespace MIS.UI.Areas.Sys.Controllers
             ViewBag.UniqueId = uniqueId;
             return View();
         }
+
+        public ActionResult RoleOperationFunctionTree(string uniqueId)
+        {
+            ViewBag.UniqueId = uniqueId;
+            return View();
+
+        }
+
+        public ActionResult SelectRoleUser(string uniqueId)
+        {
+            ViewBag.UniqueId = uniqueId;
+            return View();
+        }
+
+
     }
 }

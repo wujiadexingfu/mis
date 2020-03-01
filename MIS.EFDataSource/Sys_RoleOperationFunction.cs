@@ -12,10 +12,12 @@ namespace MIS.EFDataSource
     using System;
     using System.Collections.Generic;
     
-    public partial class Sys_RoleFunctionOperation
+    public partial class Sys_RoleOperationFunction
     {
         public string UniqueId { get; set; }
         public string RoleUniqueId { get; set; }
-        public string FunctionOperationUniqueId { get; set; }
+        public string OperationFunctionUniqueId { get; set; }
+        public string CreateUser { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }

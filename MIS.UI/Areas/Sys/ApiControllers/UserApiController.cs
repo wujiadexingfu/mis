@@ -140,5 +140,40 @@ namespace MIS.UI.Areas.Sys.ApiControllers
             };
         }
 
+
+        /// <summary>
+        /// 根据角色的唯一编码找到已经选中的人员信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage QueryUserByRoleUniqueId(SysUserRoleParameter parameter)
+        {
+            var result = JosnNetHelper.ObjectToJson(_sysUserBLL.QueryUserByRoleUniqueId(parameter));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// 根据角色的唯一编码查询到没有选中的人员信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage QueryNotSelectedUserByRoleUniqueId(SysUserRoleParameter parameter)
+        {
+            var result = JosnNetHelper.ObjectToJson(_sysUserBLL.QueryNotSelectedUserByRoleUniqueId(parameter));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
     }
 }

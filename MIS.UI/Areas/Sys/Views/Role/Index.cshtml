@@ -39,23 +39,25 @@
                     查询结果
                 </div>
                 <div class="layui-card-body layui-table-body layui-table-main">
-                  
+
                     <div class="layui-tab">
                         <ul class="layui-tab-title">
                             <li class="layui-this">菜单</li>
                             <li>人员</li>
-                        
-                          
+
+
                         </ul>
                         <div class="layui-tab-content">
                             <div class="layui-tab-item layui-show">
-                                <button class="layui-btn" lay-filter="btnRoleFunctionSave" id="btnRoleFunctionSave"><i class="layui-icon"></i>保存</button>
+                                <button class="layui-btn" lay-filter="btnRoleOperationFunctionSave" id="btnRoleOperationFunctionSave"><i class="layui-icon"></i>保存</button>
+                                <div id="divRoleOperationFunctionTree"></div>
                             </div>
                             <div class="layui-tab-item">
-                                <button class="layui-btn" lay-filter="btnRoleUserSave" id="btnRoleUserSave"><i class="layui-icon"></i>保存</button>
+                                <button class="layui-btn" lay-filter="btnRoleUserAdd" id="btnRoleUserAdd"><i class="layui-icon"></i>新增</button>
+                                <table id="roleUserTable" class="layui-table layui-form" lay-filter="roleUserTable"></table>
 
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -66,8 +68,14 @@
 
 
 @section scripts{
+
+    <script type="text/html" id="deleteBar">
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+    </script>
+
     <script type="text/javascript">
-    var table = "";
+        var table = "";
+        var uniqueId = "";
         layui.use(["layer", "table", "element"], function () {
             table = layui.table;
             var form = layui.form;
@@ -143,19 +151,33 @@
 
             table.on('row(roleTable)', function (obj) {
                 var data = obj.data;
+                uniqueId = data.UniqueId;
+                InitRoleOperationFunctionTree(data.UniqueId);
 
-                @*$.ajax({
-                    url: '@Url.Content("~/Sys/Operation/OperationFunctionTree?uniqueId=")' + data.UniqueId,
-                     type: "get",
-                     dataType:"html",
-                       success: function (result) {
-                           $("#divOperationFunctionTree").html(result);
-                 }
-             });*@
-
-
-
+                QueryRoleUser(data.UniqueId);
             });
+
+            table.on('tool(roleUserTable)', function (obj) {
+            var data = obj.data;
+                var deieteUniqueId = data.UniqueId;
+                layer.confirm('是否删除数据', function (index) {
+                    $.ajax({
+                        url: '@Url.Content("~/api/Sys/Role/DeleteRoleUser")?uniqueId=' + deieteUniqueId ,
+                        type: "get",
+                         success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('删除成功');
+                              QueryRoleUser(uniqueId);
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+
+                });
+           
+            });
+
 
 
 
@@ -200,6 +222,77 @@
              });
 
             });
+
+
+            function InitRoleOperationFunctionTree(roleUnqiueId) {
+                $.ajax({
+                    url: '@Url.Content("~/Sys/Role/RoleOperationFunctionTree?uniqueId=")' + roleUnqiueId,
+                    type: "get",
+                    dataType:"html",
+                    success: function (result) {
+                        $("#divRoleOperationFunctionTree").html(result);
+                 }
+             });
+
+            }
+
+            function QueryRoleUser(roleUniqueId) {
+                 table.render({
+                 elem: '#roleUserTable',
+                 height: GLOBAL_TABLE_HEIGHT,
+                method: "post",
+                url: '@Url.Content("~/Api/Sys/User/QueryUserByRoleUniqueId")',
+                page: GLOBAL_TABLE_PAGE, //开启分页
+                cols: [[
+                   { field: 'Id', title: '编号', sort: true }
+                    , { field: 'Name', title: '名称', sort: true }
+                    , { fixed: 'right', width: 150, title: "操作", align: 'center', toolbar: '#deleteBar' }
+                ]],
+               where: { roleUniqueId: roleUniqueId },
+                toolbar: GLOBAL_TABLE_TOOBAR,
+                limit: GLOBAL_TABLE_LIMIT,
+                limits: GLOBAL_TABLE_LIMITS,
+                loading: true,
+                skin: GLOBAL_TABLE_SKIN, //行边框风格
+                even: GLOBAL_TABLE_EVEN //开启隔行背景
+            });
+
+
+            }
+
+
+
+            
+            $("#btnRoleUserAdd").click(function () {
+                if (uniqueId) {
+                    $.ajax({
+                        url: '@Url.Content("~/Sys/Role/SelectRoleUser?uniqueId=")' + uniqueId,
+                        type: "get",
+                        dataType: "html",
+                        success: function (result) {
+                            debugger
+
+                            layer.open({
+                                type: 1,
+                                title: "新增角色人员信息",
+                                content: result,
+                                area: ["800px", "500px"],
+                                shade: 0.3, //不显示遮罩
+                                end: function () {
+       
+                                    QueryRoleUser(uniqueId);
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    layer.msg('请选择角色');
+                }
+                 
+
+            });
+
+
 
         });
     </script>

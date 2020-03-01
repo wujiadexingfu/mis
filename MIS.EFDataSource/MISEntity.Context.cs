@@ -33,8 +33,9 @@ namespace MIS.EFDataSource
         public virtual DbSet<Sys_OperationFunction> Sys_OperationFunction { get; set; }
         public virtual DbSet<Sys_Organization> Sys_Organization { get; set; }
         public virtual DbSet<Sys_Role> Sys_Role { get; set; }
-        public virtual DbSet<Sys_RoleFunctionOperation> Sys_RoleFunctionOperation { get; set; }
+        public virtual DbSet<Sys_RoleOperationFunction> Sys_RoleOperationFunction { get; set; }
         public virtual DbSet<Sys_User> Sys_User { get; set; }
         public virtual DbSet<Sys_UserRole> Sys_UserRole { get; set; }
+        public virtual DbSet<view_OperationFunction> view_OperationFunction { get; set; }
     }
 }

@@ -111,13 +111,15 @@
           <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
           <Property Name="ModifyTime" Type="datetime" />
         </EntityType>
-        <EntityType Name="Sys_RoleFunctionOperation">
+        <EntityType Name="Sys_RoleOperationFunction">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
           <Property Name="UniqueId" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="RoleUniqueId" Type="varchar" MaxLength="50" />
-          <Property Name="FunctionOperationUniqueId" Type="varchar" MaxLength="50" />
+          <Property Name="OperationFunctionUniqueId" Type="varchar" MaxLength="50" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Sys_User">
           <Key>
@@ -150,6 +152,27 @@
           <Property Name="UniqueId" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="UserUniqueId" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="RoleUniqueId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“MIS.dbo.view_OperationFunction”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="view_OperationFunction">
+          <Key>
+            <PropertyRef Name="OperationFunctionUniqueId" />
+            <PropertyRef Name="OperationUniqueId" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FunctionId" />
+            <PropertyRef Name="FunctionName" />
+          </Key>
+          <Property Name="OperationFunctionUniqueId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="OperationUniqueId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OperationId" Type="varchar" MaxLength="20" />
+          <Property Name="OperationName" Type="varchar" MaxLength="50" />
+          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FunctionId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="FunctionName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Controller" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityContainer Name="MISModelStoreContainer">
           <EntitySet Name="Sys_Attachment" EntityType="Self.Sys_Attachment" Schema="dbo" store:Type="Tables" />
@@ -160,9 +183,21 @@
           <EntitySet Name="Sys_OperationFunction" EntityType="Self.Sys_OperationFunction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Organization" EntityType="Self.Sys_Organization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Role" EntityType="Self.Sys_Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Sys_RoleFunctionOperation" EntityType="Self.Sys_RoleFunctionOperation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys_RoleOperationFunction" EntityType="Self.Sys_RoleOperationFunction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_User" EntityType="Self.Sys_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_UserRole" EntityType="Self.Sys_UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="view_OperationFunction" EntityType="Self.view_OperationFunction" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [view_OperationFunction].[OperationFunctionUniqueId] AS [OperationFunctionUniqueId], 
+    [view_OperationFunction].[OperationUniqueId] AS [OperationUniqueId], 
+    [view_OperationFunction].[OperationId] AS [OperationId], 
+    [view_OperationFunction].[OperationName] AS [OperationName], 
+    [view_OperationFunction].[Id] AS [Id], 
+    [view_OperationFunction].[FunctionId] AS [FunctionId], 
+    [view_OperationFunction].[FunctionName] AS [FunctionName], 
+    [view_OperationFunction].[Controller] AS [Controller]
+    FROM [dbo].[view_OperationFunction] AS [view_OperationFunction]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -177,9 +212,10 @@
           <EntitySet Name="Sys_OperationFunction" EntityType="MISModel.Sys_OperationFunction" />
           <EntitySet Name="Sys_Organization" EntityType="MISModel.Sys_Organization" />
           <EntitySet Name="Sys_Role" EntityType="MISModel.Sys_Role" />
-          <EntitySet Name="Sys_RoleFunctionOperation" EntityType="MISModel.Sys_RoleFunctionOperation" />
+          <EntitySet Name="Sys_RoleOperationFunction" EntityType="MISModel.Sys_RoleOperationFunction" />
           <EntitySet Name="Sys_User" EntityType="MISModel.Sys_User" />
           <EntitySet Name="Sys_UserRole" EntityType="MISModel.Sys_UserRole" />
+          <EntitySet Name="view_OperationFunction" EntityType="MISModel.view_OperationFunction" />
         </EntityContainer>
         <EntityType Name="Sys_Attachment">
           <Key>
@@ -287,13 +323,15 @@
           <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="Sys_RoleFunctionOperation">
+        <EntityType Name="Sys_RoleOperationFunction">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
           <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RoleUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FunctionOperationUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OperationFunctionUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Sys_User">
           <Key>
@@ -326,6 +364,25 @@
           <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="UserUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="RoleUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="view_OperationFunction">
+          <Key>
+            <PropertyRef Name="OperationFunctionUniqueId" />
+            <PropertyRef Name="OperationUniqueId" />
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="FunctionId" />
+            <PropertyRef Name="FunctionName" />
+          </Key>
+          <Property Name="OperationFunctionUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="OperationUniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OperationId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OperationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FunctionId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="FunctionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Controller" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -447,10 +504,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sys_RoleFunctionOperation">
-            <EntityTypeMapping TypeName="MISModel.Sys_RoleFunctionOperation">
-              <MappingFragment StoreEntitySet="Sys_RoleFunctionOperation">
-                <ScalarProperty Name="FunctionOperationUniqueId" ColumnName="FunctionOperationUniqueId" />
+          <EntitySetMapping Name="Sys_RoleOperationFunction">
+            <EntityTypeMapping TypeName="MISModel.Sys_RoleOperationFunction">
+              <MappingFragment StoreEntitySet="Sys_RoleOperationFunction">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="OperationFunctionUniqueId" ColumnName="OperationFunctionUniqueId" />
                 <ScalarProperty Name="RoleUniqueId" ColumnName="RoleUniqueId" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
@@ -484,9 +543,25 @@
           <EntitySetMapping Name="Sys_UserRole">
             <EntityTypeMapping TypeName="MISModel.Sys_UserRole">
               <MappingFragment StoreEntitySet="Sys_UserRole">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="RoleUniqueId" ColumnName="RoleUniqueId" />
                 <ScalarProperty Name="UserUniqueId" ColumnName="UserUniqueId" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_OperationFunction">
+            <EntityTypeMapping TypeName="MISModel.view_OperationFunction">
+              <MappingFragment StoreEntitySet="view_OperationFunction">
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
+                <ScalarProperty Name="FunctionId" ColumnName="FunctionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OperationName" ColumnName="OperationName" />
+                <ScalarProperty Name="OperationId" ColumnName="OperationId" />
+                <ScalarProperty Name="OperationUniqueId" ColumnName="OperationUniqueId" />
+                <ScalarProperty Name="OperationFunctionUniqueId" ColumnName="OperationFunctionUniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

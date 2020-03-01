@@ -80,5 +80,12 @@ namespace MIS.IDAL
         /// <param name="parentId"></param>
         /// <returns></returns>
         List<TreeNode> GetFunctionTreeNodes(string parentId);
+
+        /// <summary>
+        /// 根据角色唯一编码获取菜单的操作信息
+        /// </summary>
+        /// <param name="operationUnqiueId"></param>
+        /// <returns></returns>
+        List<LayuiTreeNode> GetFunctionTreeByRoleUniqueId(string roleUnqiueId);
     }
 }

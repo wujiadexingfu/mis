@@ -334,6 +334,66 @@ namespace MIS.DAL
             return db.Sys_User.Where(x=>x.Status!=Status.Delete.ToString()).Select(x => new UserSelectItem() { Text = x.Id + "-" + x.Name, Value = x.UniqueId }).ToList();
         }
 
+        /// <summary>
+        /// 根据角色的唯一编码找到已经选中的人员信息
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public PageData QueryUserByRoleUniqueId(SysUserRoleParameter parameter)
+        {
+            using (MISEntities db = new MISEntities())
+            {
+                var query = (from x in db.Sys_User
+                             join x1 in db.Sys_UserRole on x.UniqueId equals x1.UserUniqueId
+                             where x1.RoleUniqueId == parameter.RoleUniqueId
+                             select new  SysUserGrid {
+                                UniqueId= x1.UniqueId,
+                                Name= x.Name,
+                                Id= x.Id
+                             }).AsQueryable();
+
+                var count = query.Count();
+                var list = query.OrderBy(x => x.Id).Skip((parameter.Page - 1) * parameter.Limit).Take(parameter.Limit).ToList();
+                PageData pageData = new PageData(count, list);
+                return pageData;
+            }
+        }
+
+      /// <summary>
+      /// 根据角色的唯一编码查询到没有选中的人员信息
+      /// </summary>
+      /// <param name="parameter"></param>
+      /// <returns></returns>
+        public PageData QueryNotSelectedUserByRoleUniqueId(SysUserRoleParameter parameter)
+        {
+            using (MISEntities db = new MISEntities())
+            {
+
+                var selectedUserUniqueIdList = db.Sys_UserRole.Where(x => x.RoleUniqueId == parameter.RoleUniqueId).Select(x => x.UserUniqueId).ToList();  //角色对应的选中人员
+
+                var query = (from x in db.Sys_User
+                            where !selectedUserUniqueIdList.Contains(x.UniqueId)
+                             select new SysUserGrid
+                             {
+                                 UniqueId = x.UniqueId,
+                                 Name = x.Name,
+                                 Id = x.Id
+                             }).AsQueryable();
+
+                if (!string.IsNullOrEmpty(parameter.KeyWord))
+                {
+                    query = query.Where(x => parameter.KeyWord.Contains(x.Id) || parameter.KeyWord.Contains(x.Name));
+                }
+
+                var count = query.Count();
+                var list = query.OrderBy(x => x.Id).Skip((parameter.Page - 1) * parameter.Limit).Take(parameter.Limit).ToList();
+                PageData pageData = new PageData(count, list);
+                return pageData;
+            }
+        }
+
+
+
 
     }
 }

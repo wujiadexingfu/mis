@@ -2852,6 +2852,8 @@
     <Content Include="Areas\Sys\Views\Function\InputForm.cshtml" />
     <Content Include="Areas\Sys\Views\Role\Index.cshtml" />
     <Content Include="Areas\Sys\Views\Role\InputForm.cshtml" />
+    <Content Include="Areas\Sys\Views\Role\RoleOperationFunctionTree.cshtml" />
+    <Content Include="Areas\Sys\Views\Role\SelectRoleUser.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

@@ -3,6 +3,7 @@ using MIS.IDAL;
 using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysRole;
+using MIS.Model.Tree;
 using MIS.Utility;
 using System;
 using System.Collections.Generic;
@@ -158,5 +159,116 @@ namespace MIS.DAL
             }
             return result;
         }
+
+
+     
+
+
+
+        /// <summary>
+        /// 添加用户菜单和操作权限的关联
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        public RequestResult AddRoleOperationFunction(SysRoleOperationFunctionInputForm inputForm)
+        {
+            RequestResult result = new RequestResult();
+
+            try
+            {
+                MISEntities db = new MISEntities();
+
+
+                var list = db.Sys_RoleOperationFunction.Where(x => x.RoleUniqueId == inputForm.RoleUnqiueId).ToList();
+                db.Sys_RoleOperationFunction.RemoveRange(list);
+
+                foreach (var item in inputForm.OperationFunctionList)
+                {
+
+                    Sys_RoleOperationFunction roleOperationFunction = new Sys_RoleOperationFunction();
+                    roleOperationFunction.UniqueId = Guid.NewGuid().ToString();
+                    roleOperationFunction.RoleUniqueId = inputForm.RoleUnqiueId;
+                    roleOperationFunction.OperationFunctionUniqueId = item.ToString();
+                    roleOperationFunction.CreateTime = DateTime.Now;
+                    roleOperationFunction.CreateUser = SessionUtils.GetAccountUnqiueId();
+                    db.Sys_RoleOperationFunction.Add(roleOperationFunction);
+                }
+
+                db.SaveChanges();
+                result.Success();
+            }
+            catch (Exception ex)
+            {
+                result.ReturnFailedMessage(ex.Message);
+            }
+            return result;
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// 添加角色和用户的关联
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        public RequestResult AddRoleUser(SysRoleUserInputForm inputForm)
+        {
+            RequestResult result = new RequestResult();
+
+            try
+            {
+                MISEntities db = new MISEntities();
+
+                foreach (var item in inputForm.UserList)
+                {
+                    Sys_UserRole userRole = new Sys_UserRole();
+                    userRole.UniqueId = Guid.NewGuid().ToString();
+                    userRole.RoleUniqueId = inputForm.RoleUniqueId;
+                    userRole.UserUniqueId = item.ToString();
+                    userRole.CreateTime = DateTime.Now;
+                    userRole.CreateUser = SessionUtils.GetAccountUnqiueId();
+                    db.Sys_UserRole.Add(userRole);
+                }
+
+                db.SaveChanges();
+                result.Success();
+            }
+            catch (Exception ex)
+            {
+                result.ReturnFailedMessage(ex.Message);
+            }
+            return result;
+        }
+
+
+        /// <summary>
+        /// 删除角色用户的关联
+        /// </summary>
+        /// <param name="uniqueId"></param>
+        /// <returns></returns>
+        public RequestResult DeleteRoleUser(string uniqueId)
+        {
+            RequestResult result = new RequestResult();
+
+            try
+            {
+                MISEntities db = new MISEntities();
+
+
+                var list = db.Sys_UserRole.Where(x => x.UniqueId == uniqueId).ToList();
+                db.Sys_UserRole.RemoveRange(list);
+                db.SaveChanges();
+                result.Success();
+            }
+            catch (Exception ex)
+            {
+                result.ReturnFailedMessage(ex.Message);
+            }
+            return result;
+        }
+
     }
 }

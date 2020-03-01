@@ -71,5 +71,36 @@ namespace MIS.BLL
             return _sysRoleDAL.Delete(uniqueId);
         }
 
+
+        /// <summary>
+        /// 添加用户菜单和操作权限的关联
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        public RequestResult AddRoleOperationFunction(SysRoleOperationFunctionInputForm inputForm)
+        {
+            return _sysRoleDAL.AddRoleOperationFunction(inputForm);
+        }
+
+        /// <summary>
+        /// 添加角色和用户的关联
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+       public  RequestResult AddRoleUser(SysRoleUserInputForm inputForm)
+        {
+            return _sysRoleDAL.AddRoleUser(inputForm);
+        }
+
+
+        /// <summary>
+        /// 删除角色用户的关联
+        /// </summary>
+        /// <param name="uniqueId"></param>
+        /// <returns></returns>
+        public RequestResult DeleteRoleUser(string uniqueId)
+        {
+            return _sysRoleDAL.DeleteRoleUser(uniqueId);
+        }
     }
 }

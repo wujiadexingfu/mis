@@ -121,5 +121,16 @@ namespace MIS.BLL
             return _sysFunctionDAL.GetFunctionTreeNodes(parentId);
         }
 
+
+        /// <summary>
+        /// 根据角色唯一编码获取菜单的操作信息
+        /// </summary>
+        /// <param name="operationUnqiueId"></param>
+        /// <returns></returns>
+        public List<LayuiTreeNode> GetFunctionTreeByRoleUniqueId(string roleUnqiueId)
+        {
+            return _sysFunctionDAL.GetFunctionTreeByRoleUniqueId(roleUnqiueId);
+        }
+
     }
 }

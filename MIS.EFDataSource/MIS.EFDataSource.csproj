@@ -90,13 +90,16 @@
     <Compile Include="Sys_Role.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Sys_RoleFunctionOperation.cs">
+    <Compile Include="Sys_RoleOperationFunction.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Sys_User.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Sys_UserRole.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="view_OperationFunction.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
   </ItemGroup>

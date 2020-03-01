@@ -91,5 +91,20 @@ namespace MIS.IBLL
         /// <returns></returns>
         List<UserSelectItem> QueryUserSelectItemList();
 
+        /// <summary>
+        /// 根据角色的唯一编码找到已经选中的人员信息
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        PageData QueryUserByRoleUniqueId(SysUserRoleParameter parameter);
+
+        /// <summary>
+        /// 根据角色的唯一编码查询到没有选中的人员信息
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        PageData QueryNotSelectedUserByRoleUniqueId(SysUserRoleParameter parameter);
     }
+
+
 }

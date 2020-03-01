@@ -49,5 +49,26 @@ namespace MIS.IDAL
         /// <returns></returns>
         RequestResult Delete(string uniqueId);
 
+        /// <summary>
+        /// 添加用户菜单和操作权限的关联
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        RequestResult AddRoleOperationFunction(SysRoleOperationFunctionInputForm inputForm);
+
+        /// <summary>
+        /// 添加角色和用户的关联
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        RequestResult AddRoleUser(SysRoleUserInputForm inputForm);
+
+
+        /// <summary>
+        /// 删除角色用户的关联
+        /// </summary>
+        /// <param name="uniqueId"></param>
+        /// <returns></returns>
+        RequestResult DeleteRoleUser(string uniqueId);
     }
 }

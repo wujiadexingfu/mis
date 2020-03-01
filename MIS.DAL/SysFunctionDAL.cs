@@ -4,6 +4,7 @@ using MIS.Model.Account;
 using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysFunction;
+using MIS.Model.Sys.SysRole;
 using MIS.Model.Tree;
 using MIS.Utility;
 using System;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MIS.Utility.EnumUtility.SystemEnums;
 
 namespace MIS.DAL
 {
@@ -107,7 +109,7 @@ namespace MIS.DAL
                     Id = item.Id,
                     Title=item.Description,
                     Children = GetFunctionChildTreeNodes(item.Id, allFunctionList, selectedFunctionList),
-                    Checked =item.Controller!=null&&selectedFunctionList.Any(x => x == item.Id),
+                    Checked =!string.IsNullOrEmpty(item.Controller) &&selectedFunctionList.Any(x => x == item.Id),
 
                 });
             }
@@ -346,6 +348,93 @@ namespace MIS.DAL
                 return pageData;
             }
         }
+
+        /// <summary>
+        /// 根据角色唯一编码获取菜单的操作信息
+        /// </summary>
+        /// <param name="operationUnqiueId"></param>
+        /// <returns></returns>
+        public List<LayuiTreeNode> GetFunctionTreeByRoleUniqueId(string roleUnqiueId)
+        {
+            MISEntities db = new MISEntities();
+            var functionList = db.Sys_Function.ToList();  //所有的菜单信息
+            var selectedOperationFunctionList = db.Sys_RoleOperationFunction.Where(x => x.RoleUniqueId == roleUnqiueId).Select(x=>x.OperationFunctionUniqueId).ToList(); //选中菜单操作信息
+
+            var operationFunctionList = db.view_OperationFunction.ToList(); //所有的菜单操作信息
+            
+
+
+
+
+            var list = GetFunctionChildTreeNodesWithType("*", functionList, selectedOperationFunctionList, operationFunctionList);
+
+            return list;
+
+        }
+
+
+        private static List<LayuiTreeNode> GetFunctionChildTreeNodesWithType(string parentId, List<Sys_Function> allFunctionList, List<string> selectedOperationFunctionList,List<view_OperationFunction> operationFunctionList)
+        {
+
+            var layuiTreeNodeList = new List<LayuiTreeNode>();
+
+            var childFunctionList = allFunctionList.Where(x => x.ParentId == parentId).OrderBy(x => x.Sort);
+
+            foreach (var item in childFunctionList)
+            {
+                var layuiTreeNode = new LayuiTreeNode();
+
+                var operationFunctionNodeList = GetFunctionOperation(item.Id, selectedOperationFunctionList, operationFunctionList);
+
+                layuiTreeNode.Children.AddRange(operationFunctionNodeList);
+                layuiTreeNode.Id = item.Id;
+                layuiTreeNode.Title = item.Description;
+                layuiTreeNode.Children.AddRange(GetFunctionChildTreeNodesWithType(item.Id, allFunctionList, selectedOperationFunctionList, operationFunctionList));
+
+                layuiTreeNodeList.Add(layuiTreeNode);
+
+            }
+            return layuiTreeNodeList;
+
+        }
+
+        private static List<LayuiTreeNode> GetFunctionOperation(string functionId, List<string> selectedOperationFunctionList, List<view_OperationFunction> operationFunctionList)
+        {
+            List<LayuiTreeNode> list = new List<LayuiTreeNode>();
+
+
+            var operationList = operationFunctionList.Where(x => x.FunctionId == functionId).Distinct().Select(x => new
+            {
+
+                x.OperationFunctionUniqueId,
+                x.OperationId,
+                x.OperationName,
+                x.Controller
+
+            }).ToList();
+
+            foreach (var item in operationList)
+            {
+                if (!string.IsNullOrEmpty(item.Controller))
+                {
+                    LayuiTreeNode layuiTreeNode = new LayuiTreeNode();
+                    layuiTreeNode.Id = item.OperationFunctionUniqueId;
+                    layuiTreeNode.Title = item.OperationName;
+                    layuiTreeNode.NodeType = TreeNodeType.Operation.ToString();
+                    layuiTreeNode.Checked = selectedOperationFunctionList.Any(x => x == item.OperationFunctionUniqueId);
+
+                    list.Add(layuiTreeNode);
+                }
+            }
+            return list;
+
+
+        }
+
+
+
+
+
 
 
 

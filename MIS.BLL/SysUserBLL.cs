@@ -142,5 +142,25 @@ namespace MIS.BLL
         {
             return _sysUserDAL.QueryUserSelectItemList();
         }
+
+        /// <summary>
+        /// 根据角色的唯一编码找到已经选中的人员信息
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public PageData QueryUserByRoleUniqueId(SysUserRoleParameter parameter)
+        {
+            return _sysUserDAL.QueryUserByRoleUniqueId(parameter);
+        }
+
+        /// <summary>
+        /// 根据角色的唯一编码查询到没有选中的人员信息
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+       public PageData QueryNotSelectedUserByRoleUniqueId(SysUserRoleParameter parameter)
+        {
+            return _sysUserDAL.QueryNotSelectedUserByRoleUniqueId(parameter);
+        }
     }
 }

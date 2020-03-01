@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "SelectRoleUser";
+    Layout = null;
+}
+
+
+<div class="layui-inline layui-show-xs-block">
+    <input class="layui-input" autocomplete="off" placeholder="请输入关键字" name="Keyword" id="Keyword">
+</div>
+
+<div class="layui-inline layui-show-xs-block">
+    <button class="layui-btn" lay-filter="btnNotSelectRoleUserQuery" id="btnNotSelectRoleUserQuery"><i class="layui-icon"></i></button>
+    <button class="layui-btn" lay-filter="btnRoleUserSave" id="btnRoleUserSave">保存</button>
+
+</div>
+<div id="notSelectRoleUserTable" lay-filter="notSelectRoleUserTable"></div>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    var table = "";
+        layui.use(["layer", "table", "element"], function () {
+            table = layui.table;
+            var roleUniqueId = "@ViewBag.UniqueId";
+            var form = layui.form;
+            table.render({
+                elem: '#notSelectRoleUserTable',
+                height: GLOBAL_TABLE_HEIGHT,
+
+                method: "post",
+                url: '@Url.Content("~/Api/Sys/User/QueryNotSelectedUserByRoleUniqueId")',
+                page: GLOBAL_TABLE_PAGE, //开启分页
+                cols: [[
+                    { checkbox: true, fixed: true }
+                    , { field: 'Id', title: '编号', sort: true }
+                    , { field: 'Name', title: '名称', sort: true }
+                ]],
+                where: { roleUniqueId: roleUniqueId },
+                toolbar: GLOBAL_TABLE_TOOBAR,
+                limit: GLOBAL_TABLE_LIMIT,
+                limits: GLOBAL_TABLE_LIMITS,
+                loading: true,
+                skin: GLOBAL_TABLE_SKIN, //行边框风格
+                even: GLOBAL_TABLE_EVEN //开启隔行背景
+            });
+
+            $("#btnNotSelectRoleUserQuery").unbind("click");
+            $("#btnNotSelectRoleUserQuery").click(function () {
+
+         
+                table.reload('notSelectRoleUserTable', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: { keyWord: $("#Keyword").val(), roleUniqueId: roleUniqueId },
+                }, 'data');
+
+
+            });
+
+
+            function refreshNotSelectRoleUserTable() {
+                table.reload('notSelectRoleUserTable', {
+                    where: { keyWord: $("#Keyword").val(), roleUniqueId: roleUniqueId },
+                }, 'data');
+            }
+
+
+            $("#btnRoleUserSave").unbind("click");
+            $("#btnRoleUserSave").click(function () {
+                debugger
+                var list = table.checkStatus("notSelectRoleUserTable");
+
+                var userList = [];
+                for (var i = 0; i < list.data.length; i++) {
+                    userList.push(list.data[i].UniqueId);
+                }
+
+                var data = { "RoleUniqueId": roleUniqueId, "UserList": userList };
+                 $.ajax({
+                    url: '@Url.Content("~/api/Sys/Role/AddRoleUser")',
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('新增成功');
+                              refreshNotSelectRoleUserTable()
+                              layer.closeAll();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+
+            });
+
+        });
+</script>
+

@@ -90,5 +90,15 @@ namespace MIS.Utility.EnumUtility
 
         }
 
+
+        public enum TreeNodeType
+        {
+            /// <summary>
+            /// 操作
+            /// </summary>
+            Operation
+
+        }
+
     }
 }

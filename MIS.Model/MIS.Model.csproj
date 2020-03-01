@@ -62,11 +62,14 @@
     <Compile Include="Sys\SysOrganization\SysOrganizationParameter.cs" />
     <Compile Include="Sys\SysRole\SysRoleGrid.cs" />
     <Compile Include="Sys\SysRole\SysRoleInputForm.cs" />
+    <Compile Include="Sys\SysRole\SysRoleOperationFunctionInputForm.cs" />
     <Compile Include="Sys\SysRole\SysRoleParameter.cs" />
+    <Compile Include="Sys\SysRole\SysRoleUserInputForm.cs" />
     <Compile Include="Sys\SysUser\SysUserGrid.cs" />
     <Compile Include="Sys\SysUser\SysUserInputForm.cs" />
     <Compile Include="Sys\SysUser\SysUserParameter.cs" />
     <Compile Include="Sys\SysUser\SysUserResetModel.cs" />
+    <Compile Include="Sys\SysUser\SysUserRoleParameter.cs" />
     <Compile Include="Sys\SysUser\UserSelectItem.cs" />
     <Compile Include="Tree\LayuiTreeNode.cs" />
     <Compile Include="Tree\TreeNode.cs" />

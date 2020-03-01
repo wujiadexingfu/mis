@@ -39,6 +39,12 @@ namespace MIS.Model.Tree
         [JsonProperty(PropertyName = "disabled")]
         public bool Disabled { get; set; }
 
+        /// <summary>
+        /// 节点类型
+        /// </summary>
+        public string NodeType { get; set; }
+
+
         public LayuiTreeNode()
         {
             this.Children = new List<LayuiTreeNode>();

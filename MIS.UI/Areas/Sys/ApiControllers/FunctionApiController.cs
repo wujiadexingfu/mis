@@ -167,5 +167,19 @@ namespace MIS.UI.Areas.Sys.ApiControllers
             };
         }
 
+        /// <summary>
+        /// 根据角色唯一编码获取菜单的操作信息
+        /// </summary>
+        /// <param name="operationUnqiueId"></param>
+        /// <returns></returns>
+        public HttpResponseMessage GetFunctionTreeByRoleUniqueId(string roleUnqiueId)
+        {
+          
+            var result = JosnNetHelper.ObjectToJson(_sysFunctionBLL.GetFunctionTreeByRoleUniqueId(roleUnqiueId));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
     }
 }

@@ -103,8 +103,59 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         }
 
 
+        /// <summary>
+        ///  添加用户菜单和操作权限的关联
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage AddRoleOperationFunction(SysRoleOperationFunctionInputForm inputForm)
+        {
 
-    
+            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.AddRoleOperationFunction(inputForm));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+        /// <summary>
+        /// 添加角色和用户的关联
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage AddRoleUser(SysRoleUserInputForm inputForm)
+        {
+
+            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.AddRoleUser(inputForm));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+
+        /// <summary>
+        /// 删除角色用户的关联
+        /// </summary>
+        /// <param name="uniqueId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage DeleteRoleUser(string uniqueId)
+        {
+
+            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.DeleteRoleUser(uniqueId));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+
 
     }
 }

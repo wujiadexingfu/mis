@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "RoleOperationFunctionTree";
+    Layout = null;
+}
+
+
+<div id="roleOperationFunctionTree"></div>
+<script>
+
+    layui.use(['tree'], function () {
+        var tree = layui.tree;
+        var roleUnqiueId = "@ViewBag.UniqueId";
+        var selectedOperationFunctionArray = [];
+
+
+        var roleOperationFunctionTree = "";
+             $.ajax({
+                 url: '@Url.Content("~/api/Sys/Function/GetFunctionTreeByRoleUniqueId?roleUnqiueId=")' + roleUnqiueId,
+                  type: "get",
+                  dataType: "json",
+                  headers: {
+                      "Content-Type": "application/json",
+                      "X-HTTP-Method-Override": "POST"
+                 },
+                 success: function (data) {
+                     roleOperationFunctionTree = tree.render({
+                          elem: '#roleOperationFunctionTree' //默认是点击节点可进行收缩
+                         , data: data
+                         , showCheckbox: true
+                     });
+
+                    }
+                });
+
+
+        function getChecked() {
+            var checkedData = roleOperationFunctionTree.getChecked(); //获取选中节点的数据
+
+
+            for (var i = 0; i < checkedData.length; i++) {
+                getData(checkedData[i]);
+            }
+
+            var data = { "RoleUnqiueId": roleUnqiueId, "OperationFunctionList": selectedOperationFunctionArray}
+             $.ajax({
+               url: '@Url.Content("~/api/Sys/Role/AddRoleOperationFunction")'  ,
+               type: "post",
+               data:data,
+               success: function (result) {
+                   if (result.IsSuccess) {
+                      layer.msg('保存成功');
+                  } else {
+                    layer.msg(result.Message);
+                }
+               }
+             });
+        }
+
+        $('#btnRoleOperationFunctionSave').unbind('click');
+        $("#btnRoleOperationFunctionSave").click(function () {
+
+            if (roleUnqiueId) {
+                getChecked();
+            } else {
+                layer.msg("请选择角色");
+            }
+         
+        });
+
+        ///递归查询获取数据
+        function getData(data) {
+            selectedOperationFunctionArray.push(data.id);
+            if (data.children) {
+                for (var i = 0; i < data.children.length; i++) {
+                    getData(data.children[i]);
+                }
+            }
+        }
+    });
+
+</script>
+
+
