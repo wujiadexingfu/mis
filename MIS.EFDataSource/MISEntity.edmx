@@ -11,8 +11,8 @@
           </Key>
           <Property Name="UniqueId" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="Content" Type="varchar" MaxLength="4000" Nullable="false" />
-          <Property Name="EffectiveDate" Type="datetime" />
+          <Property Name="Contents" Type="varchar" MaxLength="4000" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="Levels" Type="varchar" MaxLength="100" />
           <Property Name="CreateTime" Type="datetime" />
@@ -285,8 +285,8 @@
           </Key>
           <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Content" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
-          <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
+          <Property Name="Contents" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="Levels" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
@@ -503,8 +503,8 @@
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="Levels" ColumnName="Levels" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>

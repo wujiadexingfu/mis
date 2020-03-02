@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SysAnnouncementBLL.cs" />
     <Compile Include="SysCodeBLL.cs" />
     <Compile Include="SysFunctionBLL.cs" />
     <Compile Include="SysOperationBLL.cs" />

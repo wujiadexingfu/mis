@@ -13,7 +13,6 @@ namespace MIS.UI.Areas.Sys.Controllers
     {
         public ActionResult Index()
         {
-           var m= HttpContext.Session[Constant.Account];
             return View();
         }
 

@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ISysAnnouncementDAL.cs" />
     <Compile Include="ISysCodeDAL.cs" />
     <Compile Include="ISysFunctionDAL.cs" />
     <Compile Include="ISysOperationDAL.cs" />

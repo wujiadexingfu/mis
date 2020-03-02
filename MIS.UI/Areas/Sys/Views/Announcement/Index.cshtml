@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using MIS.UI.Filters
+
+
+
+<div style="padding: 20px;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <i class="layui-icon layui-icon-link"></i>
+                查询条件
+            </div>
+            <div class="layui-card-body">
+                <div class="layui-inline layui-show-xs-block">
+                    <input class="layui-input" autocomplete="off" placeholder="请输入关键字" name="keyword" id="keyword">
+                </div>
+
+                @if (CheckOperationFilterAttribute.CheckQuery())
+                {
+                    <button class="layui-btn" lay-filter="btnSysAnnouncementQuery" id="btnSysAnnouncementQuery"><i class="layui-icon"></i></button>
+                }
+
+                <div class="layui-inline layui-show-xs-block">
+
+                    @if (CheckOperationFilterAttribute.CheckAdd())
+                    {
+
+                        <button class="layui-btn" lay-filter="btnAddSysAnnouncement" id="btnAddSysAnnouncement"><i class="layui-icon"></i>添加</button>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="layui-row layui-col-space15;" style="padding: 20px;">
+
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <i class="layui-icon layui-icon-table" style="font-size:20px"></i>
+            查询结果
+        </div>
+        <div class="layui-card-body layui-table-body layui-table-main">
+            <table id="sysAnnouncementTable" class="layui-table layui-form" lay-filter="sysAnnouncementTable"></table>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+        var sysAnnouncementUniqueId = "";
+        layui.use(["layer", "table"], function () {
+
+            table = layui.table;
+
+            table.render({
+                elem: '#sysAnnouncementTable',
+                height: GLOBAL_TABLE_HEIGHT,
+
+                method: "post",
+                url: '@Url.Content("~/Api/Sys/Announcement/Query")',
+                page: GLOBAL_TABLE_PAGE, //开启分页
+                cols: [[
+
+                    { field: 'Title', title: '标题', sort: true }
+                    , { field: 'Contents', title: '内容', sort: true }
+                    , { field: 'StartDate', title: '开始时间', sort: true }
+                    , { field: 'EndDate', title: '结束时间',  sort: true }
+                    , { field: 'Levels', title: '等级', sort: true }
+                    , { fixed: 'right', width: 150, title: "操作", align: 'center', toolbar: '#bar' }
+                ]],
+                where: { UniqueId: sysAnnouncementUniqueId },
+                toolbar: GLOBAL_TABLE_TOOBAR,
+                limit: GLOBAL_TABLE_LIMIT,
+                limits: GLOBAL_TABLE_LIMITS,
+                loading: true,
+                skin: GLOBAL_TABLE_SKIN, //行边框风格
+                even: GLOBAL_TABLE_EVEN //开启隔行背景
+            });
+
+
+
+            table.on('tool(sysAnnouncementTable)', function (obj) {
+                debugger
+                var data = obj.data;
+                var uniqueId = data.UniqueId;
+                if (obj.event === 'edit') {
+                 Edit(uniqueId);
+                } else if (obj.event === 'delete') {
+                    Delete(uniqueId)
+                }
+            });
+        });
+
+          function Add(uniqueId) {
+                $.ajax({
+                         url: '@Url.Content("~/Sys/Announcement/InputForm?uniqueId=")' + "",
+                         type: "get",
+                         dataType:"html",
+                         success: function (result) {
+                             layer.open({
+                             type: 1,
+                             title: "新增公告信息",
+                             content: result,
+                             area: ["800px", "500px"],
+                             shade: 0.3, //不显示遮罩
+                             end: function () {
+                                 RefreshSysAnnouncementTable();
+                             }
+                         });
+                     }
+                 });
+
+            }
+
+            function Edit(uniqueId) {
+                   $.ajax({
+                         url: '@Url.Content("~/Sys/Announcement/InputForm?uniqueId=")' + uniqueId  ,
+                         type: "get",
+                         dataType:"html",
+                         success: function (result) {
+                             layer.open({
+                             type: 1,
+                             title: "修改公告信息",
+                             content: result,
+                             area: ["800px", "500px"],
+                             shade: 0.3, //不显示遮罩
+                             end: function () {
+                                 RefreshSysAnnouncementTable();
+                             }
+                         });
+                     }
+                 });
+
+
+            }
+
+        function Delete(uniqueId) {
+              layer.confirm('是否删除数据', function (index) {
+                        $.ajax({
+                            url: '@Url.Content("~/api/Sys/Announcement/Delete")?uniqueId=' + uniqueId ,
+                            type: "get",
+                             success: function (result) {
+                              if (result.IsSuccess) {
+                                  layer.msg('删除成功');
+                                  RefreshSysAnnouncementTable();
+                              } else {
+                                  layer.msg(result.Message);
+                              }
+                        }
+                    });
+
+                    });
+            }
+
+        function RefreshSysAnnouncementTable() {
+            debugger
+            table.reload('sysAnnouncementTable', {
+                where: { UniqueId: sysAnnouncementUniqueId },
+                }, 'data');
+            }
+
+    </script>
+}
+
+
+

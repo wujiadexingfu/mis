@@ -141,7 +141,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Sys\Models\" />
-    <Folder Include="Areas\Sys\Views\Announcement\" />
     <Folder Include="Areas\Sys\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
@@ -2864,6 +2863,8 @@
     <Content Include="Areas\Sys\Views\SysCode\Index.cshtml" />
     <Content Include="Areas\Sys\Views\SysCode\Tree.cshtml" />
     <Content Include="Areas\Sys\Views\SysCode\InputForm.cshtml" />
+    <Content Include="Areas\Sys\Views\Announcement\Index.cshtml" />
+    <Content Include="Areas\Sys\Views\Announcement\InputForm.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

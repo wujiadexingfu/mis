@@ -16,8 +16,8 @@ namespace MIS.EFDataSource
     {
         public string UniqueId { get; set; }
         public string Title { get; set; }
-        public string Content { get; set; }
-        public Nullable<System.DateTime> EffectiveDate { get; set; }
+        public string Contents { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Levels { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }

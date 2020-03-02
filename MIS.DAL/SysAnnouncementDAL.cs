@@ -1,4 +1,5 @@
 ﻿using MIS.EFDataSource;
+using MIS.IDAL;
 using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysAnnouncement;
@@ -11,8 +12,13 @@ using System.Threading.Tasks;
 
 namespace MIS.DAL
 {
-   public class SysAnnouncementDAL
+   public class SysAnnouncementDAL: ISysAnnouncementDAL
     {
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public PageData Query(SysAnnouncementParameter parameter)
         {
             using (MISEntities db = new MISEntities())
@@ -34,29 +40,23 @@ namespace MIS.DAL
 
 
         /// <summary>
-        /// 根据UniqueId获取用户信息
+        /// 根据UniqueId获取公告信息
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         public SysAnnouncementInputForm GetItemByUniqueId(string uniqueId)
         {
             MISEntities db = new MISEntities();
-            var item = db.Sys_User.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
+            var item = db.Sys_Announcement.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
             SysAnnouncementInputForm inputForm = new SysAnnouncementInputForm()
             {
-                //UniqueId = item.UniqueId,
-                //BirthDay = DateTimeUtils.GetDateToStringYYYY_MM_DD(item.BirthDay),
-                //Email = item.Email,
-                //EndExpiryDate = DateTimeUtils.GetDateToStringYYYY_MM_DD(item.EndExpiryDate),
-                //Id = item.Id,
-                //IsLogin = BoolUtils.BoolToString(item.IsLogin),
-                //MobilePhone = item.MobilePhone,
-                //Name = item.Name,
-                //OrganizationUniqueId = item.OrganizationUniqueId,
-                //Remark = item.Remark,
-                //StartExpiryDate = DateTimeUtils.GetDateToStringYYYY_MM_DD(item.StartExpiryDate),
-                //Title = item.Title
 
+                UniqueId = item.UniqueId,
+                Contents = item.Contents,
+                EndDate=item.StartDate,
+                StartDate=item.StartDate,
+                Levels=item.Levels,
+                Title=item.Title 
             };
 
             return inputForm;
@@ -75,35 +75,32 @@ namespace MIS.DAL
             try
             {
                 MISEntities db = new MISEntities();
-                if (db.Sys_User.Any(x => x.Id == inputForm.Id))
-                {
-                    result.ReturnFailedMessage("编号重复");
-                }
-                else
-                {
-                    Sys_User item = new Sys_User();
-                    item.UniqueId = Guid.NewGuid().ToString();
-                    //item.Id = inputForm.Id;
-                    //item.Name = inputForm.Name;
-                    //item.PassWord = Constant.DefaultPassword;
-                    //item.OrganizationUniqueId = inputForm.OrganizationUniqueId;
-                    //item.Email = inputForm.Email;
-                    //item.BirthDay = DateTimeUtils.StringToDateTime(inputForm.BirthDay);
-                    //item.Title = inputForm.Title;
-                    //item.MobilePhone = inputForm.MobilePhone;
-                    //item.Email = inputForm.Email;
-                    //item.Status = UserStatus.New.ToString();
-                    //item.Remark = inputForm.Remark;
-                    //item.StartExpiryDate = DateTimeUtils.StringToDateTime(inputForm.StartExpiryDate);
-                    //item.EndExpiryDate = DateTimeUtils.StringToDateTime(inputForm.EndExpiryDate);
-                    //item.IsLogin = BoolUtils.StringToBool(inputForm.IsLogin);
-                    //item.CreateTime = DateTime.Now;
-                    //item.CreateUser = SessionUtils.GetAccountUnqiueId();
-                    //db.Sys_User.Add(item);
-                    db.SaveChanges();
-                    result.Success();
-                }
+               
+                Sys_Announcement item = new Sys_Announcement();
+                item.UniqueId = Guid.NewGuid().ToString();
+                item.Title = inputForm.Title;
+                item.Contents = inputForm.Contents;
+                item.StartDate = inputForm.StartDate;
+                item.EndDate = inputForm.EndDate;
+                item.Levels = inputForm.Levels;
+                item.CreateTime = DateTime.Now;
+                item.CreateUser = SessionUtils.GetAccountUnqiueId();
+                db.Sys_Announcement.Add(item);
 
+
+                foreach (var itemDetail in inputForm.SelectedUserUniqueId)
+                {
+                    Sys_AnnouncementUser sysAnnouncementUser = new Sys_AnnouncementUser();
+                    sysAnnouncementUser.AnnouncementUniqueId = item.UniqueId;
+                    sysAnnouncementUser.UserUniqueId = itemDetail;
+                    sysAnnouncementUser.CreateTime= DateTime.Now;
+                    sysAnnouncementUser.CreateUser= SessionUtils.GetAccountUnqiueId();
+
+                    db.Sys_AnnouncementUser.Add(sysAnnouncementUser);
+                }
+                db.SaveChanges();
+                result.Success();
+                    
             }
             catch (Exception ex)
             {
@@ -124,30 +121,39 @@ namespace MIS.DAL
             try
             {
                 MISEntities db = new MISEntities();
-                if (db.Sys_User.Any(x => x.Id == inputForm.Id && x.UniqueId != inputForm.UniqueId))
+
+
+                Sys_Announcement item = db.Sys_Announcement.Where(x => x.UniqueId == inputForm.UniqueId).FirstOrDefault();
+
+                item.Title = inputForm.Title;
+                item.Contents = inputForm.Contents;
+                item.StartDate = inputForm.StartDate;
+                item.EndDate = inputForm.EndDate;
+                item.Levels = inputForm.Levels;
+                item.ModifyTime = DateTime.Now;
+                item.ModifyUser = SessionUtils.GetAccountUnqiueId();
+
+
+                var sysAnnouncementUserList = db.Sys_AnnouncementUser.Where(x => x.AnnouncementUniqueId == inputForm.UniqueId).ToList();
+                db.Sys_AnnouncementUser.RemoveRange(sysAnnouncementUserList);
+
+
+                foreach (var itemDetail in inputForm.SelectedUserUniqueId)
                 {
-                    result.ReturnFailedMessage("编号重复");
+                    Sys_AnnouncementUser sysAnnouncementUser = new Sys_AnnouncementUser();
+                    sysAnnouncementUser.AnnouncementUniqueId = item.UniqueId;
+                    sysAnnouncementUser.UserUniqueId = itemDetail;
+                    sysAnnouncementUser.CreateTime = DateTime.Now;
+                    sysAnnouncementUser.CreateUser = SessionUtils.GetAccountUnqiueId();
+                    db.Sys_AnnouncementUser.Add(sysAnnouncementUser);
+
                 }
-                else
-                {
-                    //Sys_User item = db.Sys_User.Where(x => x.UniqueId == inputForm.UniqueId).FirstOrDefault();
-                    //item.Id = inputForm.Id;
-                    //item.Name = inputForm.Name;
-                    //item.OrganizationUniqueId = inputForm.OrganizationUniqueId;
-                    //item.Email = inputForm.Email;
-                    //item.BirthDay = DateTimeUtils.StringToDateTime(inputForm.BirthDay);
-                    //item.Title = inputForm.Title;
-                    //item.MobilePhone = inputForm.MobilePhone;
-                    //item.Email = inputForm.Email;
-                    //item.Remark = inputForm.Remark;
-                    //item.StartExpiryDate = DateTimeUtils.StringToDateTime(inputForm.StartExpiryDate);
-                    //item.EndExpiryDate = DateTimeUtils.StringToDateTime(inputForm.EndExpiryDate);
-                    //item.IsLogin = BoolUtils.StringToBool(inputForm.IsLogin);
-                    //item.ModifyTime = DateTime.Now;
-                    //item.ModifyUser = SessionUtils.GetAccountUnqiueId();
-                    db.SaveChanges();
-                    result.Success();
-                }
+
+
+
+
+                db.SaveChanges();
+                result.Success();
 
             }
             catch (Exception ex)
@@ -169,10 +175,12 @@ namespace MIS.DAL
             try
             {
                 MISEntities db = new MISEntities();
-                var item = db.Sys_User.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
-               // item.Status = UserStatus.Delete.ToString();
-                item.ModifyTime = DateTime.Now;
-                item.ModifyUser = SessionUtils.GetAccountUnqiueId();
+                var item = db.Sys_Announcement.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
+                db.Sys_Announcement.Remove(item);
+
+                var sysAnnouncementUserList = db.Sys_AnnouncementUser.Where(x => x.AnnouncementUniqueId == uniqueId).ToList();
+                db.Sys_AnnouncementUser.RemoveRange(sysAnnouncementUserList);
+
                 db.SaveChanges();
                 result.Success();
             }

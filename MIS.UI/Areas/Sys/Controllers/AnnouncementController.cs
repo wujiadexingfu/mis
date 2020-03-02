@@ -13,5 +13,12 @@ namespace MIS.UI.Areas.Sys.Controllers
         {
             return View();
         }
+
+
+        public ActionResult InputForm(string uniqueId)
+        {
+            ViewBag.UniqueId = uniqueId;
+            return View();
+        }
     }
 }

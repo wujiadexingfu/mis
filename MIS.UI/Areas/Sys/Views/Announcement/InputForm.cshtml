@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "InputForm";
+}
+
+
+<form class="layui-form" action="" name="userInputForm" lay-filter="userInputForm">
+
+    <button type="submit" class="layui-btn" lay-submit lay-filter="saveUserInputForm">提交</button>
+    <input type="hidden" name="UniqueId" id="UniqueId" />
+    <table class="layui-table">
+        <tr>
+            <th>编号</th>
+            <td>
+                <input type="text" value="" name="Id" required lay-verify="required" placeholder="请输入编号" autocomplete="off" class="layui-input" />
+            </td>
+            <th>名称</th>
+            <td>
+                <input type="text" value="" required lay-verify="required" name="Name" placeholder="请输入名称" autocomplete="off" class="layui-input" />
+            </td>
+        </tr>
+        <tr>
+            <th>组织</th>
+            <td>
+                <input type="text" name="OrganizationUniqueId" id="OrganizationUniqueId" lay-filter="organizationUniqueIdTree" class="layui-input" required lay-verify="required">
+                @*<input type="text" name="OrganizationUniqueId" id="OrganizationUniqueId" lay-filter="OrganizationUniqueId" placeholder="请输入组织" autocomplete="off" class="layui-input" />*@
+            </td>
+            <th>Emial</th>
+            <td>
+                <input type="text" value="" name="Email" placeholder="请输入Emial" autocomplete="off" class="layui-input" />
+            </td>
+        </tr>
+
+        <tr>
+            <th>出生日期</th>
+            <td>
+                <input type="text" value="" id="BirthDay" name="BirthDay" placeholder="请输入出厂日期" autocomplete="off" class="layui-input" />
+            </td>
+            <th>职称</th>
+            <td>
+                <input type="text" value="" name="Title" placeholder="请输入职称" autocomplete="off" class="layui-input" />
+            </td>
+        </tr>
+
+        <tr>
+            <th>电话号码</th>
+            <td>
+                <input type="text" value="" name="MobilePhone" placeholder="请输入电话号码" autocomplete="off" class="layui-input" />
+            </td>
+            <th>是否登录</th>
+            <td>
+                <input type="checkbox" name="IsLogin" lay-skin="switch" lay-text="是|否">
+            </td>
+        </tr>
+
+        <tr>
+            <th>开始有效期</th>
+            <td>
+                <input type="text" value="" id="StartExpiryDate" name="StartExpiryDate" placeholder="请输入开始有效期" autocomplete="off" class="layui-input" />
+            </td>
+            <th>结束有效期</th>
+            <td>
+
+                <input type="text" value="" id="EndExpiryDate" name="EndExpiryDate" placeholder="请输入结束有效期" autocomplete="off" class="layui-input" />
+
+            </td>
+        </tr>
+        <tr>
+            <th>备注</th>
+            <td colspan="3">
+                <input type="text" value="" name="Remark" placeholder="请输入备注" autocomplete="off" class="layui-input" />
+            </td>
+
+        </tr>
+
+    </table>
+</form>
+
+
+<script>
+
+    layui.use(['form', "laydate"], function () {
+        var form = layui.form;
+        var uniqueId = "@ViewBag.UniqueId";
+        var laydate = layui.laydate;
+      
+
+        laydate.render({
+            elem: '#BirthDay',
+            trigger: 'click'
+        });
+        laydate.render({
+            elem: '#StartExpiryDate',
+            trigger: 'click'
+        });
+
+
+
+
+    
+
+
+        form.on('submit(saveUserInputForm)', function (data) {
+
+            var data = JSON.stringify(data.field);
+
+
+            if (uniqueId) {
+                  $.ajax({
+                    url: '@Url.Content("~/api/Sys/User/Edit")',
+                    type: "post",
+                    dataType: "json",
+                    headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                      data: data,
+                      async: false,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('修改成功');
+                              layer.closeAll();
+                          } else {
+                              debugger
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+            } else {
+                debugger
+                  $.ajax({
+                    url: '@Url.Content("~/api/Sys/User/Add")',
+                      type: "post",
+                      dataType: "json",
+                      async: false,
+                      headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                    data: data,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('新增成功');
+                              layer.closeAll();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+            }
+
+
+
+            return false;
+        });
+
+        form.render();
+
+        function initStatusSelectOption() {
+              $.ajax({
+                type: "Get",
+                  url: '@Url.Content("~/Api/Sys/SysCode/GetCodeListByParentCodeValue?CodeValue=")' +"EquipmentStatus",
+                contentType: "application/json; charset=utf-8",
+                  dataType: 'json',
+                  async: false,
+                success: function (data) {
+                    //赋值
+                    var html = "";
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<option value="' + data[i].CodeValue + '" id="' + data[i].CodeValue + '" >' + data[i].CodeText + '</option>';
+                    };
+                    $("#Status").append(html);
+                    form.render("select");            // 刷性select，显示出数据
+                   }
+            });
+        };
+
+    });
+
+</script>
+
+
