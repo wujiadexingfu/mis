@@ -141,6 +141,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Sys\Models\" />
+    <Folder Include="Areas\Sys\Views\Announcement\" />
     <Folder Include="Areas\Sys\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
@@ -149,12 +150,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Sys\ApiControllers\AnnouncementApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\FunctionApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\OperationApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\OrganizationApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\RoleApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\SysCodeApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\UserApiController.cs" />
+    <Compile Include="Areas\Sys\Controllers\AnnouncementController.cs" />
     <Compile Include="Areas\Sys\Controllers\FunctionController.cs" />
     <Compile Include="Areas\Sys\Controllers\OperationController.cs" />
     <Compile Include="Areas\Sys\Controllers\OrganizationController.cs" />

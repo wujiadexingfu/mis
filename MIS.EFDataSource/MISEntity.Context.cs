@@ -25,6 +25,8 @@ namespace MIS.EFDataSource
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Sys_Announcement> Sys_Announcement { get; set; }
+        public virtual DbSet<Sys_AnnouncementUser> Sys_AnnouncementUser { get; set; }
         public virtual DbSet<Sys_Attachment> Sys_Attachment { get; set; }
         public virtual DbSet<Sys_Code> Sys_Code { get; set; }
         public virtual DbSet<Sys_Function> Sys_Function { get; set; }

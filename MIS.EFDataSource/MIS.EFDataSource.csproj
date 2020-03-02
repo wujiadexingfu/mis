@@ -66,6 +66,12 @@
       <DependentUpon>MISEntity.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sys_Announcement.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sys_AnnouncementUser.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Sys_Attachment.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
