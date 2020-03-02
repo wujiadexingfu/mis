@@ -32,6 +32,9 @@ namespace MIS.BLL
 
             var accountId = "5BE2DAD8-BA8C-480C-95FD-FD5CA26BDE28";
 
+
+
+
             return _sysFunctionDAL.GetFunctionTreeByAccount(accountId);
         }
 
@@ -45,6 +48,17 @@ namespace MIS.BLL
         {
             return _sysFunctionDAL.GetFunctionTreeByOperationUniqueId(operationUnqiueId);
         }
+
+        /// <summary>
+        /// 根据用户唯一编码，获取到用户所拥有的菜单和操作信息，以便做权限管控
+        /// </summary>
+        /// <param name="userUniqueId"></param>
+        /// <returns></returns>
+        public List<AccountFunctionOperation> GetAccountFunctionOperations(string userUniqueId)
+        {
+            return _sysFunctionDAL.GetAccountFunctionOperations(userUniqueId);
+        }
+
 
 
         /// <summary>

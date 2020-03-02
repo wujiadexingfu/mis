@@ -1,5 +1,6 @@
 ﻿using MIS.IBLL;
 using MIS.Model.Sys.SysOperation;
+using MIS.UI.Filters;
 using MIS.Utility.Serialize;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web.Http;
+using static MIS.Utility.EnumUtility.SystemEnums;
 
 namespace MIS.UI.Areas.Sys.ApiControllers
 {
@@ -26,6 +28,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
+        [OperationFilterAttribute(OperationType.Query)]
         public HttpResponseMessage Query(SysOperationParameter parameter)
         {
             var result = JosnNetHelper.ObjectToJson(_sysOperationBLL.Query(parameter));
@@ -42,7 +45,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// </summary>
         /// <param name="inputForm">修改参数</param>
         /// <returns></returns>
-
+        [OperationFilterAttribute(OperationType.Edit)]
         [HttpPost]
         public HttpResponseMessage Edit(SysOperationInputForm inputForm)
         {
@@ -60,6 +63,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <param name="inputForm">新增参数</param>
         /// <returns></returns>
         [HttpPost]
+        [OperationFilterAttribute(OperationType.Add)]
         public HttpResponseMessage Add(SysOperationInputForm inputForm)
         {
             var result = JosnNetHelper.ObjectToJson(_sysOperationBLL.Add(inputForm));
@@ -93,6 +97,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <param name="uniqueId">唯一编码</param>
         /// <returns></returns>
         [HttpGet]
+        [OperationFilterAttribute(OperationType.Delete)]
         public HttpResponseMessage Delete(string uniqueId)
         {
             var result = JosnNetHelper.ObjectToJson(_sysOperationBLL.Delete(uniqueId));

@@ -98,12 +98,12 @@ namespace MIS.Model.Account
        /// <summary>
        ///操作权限
        /// </summary>
-        public List<AccountFunctionOperation> AccountFunctionOperations { get; set; }
+
 
         public AccountFuntion()
         {
             ChildAccountFuntion = new List<AccountFuntion>();
-            AccountFunctionOperations = new List<AccountFunctionOperation>();
+
         }
 
     }

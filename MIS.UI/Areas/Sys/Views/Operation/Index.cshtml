@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
+@using MIS.UI.Filters
 
 <div style="padding: 20px;">
 
@@ -19,12 +19,22 @@
                 </div>
                 <div class="layui-card-body">
                     <div class="layui-inline layui-show-xs-block">
+
                         <input class="layui-input" autocomplete="off" placeholder="请输入关键字" name="keyword" id="keyword">
+                     
                     </div>
 
                     <div class="layui-inline layui-show-xs-block">
-                        <button class="layui-btn" lay-filter="btnOperationQuery" id="btnOperationQuery" ><i class="layui-icon"></i></button>
-                        <button class="layui-btn" lay-filter="btnAddOperation" id="btnAddOperation"><i class="layui-icon"></i>添加</button>
+                        @if (CheckOperationFilterAttribute.CheckQuery())
+                        {
+                            <button class="layui-btn" lay-filter="btnOperationQuery" id="btnOperationQuery"><i class="layui-icon"></i></button>
+                        }
+
+                        @if (CheckOperationFilterAttribute.CheckAdd())
+                        {
+                            <button class="layui-btn" lay-filter="btnAddOperation" id="btnAddOperation"><i class="layui-icon"></i>添加</button>
+                        }
+
                     </div>
 
                     <table id="operationTable" class="layui-table layui-form" lay-filter="operationTable"></table>
@@ -66,7 +76,7 @@
                 url: '@Url.Content("~/Api/Sys/Operation/Query")',
                 page: GLOBAL_TABLE_PAGE, //开启分页
                 cols: [[
-                  
+
                     { field: 'Id', title: '编号', sort: true }
                     , { field: 'Name', title: '名称', sort: true }
                     , { fixed: 'right', width: 150, title: "操作", align: 'center', toolbar: '#bar' }
@@ -83,7 +93,7 @@
 
 
             table.on('tool(operationTable)', function (obj) {
-      
+
             var data = obj.data;
             var uniqueId = data.UniqueId;
             if (obj.event === 'edit') {

@@ -1,6 +1,7 @@
 ﻿using MIS.IBLL;
 using MIS.Model.Sys.SysOrganization;
 using MIS.Model.Tree;
+using MIS.UI.Filters;
 using MIS.Utility.Serialize;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web.Http;
+using static MIS.Utility.EnumUtility.SystemEnums;
 
 namespace MIS.UI.Areas.Sys.ApiControllers
 {
@@ -60,6 +62,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
+        [OperationFilterAttribute(OperationType.Query)]
         public HttpResponseMessage Query(SysOrganizationParameter parameter)
         {
             var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.Query(parameter));
@@ -93,6 +96,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
+        [OperationFilterAttribute(OperationType.Edit)]
         public HttpResponseMessage Edit(SysOrganizationInputForm inputForm)
         {
 
@@ -110,6 +114,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
+        [OperationFilterAttribute(OperationType.Add)]
         public HttpResponseMessage Add(SysOrganizationInputForm inputForm)
         {
 
@@ -126,6 +131,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <param name="uniqueId"></param>
         /// <returns></returns>
         [HttpGet]
+        [OperationFilterAttribute(OperationType.Delete)]
         public HttpResponseMessage Delete(string uniqueId)
         {
             var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.Delete(uniqueId));

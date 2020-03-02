@@ -55,5 +55,17 @@ namespace MIS.Model.Account
        /// 职称
        /// </summary>
        public string Title { get; set; }
+
+
+        public List<AccountFunctionOperation> AccountFunctionOperations { get; set; }
+
+
+        public Account()
+        {
+            AccountFunctionOperations = new List<AccountFunctionOperation>();
+        }
+
+
+
     }
 }

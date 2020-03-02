@@ -35,9 +35,11 @@ namespace MIS.BLL
     public  class SysUserBLL: ISysUserBLL
     {
         ISysUserDAL _sysUserDAL;
-        public SysUserBLL(ISysUserDAL sysUserDAL)
+        ISysFunctionDAL _sysFunctionDAL;
+        public SysUserBLL(ISysUserDAL sysUserDAL,ISysFunctionDAL sysFunctionDAL)
         {
             _sysUserDAL = sysUserDAL;
+            _sysFunctionDAL = sysFunctionDAL;
         }
 
         /// <summary>
@@ -69,6 +71,7 @@ namespace MIS.BLL
             }
             else {
                 var account= _sysUserDAL.GetAccountById(Id);
+                account.AccountFunctionOperations = _sysFunctionDAL.GetAccountFunctionOperations(account.UniqueId); 
                 System.Web.HttpContext.Current.Session[Constant.Account] = account;  //将用户数据放在Session中
                 result.ReturnData(account);
 

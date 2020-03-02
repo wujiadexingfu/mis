@@ -18,7 +18,7 @@ namespace MIS.UI.Controllers
 
         public ActionResult Index()
         {
-            _sysUserBLL.Login("admin", "admin");
+            _sysUserBLL.Login("admin", "123456");
 ;            ViewBag.Title = "Home Page";
 
             return View();

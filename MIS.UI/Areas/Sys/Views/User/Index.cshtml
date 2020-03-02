@@ -3,6 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using MIS.UI.Filters
 
 <div style="padding: 20px;">
     <div class="layui-row layui-col-space15">
@@ -16,11 +17,20 @@
                     <input class="layui-input" autocomplete="off" placeholder="请输入关键字" name="userParameterKeyword" id="userParameterKeyword">
                 </div>
 
-                <div class="layui-inline layui-show-xs-block">
+                @if (CheckOperationFilterAttribute.CheckQuery())
+                {
                     <button class="layui-btn" lay-filter="btnUserQuery" id="btnUserQuery"><i class="layui-icon"></i></button>
-                    <button class="layui-btn" lay-filter="btnAddUser" id="btnAddUser"><i class="layui-icon"></i>添加</button>
+                }
 
-                    <button class="layui-btn" lay-filter="btnResetPassword" id="btnResetPassword"><img src="/Images/resetpassword.png" />重设密码</button>
+                <div class="layui-inline layui-show-xs-block">
+
+                    @if (CheckOperationFilterAttribute.CheckAdd())
+                    {
+
+                        <button class="layui-btn" lay-filter="btnAddUser" id="btnAddUser"><i class="layui-icon"></i>添加</button>
+                    }
+
+
                 </div>
             </div>
         </div>

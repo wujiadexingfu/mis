@@ -1,5 +1,6 @@
 ﻿using MIS.IBLL;
 using MIS.Model.Sys.SysUser;
+using MIS.UI.Filters;
 using MIS.Utility.Serialize;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web.Http;
+using static MIS.Utility.EnumUtility.SystemEnums;
 
 namespace MIS.UI.Areas.Sys.ApiControllers
 {
@@ -29,7 +31,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
             };
         }
 
-
+        [OperationFilterAttribute(OperationType.Query)]
         [HttpGet]
         [HttpPost]
         public HttpResponseMessage Query(SysUserParameter parameter)
@@ -48,7 +50,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// </summary>
         /// <param name="inputForm">修改参数</param>
         /// <returns></returns>
-
+        [OperationFilterAttribute(OperationType.Edit)]
         [HttpPost]
         public HttpResponseMessage Edit(SysUserInputForm inputForm)
         {
@@ -65,6 +67,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// </summary>
         /// <param name="inputForm">新增参数</param>
         /// <returns></returns>
+        [OperationFilterAttribute(OperationType.Add)]
         [HttpPost]
         public HttpResponseMessage Add(SysUserInputForm inputForm)
         {
@@ -98,6 +101,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// </summary>
         /// <param name="uniqueId">唯一编码</param>
         /// <returns></returns>
+        [OperationFilterAttribute(OperationType.Delete)]
         [HttpGet]
         public HttpResponseMessage Delete(string uniqueId)
         {

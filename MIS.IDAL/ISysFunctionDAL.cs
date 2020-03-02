@@ -1,4 +1,5 @@
-﻿using MIS.Model.Page;
+﻿using MIS.Model.Account;
+using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysFunction;
 using MIS.Model.Tree;
@@ -26,6 +27,14 @@ namespace MIS.IDAL
         /// <param name="operationUnqiueId"></param>
         /// <returns></returns>
         List<LayuiTreeNode> GetFunctionTreeByOperationUniqueId(string operationUnqiueId);
+
+
+        /// <summary>
+        /// 根据用户唯一编码，获取到用户所拥有的菜单和操作信息，以便做权限管控
+        /// </summary>
+        /// <param name="userUniqueId"></param>
+        /// <returns></returns>
+        List<AccountFunctionOperation> GetAccountFunctionOperations(string userUniqueId);
 
         /// <summary>
         /// 修改

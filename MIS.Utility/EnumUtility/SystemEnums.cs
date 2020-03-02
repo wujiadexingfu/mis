@@ -100,5 +100,33 @@ namespace MIS.Utility.EnumUtility
 
         }
 
+        /// <summary>
+        /// 操作类型
+        /// </summary>
+        public enum OperationType
+        {
+            /// <summary>
+            /// 查询
+            /// </summary>
+            Query,
+
+            /// <summary>
+            /// 
+            /// </summary>
+            Add,
+
+
+            /// <summary>
+            /// 修改
+            /// </summary>
+            Edit,
+
+
+            /// <summary>
+            /// 删除
+            /// </summary>
+            Delete
+        }
+
     }
 }

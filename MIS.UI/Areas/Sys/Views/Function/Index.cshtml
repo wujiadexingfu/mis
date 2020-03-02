@@ -3,6 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using MIS.UI.Filters
 
 <script src="~/Content/jsTree/jstree.js"></script>
 <link href="~/Content/jsTree/themes/default/style.css" rel="stylesheet" />
@@ -26,11 +27,17 @@
             <div class="layui-card">
                 <div class="layui-card-header ">
                     <div class="layui-row">
-                        <div class="layui-col-md11 layui-col-sm8 layui-col-xs8">
+                        <div class="layui-col-md10 layui-col-sm6 layui-col-xs6">
                             <i class="layui-icon layui-icon-table pull-right" style="font-size:20px"></i>
                             查询结果
                         </div>
-                        <div class="layui-col-md1  layui-col-sm4  layui-col-xs4">   <button class="layui-btn " lay-filter="btnAddFunction" id="btnAddFunction" onclick="Add('')"><i class="layui-icon"></i>添加</button></div>
+                        <div class="layui-col-md2  layui-col-sm6 layui-col-xs6">
+                            @if (CheckOperationFilterAttribute.CheckAdd())
+                            {
+                                <button class="layui-btn " lay-filter="btnAddFunction" id="btnAddFunction" onclick="Add('')"><i class="layui-icon"></i>添加</button>
+                            }
+
+                        </div>
                     </div>
 
 
@@ -180,7 +187,7 @@
 
 
 
-     
+
 
     </script>
 }

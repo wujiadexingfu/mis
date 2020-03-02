@@ -7,6 +7,7 @@
 
 
 }
+@using MIS.UI.Filters
 
 <script src="~/Content/jsTree/jstree.js"></script>
 <link href="~/Content/jsTree/themes/default/style.css" rel="stylesheet" />
@@ -17,24 +18,31 @@
             <div class="layui-card">
                 <div class="layui-card-header">
 
-                <i class="layui-icon layui-icon-link"></i>查询条件
+                    <i class="layui-icon layui-icon-link"></i>查询条件
                 </div>
-                        <div class="layui-card-body">
-                            <div id="divOrganizationTree">
+                <div class="layui-card-body">
+                    <div id="divOrganizationTree">
 
-                            </div>
-                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
         <div class="layui-col-md8">
             <div class="layui-card">
                 <div class="layui-card-header ">
                     <div class="layui-row">
-                        <div class="layui-col-md11 layui-col-sm8 layui-col-xs8">
+                        <div class="layui-col-md10 layui-col-sm6 layui-col-xs6">
                             <i class="layui-icon layui-icon-table pull-right" style="font-size:20px"></i>
                             查询结果
                         </div>
-                        <div class="layui-col-md1  layui-col-sm4  layui-col-xs4">   <button class="layui-btn " lay-filter="btnAddOrganization" id="btnAddOrganization" onclick="Add('')"><i class="layui-icon"></i>添加</button></div>
+                        <div class="layui-col-md2  layui-col-sm6  layui-col-xs6">
+                            @if (CheckOperationFilterAttribute.CheckAdd())
+                            {
+                                <button class="layui-btn " lay-filter="btnAddOrganization" id="btnAddOrganization" onclick="Add('')"><i class="layui-icon"></i>添加</button>
+
+                            }
+
+                        </div>
                     </div>
 
 
@@ -54,7 +62,7 @@
     <script type="text/javascript">
         var organizationUniqueId = "";
         layui.use(["layer", "table"], function () {
-         
+
             table = layui.table;
 
             table.render({
@@ -65,7 +73,7 @@
                 url: '@Url.Content("~/Api/Sys/Organization/Query")',
                 page: GLOBAL_TABLE_PAGE, //开启分页
                 cols: [[
-                  
+
                      { field: 'Id', title: '编号', sort: true }
                     , { field: 'Name', title: '姓名', sort: true }
                     , { field: 'Parent', title: '父节点', sort: true }
@@ -179,10 +187,6 @@
                     where: { UniqueId: organizationUniqueId },
                 }, 'data');
             }
-
-
-
-
 
     </script>
 }

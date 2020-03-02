@@ -163,7 +163,9 @@
     <Compile Include="Areas\Sys\Controllers\UserController.cs" />
     <Compile Include="Areas\Sys\SysAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Filters\AccountFilterAttribute.cs" />
+    <Compile Include="Filters\CheckOperationFilterAttribute.cs" />
+    <Compile Include="Filters\OperationFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

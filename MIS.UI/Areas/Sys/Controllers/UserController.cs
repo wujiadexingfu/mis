@@ -1,4 +1,6 @@
 ﻿using MIS.IBLL;
+using MIS.UI.Filters;
+using MIS.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,9 @@ namespace MIS.UI.Areas.Sys.Controllers
 {
     public class UserController : Controller
     {
-
         public ActionResult Index()
         {
+           var m= HttpContext.Session[Constant.Account];
             return View();
         }
 

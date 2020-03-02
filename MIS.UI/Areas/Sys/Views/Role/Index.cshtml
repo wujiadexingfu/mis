@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@using MIS.UI.Filters
 <div style="padding: 20px;">
 
     <div class="layui-row layui-col-space15">
@@ -19,8 +19,18 @@
                     </div>
 
                     <div class="layui-inline layui-show-xs-block">
-                        <button class="layui-btn" lay-filter="btnRoleQuery" id="btnRoleQuery"><i class="layui-icon"></i></button>
-                        <button class="layui-btn" lay-filter="btnAddRole" id="btnAddRole"><i class="layui-icon"></i>添加</button>
+                        @if (CheckOperationFilterAttribute.CheckQuery())
+                        {
+
+                            <button class="layui-btn" lay-filter="btnRoleQuery" id="btnRoleQuery"><i class="layui-icon"></i></button>
+                        }
+
+                        @if (CheckOperationFilterAttribute.CheckAdd())
+                        {
+                            <button class="layui-btn" lay-filter="btnAddRole" id="btnAddRole"><i class="layui-icon"></i>添加</button>
+                        }
+
+
                     </div>
 
                     <table id="roleTable" class="layui-table layui-form" lay-filter="roleTable"></table>
@@ -174,7 +184,7 @@
                 });
 
                 });
-           
+
             });
 
 
@@ -261,7 +271,7 @@
 
 
 
-            
+
             $("#btnRoleUserAdd").click(function () {
                 if (uniqueId) {
                     $.ajax({
@@ -278,7 +288,7 @@
                                 area: ["800px", "500px"],
                                 shade: 0.3, //不显示遮罩
                                 end: function () {
-       
+
                                     QueryRoleUser(uniqueId);
                                 }
                             });
@@ -287,7 +297,7 @@
                 } else {
                     layer.msg('请选择角色');
                 }
-                 
+
 
             });
 

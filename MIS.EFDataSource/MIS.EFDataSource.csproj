@@ -102,6 +102,9 @@
     <Compile Include="view_OperationFunction.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="view_UserRoleOperationFunction.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="MISEntity.edmx">

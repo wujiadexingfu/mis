@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using MIS.UI.Filters;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MIS.UI
@@ -8,6 +9,7 @@ namespace MIS.UI
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new AccountFilterAttribute());
         }
     }
 }

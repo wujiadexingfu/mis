@@ -1,6 +1,7 @@
 ﻿using MIS.IBLL;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysFunction;
+using MIS.UI.Filters;
 using MIS.Utility.Serialize;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web.Http;
+using static MIS.Utility.EnumUtility.SystemEnums;
 
 namespace MIS.UI.Areas.Sys.ApiControllers
 {
@@ -76,6 +78,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// </summary>
         /// <param name="inputForm"></param>
         /// <returns></returns>
+        [OperationFilterAttribute(OperationType.Edit)]
         [HttpGet]
         [HttpPost]
         public HttpResponseMessage Edit(SysFunctionInputForm inputForm)
@@ -93,6 +96,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// </summary>
         /// <param name="inputForm"></param>
         /// <returns></returns>
+        [OperationFilterAttribute(OperationType.Add)]
         [HttpGet]
         [HttpPost]
         public HttpResponseMessage Add(SysFunctionInputForm inputForm)
@@ -110,6 +114,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
+        [OperationFilterAttribute(OperationType.Delete)]
         [HttpGet]
         public HttpResponseMessage Delete(string Id)
         {
@@ -141,6 +146,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
+        [OperationFilterAttribute(OperationType.Query)]
         [HttpGet]
         [HttpPost]
         public HttpResponseMessage Query(SysFunctionParameter parameter)

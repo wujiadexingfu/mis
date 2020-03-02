@@ -161,6 +161,31 @@ namespace MIS.DAL
         }
 
 
+        /// <summary>
+        /// 根据用户唯一编码，获取到用户所拥有的菜单和操作信息，以便做权限管控
+        /// </summary>
+        /// <param name="userUniqueId"></param>
+        /// <returns></returns>
+        public List<AccountFunctionOperation> GetAccountFunctionOperations(string userUniqueId)
+        {
+            MISEntities db = new MISEntities();
+
+            var list = db.view_UserRoleOperationFunction.Where(x => x.UserUniqueId == userUniqueId).Select(x => new AccountFunctionOperation()
+            {
+                FunctionId=x.FunctionId,
+                Area=x.Area,
+                Action=x.Action,
+                Controller=x.Controller,
+                OperationId=x.OperationId
+            }).ToList();
+
+            return list;
+        }
+
+
+
+
+
 
         /// <summary>
         /// 修改
