@@ -247,5 +247,29 @@ namespace MIS.DAL
                 return pageData;
             }
         }
+
+        /// <summary>
+        /// 根据父节点的值获取子节点的其他选项
+        /// </summary>
+        /// <param name="codeValue"></param>
+        /// <returns></returns>
+        public List<SysCodeInputForm> GetSysCodeByCodeValue(string codeValue)
+        {
+            MISEntities db = new MISEntities();
+            var list = (from x in db.Sys_Code join x1 in db.Sys_Code on x.UniqueId equals x1.ParentUniqueId where x.CodeValue== codeValue
+                        select new SysCodeInputForm() {
+                UniqueId = x1.UniqueId,
+                CodeText = x1.CodeText,
+                CodeValue = x1.CodeValue
+
+            }).ToList();
+
+            return list;
+        }
+
+
+
+
+
     }
 }

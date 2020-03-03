@@ -63,5 +63,13 @@ namespace MIS.IDAL
         /// <param name="parameter"></param>
         /// <returns></returns>
         PageData Query(SysCodeParameter parameter);
+
+
+        /// <summary>
+        /// 根据父节点的值获取子节点的其他选项
+        /// </summary>
+        /// <param name="codeValue"></param>
+        /// <returns></returns>
+        List<SysCodeInputForm> GetSysCodeByCodeValue(string codeValue);
     }
 }

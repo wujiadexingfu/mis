@@ -4,6 +4,7 @@ using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysAnnouncement;
 using MIS.Utility;
+using MIS.Utility.DateUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +32,18 @@ namespace MIS.DAL
 
                 var count = query.Count();
                 var data = query.OrderBy(x => x.CreateTime).Skip((parameter.Page - 1) * parameter.Limit).Take(parameter.Limit).ToList();
+
+                SysCodeDAL sysCodeDAL = new SysCodeDAL();
+                var codeList = sysCodeDAL.GetSysCodeByCodeValue("AnnouncementLevels");
+
+                foreach (var item in data)
+                {
+                    var sysCodeItem = codeList.Where(x => x.CodeValue == item.Levels).FirstOrDefault();
+                    item.Levels = sysCodeItem==null? "":sysCodeItem.CodeText;
+                }
+
              
-                PageData pageData = new PageData(count, "");
+                PageData pageData = new PageData(count, data);
                 return pageData;
             }
         }
@@ -48,15 +59,19 @@ namespace MIS.DAL
         {
             MISEntities db = new MISEntities();
             var item = db.Sys_Announcement.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
+
+            var selectedUserUniqueId = db.Sys_AnnouncementUser.Where(x => x.AnnouncementUniqueId == item.UniqueId).Select(x => x.UserUniqueId).ToList();
             SysAnnouncementInputForm inputForm = new SysAnnouncementInputForm()
             {
 
                 UniqueId = item.UniqueId,
                 Contents = item.Contents,
-                EndDate=item.StartDate,
-                StartDate=item.StartDate,
-                Levels=item.Levels,
-                Title=item.Title 
+                EndDate=item.EndDate==null?"": item.EndDate.Value.ToString(DateTimeFormatter.YYYY_MM_DD),
+                StartDate=item.StartDate == null ? "" : item.StartDate.Value.ToString(DateTimeFormatter.YYYY_MM_DD),
+                Levels =item.Levels,
+                Title=item.Title ,
+                SelectedUserUniqueId= selectedUserUniqueId
+
             };
 
             return inputForm;
@@ -80,8 +95,8 @@ namespace MIS.DAL
                 item.UniqueId = Guid.NewGuid().ToString();
                 item.Title = inputForm.Title;
                 item.Contents = inputForm.Contents;
-                item.StartDate = inputForm.StartDate;
-                item.EndDate = inputForm.EndDate;
+                item.StartDate = DateTimeUtils.StringToDateTime(inputForm.StartDate);
+                item.EndDate = DateTimeUtils.StringToDateTime(inputForm.EndDate);
                 item.Levels = inputForm.Levels;
                 item.CreateTime = DateTime.Now;
                 item.CreateUser = SessionUtils.GetAccountUnqiueId();
@@ -91,6 +106,7 @@ namespace MIS.DAL
                 foreach (var itemDetail in inputForm.SelectedUserUniqueId)
                 {
                     Sys_AnnouncementUser sysAnnouncementUser = new Sys_AnnouncementUser();
+                    sysAnnouncementUser.UniqueId = Guid.NewGuid().ToString();
                     sysAnnouncementUser.AnnouncementUniqueId = item.UniqueId;
                     sysAnnouncementUser.UserUniqueId = itemDetail;
                     sysAnnouncementUser.CreateTime= DateTime.Now;
@@ -124,11 +140,10 @@ namespace MIS.DAL
 
 
                 Sys_Announcement item = db.Sys_Announcement.Where(x => x.UniqueId == inputForm.UniqueId).FirstOrDefault();
-
                 item.Title = inputForm.Title;
                 item.Contents = inputForm.Contents;
-                item.StartDate = inputForm.StartDate;
-                item.EndDate = inputForm.EndDate;
+                item.StartDate = DateTimeUtils.StringToDateTime(inputForm.StartDate);
+                item.EndDate = DateTimeUtils.StringToDateTime(inputForm.EndDate); 
                 item.Levels = inputForm.Levels;
                 item.ModifyTime = DateTime.Now;
                 item.ModifyUser = SessionUtils.GetAccountUnqiueId();
@@ -141,6 +156,7 @@ namespace MIS.DAL
                 foreach (var itemDetail in inputForm.SelectedUserUniqueId)
                 {
                     Sys_AnnouncementUser sysAnnouncementUser = new Sys_AnnouncementUser();
+                    sysAnnouncementUser.UniqueId = Guid.NewGuid().ToString();
                     sysAnnouncementUser.AnnouncementUniqueId = item.UniqueId;
                     sysAnnouncementUser.UserUniqueId = itemDetail;
                     sysAnnouncementUser.CreateTime = DateTime.Now;

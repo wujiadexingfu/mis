@@ -19,7 +19,29 @@ var GLOBAL_TABLE_SKIN ="row";  //表格风格line （行边框风格）,  row �
 
         hideLoading: function (id) {
             $("#" + id).mLoading("hide");
+        },
+
+        selectExtens: function (id, codeValue) {
+
+            $.ajax({
+                type: "Get",
+                url: "/Api/Sys/SysCode/GetSysCodeByCodeValue?codeValue=" + codeValue,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    //赋值
+                    var html = "";
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<option value="' + data[i].CodeValue + '" id="' + data[i].CodeValue + '" >' + data[i].CodeText + '</option>';
+                    };
+                    $("#" + id).append(html);
+                
+                }
+            });
         }
+
+
     });
 })(jQuery);
 

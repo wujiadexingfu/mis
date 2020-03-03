@@ -1,4 +1,6 @@
 ﻿using MIS.IBLL;
+using MIS.Model.Account;
+using MIS.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,8 @@ namespace MIS.UI.Controllers
         {
             _sysUserBLL.Login("admin", "123456");
 ;            ViewBag.Title = "Home Page";
+
+            ViewBag.UserName = ((Account)HttpContext.Session[Constant.Account]).Name;
 
             return View();
         }

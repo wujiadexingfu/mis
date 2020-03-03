@@ -57,7 +57,7 @@
 @section scripts{
 
     <script type="text/javascript">
-        var sysAnnouncementUniqueId = "";
+  
         layui.use(["layer", "table"], function () {
 
             table = layui.table;
@@ -73,12 +73,12 @@
 
                     { field: 'Title', title: '标题', sort: true }
                     , { field: 'Contents', title: '内容', sort: true }
-                    , { field: 'StartDate', title: '开始时间', sort: true }
-                    , { field: 'EndDate', title: '结束时间',  sort: true }
+                    , { field: 'StartDate', title: '开始时间', sort: true, templet: '<div>{{ layui.util.toDateString(d.StartDate, "yyyy-MM-dd")  }}</div>'  }
+                    , { field: 'EndDate', title: '结束时间', sort: true, templet: '<div>{{ layui.util.toDateString(d.EndDate, "yyyy-MM-dd")  }}</div>' }
                     , { field: 'Levels', title: '等级', sort: true }
                     , { fixed: 'right', width: 150, title: "操作", align: 'center', toolbar: '#bar' }
                 ]],
-                where: { UniqueId: sysAnnouncementUniqueId },
+                where: { Keyword: $("#keyword").val() },
                 toolbar: GLOBAL_TABLE_TOOBAR,
                 limit: GLOBAL_TABLE_LIMIT,
                 limits: GLOBAL_TABLE_LIMITS,
@@ -90,7 +90,7 @@
 
 
             table.on('tool(sysAnnouncementTable)', function (obj) {
-                debugger
+               
                 var data = obj.data;
                 var uniqueId = data.UniqueId;
                 if (obj.event === 'edit') {
@@ -101,26 +101,30 @@
             });
         });
 
-          function Add(uniqueId) {
-                $.ajax({
-                         url: '@Url.Content("~/Sys/Announcement/InputForm?uniqueId=")' + "",
-                         type: "get",
-                         dataType:"html",
-                         success: function (result) {
-                             layer.open({
-                             type: 1,
-                             title: "新增公告信息",
-                             content: result,
-                             area: ["800px", "500px"],
-                             shade: 0.3, //不显示遮罩
-                             end: function () {
-                                 RefreshSysAnnouncementTable();
-                             }
-                         });
-                     }
-                 });
+                $("#btnAddSysAnnouncement").click(function () {
+                   $.ajax({
+                     url: '@Url.Content("~/Sys/Announcement/InputForm?uniqueId=")'+"",
+                     type: "get",
+                     dataType:"html",
+                       success: function (result) {
+                           debugger
 
-            }
+                          var index=  layer.open({
+                                type:1,
+                                title: "新增公告信息",
+                                content: result ,
+                                area: ["800px", "800px"],
+                                shade: 0.3, //不显示遮罩
+                                end: function () {
+                                    RefreshSysAnnouncementTable();
+                              }
+                         
+                           });
+                           layer.full(index);
+                 }
+             });
+
+            });
 
             function Edit(uniqueId) {
                    $.ajax({
@@ -128,16 +132,17 @@
                          type: "get",
                          dataType:"html",
                          success: function (result) {
-                             layer.open({
+                           var index=  layer.open({
                              type: 1,
                              title: "修改公告信息",
                              content: result,
-                             area: ["800px", "500px"],
+                                 area: ["800px", "800px"],
                              shade: 0.3, //不显示遮罩
                              end: function () {
                                  RefreshSysAnnouncementTable();
                              }
-                         });
+                             });
+                             layer.full(index);
                      }
                  });
 
@@ -162,10 +167,23 @@
                     });
             }
 
+
+        $("#btnSysAnnouncementQuery").click(function () {
+            table.reload('sysAnnouncementTable', {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                },
+                where: { Keyword: $("#keyword").val() },
+            }, 'data');
+
+
+        });
+
+
         function RefreshSysAnnouncementTable() {
             debugger
             table.reload('sysAnnouncementTable', {
-                where: { UniqueId: sysAnnouncementUniqueId },
+                where: { Keyword: $("#keyword").val() },
                 }, 'data');
             }
 

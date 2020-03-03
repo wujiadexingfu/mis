@@ -2839,7 +2839,6 @@
     <Content Include="Content\okadmin\lib\wangEditor\package.json" />
     <Content Include="Content\okadmin\lib\wangEditor\README.md" />
     <Content Include="Content\okadmin\lib\wangEditor\release\fonts\w-e-icon.woff" />
-    <Content Include="Content\okadmin\lib\wangEditor\release\wangEditor.min.js.map" />
     <Content Include="Content\okadmin\lib\wangEditor\src\fonts\w-e-icon.woff" />
     <Content Include="Content\okadmin\lib\wangEditor\src\js\.babelrc" />
     <Content Include="Content\okadmin\lib\wangEditor\src\less\common.less" />
@@ -2865,6 +2864,8 @@
     <Content Include="Areas\Sys\Views\SysCode\InputForm.cshtml" />
     <Content Include="Areas\Sys\Views\Announcement\Index.cshtml" />
     <Content Include="Areas\Sys\Views\Announcement\InputForm.cshtml" />
+    <Content Include="Content\okadmin\lib\wangEditor\release\wangEditor.min.js.map" />
+    <Content Include="Areas\Sys\Views\User\OrganizationUser.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

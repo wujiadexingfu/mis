@@ -2,6 +2,7 @@
 using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysUser;
+using MIS.Model.Tree;
 using MIS.Utility.EnumUtility;
 using System;
 using System.Collections.Generic;
@@ -114,5 +115,13 @@ namespace MIS.IDAL
         /// <param name="parameter"></param>
         /// <returns></returns>
         PageData QueryNotSelectedUserByRoleUniqueId(SysUserRoleParameter parameter);
+
+
+        /// <summary>
+        /// 获取部门人员信息
+        /// </summary>
+        /// <param name="selectedUserList">选中值</param>
+        /// <returns></returns>
+        List<LayuiTreeNode> GetOrganizationUser(List<string> selectedUserList);
     }
 }

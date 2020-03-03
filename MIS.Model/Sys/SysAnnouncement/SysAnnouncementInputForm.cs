@@ -26,12 +26,12 @@ namespace MIS.Model.Sys.SysAnnouncement
         /// <summary>
         /// 开始时间
         /// </summary>
-        public DateTime? StartDate { get; set; }
+        public string StartDate { get; set; }
 
         /// <summary>
         /// 结束时间
         /// </summary>
-        public DateTime? EndDate { get; set; }
+        public string EndDate { get; set; }
 
         /// <summary>
         /// 等级

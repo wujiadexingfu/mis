@@ -137,5 +137,24 @@ namespace MIS.UI.Areas.Sys.ApiControllers
             };
         }
 
+        /// <summary>
+        /// 根据父节点的值获取子节点的其他选项
+        /// </summary>
+        /// <param name="codeValue"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage GetSysCodeByCodeValue(string codeValue)
+        {
+
+            var result = JosnNetHelper.ObjectToJson(_sysCodeBLL.GetSysCodeByCodeValue(codeValue));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+        
+
     }
 }

@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "OrganizationUser";
+    Layout = null;
+}
+
+<div id="organizationUserTree"></div>
+<script>
+    var selectedUserArray = [];
+    var organziationUserTree = "";
+    layui.use(['tree'], function () {
+        var tree = layui.tree;
+        debugger
+        var selectedUser = @Html.Raw(ViewBag.SelectedUser);
+
+     
+        var data = { "SelectedUserList": selectedUser};
+
+        debugger;
+             $.ajax({
+                 url: '@Url.Content("~/api/Sys/User/GetOrganizationUser")',
+                  type: "post",
+                  dataType: "json",
+                 data: data,
+                 success: function (data) {
+                     organziationUserTree = tree.render({
+                         elem: '#organizationUserTree' //默认是点击节点可进行收缩
+                         , data: data
+                         , showCheckbox: true
+                     });
+
+                    }
+                });
+
+       
+    });
+
+    function getChecked() {
+        
+        var checkedData = organziationUserTree.getChecked(); //获取选中节点的数据
+
+        console.log(checkedData);
+
+        for (var i = 0; i < checkedData.length; i++) {
+            getData(checkedData[i]);
+        }
+
+        return selectedUserArray;
+    }
+
+     ///递归查询获取数据
+        function getData(data) {
+            //判断是否为操作节点
+            if (data.NodeType == "@MIS.Utility.EnumUtility.SystemEnums.TreeNodeType.User.ToString()") {
+                selectedUserArray.push(data.id);
+            }
+            if (data.children) {
+                for (var i = 0; i < data.children.length; i++) {
+                    getData(data.children[i]);
+                }
+            }
+        }
+
+</script>
+

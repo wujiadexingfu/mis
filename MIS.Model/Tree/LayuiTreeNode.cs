@@ -27,6 +27,7 @@ namespace MIS.Model.Tree
         [JsonProperty(PropertyName = "children")]
         public List<LayuiTreeNode> Children { get; set; }
 
+
         /// <summary>
         /// 是否选中
         /// </summary>

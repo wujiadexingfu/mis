@@ -179,5 +179,25 @@ namespace MIS.UI.Areas.Sys.ApiControllers
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
             };
         }
+
+        /// <summary>
+        /// 获取部门人员信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage GetOrganizationUser(SysOrganizationUserParameter parameter)
+        {
+            if (parameter == null)
+            {
+                parameter = new SysOrganizationUserParameter();
+            }
+            var result = JosnNetHelper.ObjectToJson(_sysUserBLL.GetOrganizationUser(parameter.SelectedUserList));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
     }
 }

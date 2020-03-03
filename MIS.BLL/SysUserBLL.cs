@@ -4,6 +4,7 @@ using MIS.Model.Account;
 using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysUser;
+using MIS.Model.Tree;
 using MIS.Utility;
 using MIS.Utility.EnumUtility;
 using System.Collections.Generic;
@@ -164,6 +165,17 @@ namespace MIS.BLL
        public PageData QueryNotSelectedUserByRoleUniqueId(SysUserRoleParameter parameter)
         {
             return _sysUserDAL.QueryNotSelectedUserByRoleUniqueId(parameter);
+        }
+
+
+        /// <summary>
+        /// 获取部门人员信息
+        /// </summary>
+        /// <param name="selectedUserList">选中值</param>
+        /// <returns></returns>
+       public  List<LayuiTreeNode> GetOrganizationUser(List<string> selectedUserList)
+        {
+            return _sysUserDAL.GetOrganizationUser(selectedUserList);
         }
     }
 }

@@ -96,7 +96,17 @@ namespace MIS.Utility.EnumUtility
             /// <summary>
             /// 操作
             /// </summary>
-            Operation
+            Operation,
+
+            /// <summary>
+            /// 组织
+            /// </summary>
+            Organization,
+
+            /// <summary>
+            /// 用户 
+            /// </summary>
+            User,
 
         }
 

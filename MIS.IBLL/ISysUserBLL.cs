@@ -1,6 +1,7 @@
 ﻿using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysUser;
+using MIS.Model.Tree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -104,6 +105,14 @@ namespace MIS.IBLL
         /// <param name="parameter"></param>
         /// <returns></returns>
         PageData QueryNotSelectedUserByRoleUniqueId(SysUserRoleParameter parameter);
+
+
+        /// <summary>
+        /// 获取部门人员信息
+        /// </summary>
+        /// <param name="selectedUserList">选中值</param>
+        /// <returns></returns>
+        List<LayuiTreeNode> GetOrganizationUser(List<string> selectedUserList);
     }
 
 

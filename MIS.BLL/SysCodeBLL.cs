@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MIS.BLL
 {
-  public   class SysCodeBLL: ISysCodeBLL
+    public class SysCodeBLL : ISysCodeBLL
     {
         public ISysCodeDAL _sysCodeDAL;
 
@@ -37,7 +37,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="inputForm"></param>
         /// <returns></returns>
-         public  RequestResult Edit(SysCodeInputForm inputForm)
+        public RequestResult Edit(SysCodeInputForm inputForm)
         {
             return _sysCodeDAL.Edit(inputForm);
 
@@ -82,7 +82,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public  RequestResult Delete(string uniqueId)
+        public RequestResult Delete(string uniqueId)
         {
             return _sysCodeDAL.Delete(uniqueId);
 
@@ -96,6 +96,16 @@ namespace MIS.BLL
         public PageData Query(SysCodeParameter parameter)
         {
             return _sysCodeDAL.Query(parameter);
+        }
+
+        /// <summary>
+        /// 根据父节点的值获取子节点的其他选项
+        /// </summary>
+        /// <param name="codeValue"></param>
+        /// <returns></returns>
+        public List<SysCodeInputForm> GetSysCodeByCodeValue(string codeValue)
+        {
+            return _sysCodeDAL.GetSysCodeByCodeValue(codeValue);
         }
 
 

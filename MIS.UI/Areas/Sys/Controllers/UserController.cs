@@ -24,5 +24,15 @@ namespace MIS.UI.Areas.Sys.Controllers
             ViewBag.UniqueId = uniqueId;
             return View();
         }
+
+        public ActionResult OrganizationUser(string selectedUser)
+        {
+            if (selectedUser == null)
+            {
+                selectedUser = "[]";
+            }
+            ViewBag.SelectedUser = selectedUser;
+            return View();
+        }
     }
 }

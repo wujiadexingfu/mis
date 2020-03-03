@@ -71,6 +71,7 @@
     <Compile Include="Sys\SysRole\SysRoleOperationFunctionInputForm.cs" />
     <Compile Include="Sys\SysRole\SysRoleParameter.cs" />
     <Compile Include="Sys\SysRole\SysRoleUserInputForm.cs" />
+    <Compile Include="Sys\SysUser\SysOrganizationUserParameter.cs" />
     <Compile Include="Sys\SysUser\SysUserGrid.cs" />
     <Compile Include="Sys\SysUser\SysUserInputForm.cs" />
     <Compile Include="Sys\SysUser\SysUserParameter.cs" />

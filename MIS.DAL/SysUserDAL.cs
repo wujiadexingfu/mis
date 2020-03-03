@@ -14,6 +14,7 @@ using MIS.Utility.DateUtility;
 using MIS.Utility;
 using static MIS.Utility.EnumUtility.SystemEnums;
 using MIS.Utility.BoolUtility;
+using MIS.Model.Tree;
 
 
 /********************************************************************************
@@ -390,6 +391,89 @@ namespace MIS.DAL
                 PageData pageData = new PageData(count, list);
                 return pageData;
             }
+        }
+
+
+
+
+        /// <summary>
+        /// 获取部门人员信息
+        /// </summary>
+        /// <param name="selectedUserList">选中值</param>
+        /// <returns></returns>
+        public List<LayuiTreeNode> GetOrganizationUser(List<string> selectedUserList)
+        {
+            MISEntities db = new MISEntities();
+            var organizationList = db.Sys_Organization.Where(x => x.Status != Status.Delete.ToString()).ToList();  //所有的部门信息
+            var userList = db.Sys_User.ToList(); //所有人员的信息
+
+            var list = GetOrganiationUserTreeNodesWithType("*", organizationList, userList, selectedUserList);
+
+            return list;
+
+        }
+
+     
+        /// <summary>
+        /// 查询部门人员树的信息（递归）
+        /// </summary>
+        /// <param name="parentUnqiueId"></param>
+        /// <param name="allOrganizationList"></param>
+        /// <param name="userList"></param>
+        /// <param name="selectedUserList"></param>
+        /// <returns></returns>
+        private static List<LayuiTreeNode> GetOrganiationUserTreeNodesWithType(string parentUnqiueId, List<Sys_Organization> allOrganizationList, List<Sys_User> userList, List<string> selectedUserList)
+        {
+
+            var layuiTreeNodeList = new List<LayuiTreeNode>();
+
+            var childOrganizationList = allOrganizationList.Where(x => x.ParentUniqueId == parentUnqiueId).OrderBy(x => x.Seq);
+
+            foreach (var item in childOrganizationList)
+            {
+                var layuiTreeNode = new LayuiTreeNode();
+
+                var organizationUserNodeList = GetOrganizationUser(item.UniqueId, userList, selectedUserList);
+
+                layuiTreeNode.Children.AddRange(organizationUserNodeList);
+                layuiTreeNode.Id = item.Id;
+                layuiTreeNode.Title = item.Name;
+                layuiTreeNode.NodeType = TreeNodeType.Organization.ToString();
+                layuiTreeNode.Children.AddRange(GetOrganiationUserTreeNodesWithType(item.UniqueId, allOrganizationList, userList, selectedUserList));
+
+                layuiTreeNodeList.Add(layuiTreeNode);
+
+            }
+            return layuiTreeNodeList;
+
+        }
+
+        /// <summary>
+        /// 获取部门人员信息
+        /// </summary>
+        /// <param name="organizationUniqueId">部门的唯一编码</param>
+        /// <param name="userList">所有的用户信息</param>
+        /// <param name="selectedUserList">选中的用户信息</param>
+        /// <returns></returns>
+        private static List<LayuiTreeNode> GetOrganizationUser(string organizationUniqueId,List<Sys_User> userList,List<string>  selectedUserList)
+        {
+            List<LayuiTreeNode> list = new List<LayuiTreeNode>();
+
+            var organizationUser = userList.Where(x => x.OrganizationUniqueId == organizationUniqueId).ToList();  //该部门下的所有人员信息
+
+
+
+            foreach (var item in organizationUser)
+            {
+                LayuiTreeNode layuiTreeNode = new LayuiTreeNode();
+                layuiTreeNode.Id = item.UniqueId;
+                layuiTreeNode.Title = item.Name;
+                layuiTreeNode.NodeType = TreeNodeType.User.ToString();
+                layuiTreeNode.Checked = selectedUserList.Any(x => x == item.UniqueId); //选中
+
+                list.Add(layuiTreeNode);
+            }
+            return list;
         }
 
 

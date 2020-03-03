@@ -352,7 +352,7 @@ layui.config({
    */
   $("#logout").click(function () {
     okLayer.confirm("确定要退出吗？", function (index) {
-      window.location = "pages/login.html";
+      window.location = "Home/Login";
     });
   });
 
