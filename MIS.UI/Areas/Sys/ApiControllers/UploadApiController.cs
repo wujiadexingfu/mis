@@ -28,6 +28,8 @@ namespace MIS.UI.Areas.Sys.ApiControllers
                var file1= files[i].FileName;
             }
 
+            
+
 
             //var result = JosnNetHelper.ObjectToJson(_sysAnnouncementBLL.Query(parameter));
             return new HttpResponseMessage()

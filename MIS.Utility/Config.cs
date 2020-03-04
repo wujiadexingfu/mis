@@ -42,5 +42,16 @@ namespace MIS.Utility
                 return XDocument.Load(Constant.ConfigFile).Root;
             }
         }
+
+        /// <summary>
+        /// 文件存放的根目录
+        /// </summary>
+        public static string GetFileDirectory
+        {
+            get
+            {
+                return Root.Element("File").Element("FileDirectory").Value;
+            }
+        } 
     }
 }
