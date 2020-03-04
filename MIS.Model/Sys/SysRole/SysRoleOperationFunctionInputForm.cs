@@ -11,11 +11,11 @@ namespace MIS.Model.Sys.SysRole
         /// <summary>
         /// 角色编号
         /// </summary>
-        public string RoleUnqiueId { get; set; }
+        public Guid RoleUnqiueId { get; set; }
 
         /// <summary>
         /// 菜单和操作的唯一编码
         /// </summary>
-        public List<string> OperationFunctionList{ get; set; }
+        public List<Guid> OperationFunctionList{ get; set; }
     }
 }

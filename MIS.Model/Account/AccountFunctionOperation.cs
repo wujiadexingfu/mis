@@ -54,6 +54,6 @@ namespace MIS.Model.Account
        /// <summary>
        /// 操作Id
        /// </summary>
-       public string OperationId { get; set; }
+       public string  OperationId { get; set; }
     }
 }

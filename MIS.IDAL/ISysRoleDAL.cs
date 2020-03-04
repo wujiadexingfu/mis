@@ -24,7 +24,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        SysRoleInputForm GetItemByUniqueId(string uniqueId);
+        SysRoleInputForm GetItemByUniqueId(Guid uniqueId);
 
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        RequestResult Delete(string uniqueId);
+        RequestResult Delete(Guid uniqueId);
 
         /// <summary>
         /// 添加用户菜单和操作权限的关联
@@ -69,6 +69,6 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        RequestResult DeleteRoleUser(string uniqueId);
+        RequestResult DeleteRoleUser(Guid uniqueId);
     }
 }

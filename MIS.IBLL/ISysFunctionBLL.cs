@@ -24,7 +24,7 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="operationUnqiueId"></param>
         /// <returns></returns>
-        List<LayuiTreeNode> GetFunctionTreeByOperationUniqueId(string operationUnqiueId);
+        List<LayuiTreeNode> GetFunctionTreeByOperationUniqueId(Guid operationUnqiueId);
 
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="userUniqueId"></param>
         /// <returns></returns>
-        List<AccountFunctionOperation> GetAccountFunctionOperations(string userUniqueId);
+        List<AccountFunctionOperation> GetAccountFunctionOperations(Guid userUniqueId);
 
 
 
@@ -96,6 +96,6 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="operationUnqiueId"></param>
         /// <returns></returns>
-        List<LayuiTreeNode> GetFunctionTreeByRoleUniqueId(string roleUnqiueId);
+        List<LayuiTreeNode> GetFunctionTreeByRoleUniqueId(Guid roleUnqiueId);
     }
 }

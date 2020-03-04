@@ -9,6 +9,6 @@ namespace MIS.Model.Sys.SysCode
 {
    public class SysCodeParameter:BaseParameter
     {
-        public string UniqueId { get; set; }
+        public Guid UniqueId { get; set; }
     }
 }

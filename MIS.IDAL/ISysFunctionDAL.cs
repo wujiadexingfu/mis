@@ -26,7 +26,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="operationUnqiueId"></param>
         /// <returns></returns>
-        List<LayuiTreeNode> GetFunctionTreeByOperationUniqueId(string operationUnqiueId);
+        List<LayuiTreeNode> GetFunctionTreeByOperationUniqueId(Guid operationUnqiueId);
 
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="userUniqueId"></param>
         /// <returns></returns>
-        List<AccountFunctionOperation> GetAccountFunctionOperations(string userUniqueId);
+        List<AccountFunctionOperation> GetAccountFunctionOperations(Guid userUniqueId);
 
         /// <summary>
         /// 修改
@@ -95,6 +95,6 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="operationUnqiueId"></param>
         /// <returns></returns>
-        List<LayuiTreeNode> GetFunctionTreeByRoleUniqueId(string roleUnqiueId);
+        List<LayuiTreeNode> GetFunctionTreeByRoleUniqueId(Guid roleUnqiueId);
     }
 }

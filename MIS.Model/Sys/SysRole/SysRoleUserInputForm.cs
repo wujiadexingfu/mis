@@ -11,11 +11,11 @@ namespace MIS.Model.Sys.SysRole
         /// <summary>
         /// 角色的唯一编码
         /// </summary>
-        public string RoleUniqueId { get; set; }
+        public Guid RoleUniqueId { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public List<string> UserList { get; set; }
+        public List<Guid> UserList { get; set; }
     }
 }

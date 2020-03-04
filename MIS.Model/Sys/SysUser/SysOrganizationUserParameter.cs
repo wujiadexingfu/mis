@@ -8,11 +8,11 @@ namespace MIS.Model.Sys.SysUser
 {
    public class SysOrganizationUserParameter
     {
-        public List<string> SelectedUserList { get; set; }
+        public List<Guid> SelectedUserList { get; set; }
 
         public SysOrganizationUserParameter()
         {
-            SelectedUserList = new List<string>();
+            SelectedUserList = new List<Guid>();
         }
     }
 }

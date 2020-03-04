@@ -11,7 +11,7 @@ namespace MIS.Model.Sys.SysCode
         /// <summary>
         /// 唯一编码
         /// </summary>
-        public string UniqueId { get; set; }
+        public Guid UniqueId { get; set; }
 
         /// <summary>
         /// 显示值
@@ -28,7 +28,7 @@ namespace MIS.Model.Sys.SysCode
         /// <summary>
         /// 父节点
         /// </summary>
-        public string ParentUniqueId { get; set; }
+        public Guid? ParentUniqueId { get; set; }
 
         /// <summary>
         /// 排序

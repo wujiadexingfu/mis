@@ -12,13 +12,13 @@ namespace MIS.EFDataSource
     using System;
     using System.Collections.Generic;
     
-    public partial class Sys_Operation
+    public partial class Sys_File
     {
         public System.Guid UniqueId { get; set; }
         public string Name { get; set; }
-        public string Id { get; set; }
-        public Nullable<System.DateTime> CreateTime { get; set; }
+        public string ParentUnqiueId { get; set; }
         public Nullable<System.Guid> CreateUser { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.Guid> ModifyUser { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
     }

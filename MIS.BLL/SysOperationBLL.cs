@@ -35,7 +35,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public SysOperationInputForm GetOperationByUniqueId(string uniqueId)
+        public SysOperationInputForm GetOperationByUniqueId(Guid uniqueId)
         {
             return _sysOperationDAL.GetOperationByUniqueId(uniqueId);
         }
@@ -68,7 +68,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public RequestResult Delete(string uniqueId)
+        public RequestResult Delete(Guid uniqueId)
         {
             return _sysOperationDAL.Delete(uniqueId);
         }

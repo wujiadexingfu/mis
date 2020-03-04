@@ -11,7 +11,7 @@ namespace MIS.Model.Sys.SysOperation
         /// <summary>
         /// 操作的唯一编码
         /// </summary>
-        public string OperationUnqiueId { get; set; }
+        public Guid OperationUnqiueId { get; set; }
 
         /// <summary>
         /// 选中的菜单选项

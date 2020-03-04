@@ -43,7 +43,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         [HttpPost]
         public HttpResponseMessage GetSysCodeTreeNodes()
         {
-            string parentUniqueId = "*";
+            Guid parentUniqueId =new Guid("00000000-0000-0000-0000-000000000000");
             var result = JosnNetHelper.ObjectToJson(_sysCodeBLL.GetSysCodeTreeNodes(parentUniqueId));
             return new HttpResponseMessage()
             {
@@ -75,7 +75,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage GetItemByUniqueId(string uniqueId)
+        public HttpResponseMessage GetItemByUniqueId(Guid uniqueId)
         {
 
             var result = JosnNetHelper.ObjectToJson(_sysCodeBLL.GetItemByUniqueId(uniqueId));
@@ -128,7 +128,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [OperationFilterAttribute(OperationType.Delete)]
-        public HttpResponseMessage Delete(string uniqueId)
+        public HttpResponseMessage Delete(Guid uniqueId)
         {
             var result = JosnNetHelper.ObjectToJson(_sysCodeBLL.Delete(uniqueId));
             return new HttpResponseMessage()

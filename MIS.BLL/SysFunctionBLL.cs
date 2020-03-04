@@ -44,7 +44,7 @@ namespace MIS.BLL
         /// <param name="operationUnqiueId"></param>
         /// <returns></returns>
 
-        public List<LayuiTreeNode> GetFunctionTreeByOperationUniqueId(string operationUnqiueId)
+        public List<LayuiTreeNode> GetFunctionTreeByOperationUniqueId(Guid operationUnqiueId)
         {
             return _sysFunctionDAL.GetFunctionTreeByOperationUniqueId(operationUnqiueId);
         }
@@ -54,7 +54,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="userUniqueId"></param>
         /// <returns></returns>
-        public List<AccountFunctionOperation> GetAccountFunctionOperations(string userUniqueId)
+        public List<AccountFunctionOperation> GetAccountFunctionOperations(Guid userUniqueId)
         {
             return _sysFunctionDAL.GetAccountFunctionOperations(userUniqueId);
         }
@@ -141,7 +141,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="operationUnqiueId"></param>
         /// <returns></returns>
-        public List<LayuiTreeNode> GetFunctionTreeByRoleUniqueId(string roleUnqiueId)
+        public List<LayuiTreeNode> GetFunctionTreeByRoleUniqueId(Guid roleUnqiueId)
         {
             return _sysFunctionDAL.GetFunctionTreeByRoleUniqueId(roleUnqiueId);
         }

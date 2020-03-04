@@ -46,7 +46,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
        [HttpPost]
-        public HttpResponseMessage GetFunctionTreeByOperationUniqueId(string operationUnqiueId)
+        public HttpResponseMessage GetFunctionTreeByOperationUniqueId(Guid operationUnqiueId)
         {
             var result = JosnNetHelper.ObjectToJson(_sysFunctionBLL.GetFunctionTreeByOperationUniqueId(operationUnqiueId));
             return new HttpResponseMessage()
@@ -178,7 +178,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// </summary>
         /// <param name="operationUnqiueId"></param>
         /// <returns></returns>
-        public HttpResponseMessage GetFunctionTreeByRoleUniqueId(string roleUnqiueId)
+        public HttpResponseMessage GetFunctionTreeByRoleUniqueId(Guid roleUnqiueId)
         {
           
             var result = JosnNetHelper.ObjectToJson(_sysFunctionBLL.GetFunctionTreeByRoleUniqueId(roleUnqiueId));

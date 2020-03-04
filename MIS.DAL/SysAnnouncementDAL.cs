@@ -5,6 +5,7 @@ using MIS.Model.Result;
 using MIS.Model.Sys.SysAnnouncement;
 using MIS.Utility;
 using MIS.Utility.DateUtility;
+using MIS.Utility.GuidUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public SysAnnouncementInputForm GetItemByUniqueId(string uniqueId)
+        public SysAnnouncementInputForm GetItemByUniqueId(Guid uniqueId)
         {
             MISEntities db = new MISEntities();
             var item = db.Sys_Announcement.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
@@ -92,7 +93,7 @@ namespace MIS.DAL
                 MISEntities db = new MISEntities();
                
                 Sys_Announcement item = new Sys_Announcement();
-                item.UniqueId = Guid.NewGuid().ToString();
+                item.UniqueId = GuidUtils.NewGuid();
                 item.Title = inputForm.Title;
                 item.Contents = inputForm.Contents;
                 item.StartDate = DateTimeUtils.StringToDateTime(inputForm.StartDate);
@@ -106,7 +107,7 @@ namespace MIS.DAL
                 foreach (var itemDetail in inputForm.SelectedUserUniqueId)
                 {
                     Sys_AnnouncementUser sysAnnouncementUser = new Sys_AnnouncementUser();
-                    sysAnnouncementUser.UniqueId = Guid.NewGuid().ToString();
+                    sysAnnouncementUser.UniqueId = GuidUtils.NewGuid();
                     sysAnnouncementUser.AnnouncementUniqueId = item.UniqueId;
                     sysAnnouncementUser.UserUniqueId = itemDetail;
                     sysAnnouncementUser.CreateTime= DateTime.Now;
@@ -156,7 +157,7 @@ namespace MIS.DAL
                 foreach (var itemDetail in inputForm.SelectedUserUniqueId)
                 {
                     Sys_AnnouncementUser sysAnnouncementUser = new Sys_AnnouncementUser();
-                    sysAnnouncementUser.UniqueId = Guid.NewGuid().ToString();
+                    sysAnnouncementUser.UniqueId = GuidUtils.NewGuid();
                     sysAnnouncementUser.AnnouncementUniqueId = item.UniqueId;
                     sysAnnouncementUser.UserUniqueId = itemDetail;
                     sysAnnouncementUser.CreateTime = DateTime.Now;
@@ -184,7 +185,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public RequestResult Delete(string uniqueId)
+        public RequestResult Delete(Guid uniqueId)
         {
             RequestResult result = new RequestResult();
 

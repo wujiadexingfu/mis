@@ -15,6 +15,7 @@ using MIS.Utility;
 using static MIS.Utility.EnumUtility.SystemEnums;
 using MIS.Utility.BoolUtility;
 using MIS.Model.Tree;
+using MIS.Utility.GuidUtility;
 
 
 /********************************************************************************
@@ -152,7 +153,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public SysUserInputForm GetUserByUniqueId(string uniqueId)
+        public SysUserInputForm GetUserByUniqueId(Guid uniqueId)
         {
             MISEntities db = new MISEntities();
             var item = db.Sys_User.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
@@ -196,7 +197,7 @@ namespace MIS.DAL
                 else
                 {
                     Sys_User item = new Sys_User();
-                    item.UniqueId = Guid.NewGuid().ToString();
+                    item.UniqueId = GuidUtils.NewGuid();
                     item.Id = inputForm.Id;
                     item.Name = inputForm.Name;
                     item.PassWord = Constant.DefaultPassword;
@@ -276,7 +277,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public RequestResult Delete(string uniqueId)
+        public RequestResult Delete(Guid uniqueId)
         {
             RequestResult result = new RequestResult();
 
@@ -332,7 +333,7 @@ namespace MIS.DAL
         public List<UserSelectItem> QueryUserSelectItemList()
         {
             MISEntities db = new MISEntities();
-            return db.Sys_User.Where(x=>x.Status!=Status.Delete.ToString()).Select(x => new UserSelectItem() { Text = x.Id + "-" + x.Name, Value = x.UniqueId }).ToList();
+            return db.Sys_User.Where(x=>x.Status!=Status.Delete.ToString()).Select(x => new UserSelectItem() { Text = x.Id + "-" + x.Name, Value = x.UniqueId.ToString() }).ToList();
         }
 
         /// <summary>
@@ -401,13 +402,15 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="selectedUserList">选中值</param>
         /// <returns></returns>
-        public List<LayuiTreeNode> GetOrganizationUser(List<string> selectedUserList)
+        public List<LayuiTreeNode> GetOrganizationUser(List<Guid> selectedUserList)
         {
             MISEntities db = new MISEntities();
             var organizationList = db.Sys_Organization.Where(x => x.Status != Status.Delete.ToString()).ToList();  //所有的部门信息
             var userList = db.Sys_User.ToList(); //所有人员的信息
 
-            var list = GetOrganiationUserTreeNodesWithType("*", organizationList, userList, selectedUserList);
+            var root = new Guid("00000000-0000-0000-0000-000000000000");
+
+            var list = GetOrganiationUserTreeNodesWithType(root, organizationList, userList, selectedUserList);
 
             return list;
 
@@ -422,7 +425,7 @@ namespace MIS.DAL
         /// <param name="userList"></param>
         /// <param name="selectedUserList"></param>
         /// <returns></returns>
-        private static List<LayuiTreeNode> GetOrganiationUserTreeNodesWithType(string parentUnqiueId, List<Sys_Organization> allOrganizationList, List<Sys_User> userList, List<string> selectedUserList)
+        private static List<LayuiTreeNode> GetOrganiationUserTreeNodesWithType(Guid parentUnqiueId, List<Sys_Organization> allOrganizationList, List<Sys_User> userList, List<Guid> selectedUserList)
         {
 
             var layuiTreeNodeList = new List<LayuiTreeNode>();
@@ -455,7 +458,7 @@ namespace MIS.DAL
         /// <param name="userList">所有的用户信息</param>
         /// <param name="selectedUserList">选中的用户信息</param>
         /// <returns></returns>
-        private static List<LayuiTreeNode> GetOrganizationUser(string organizationUniqueId,List<Sys_User> userList,List<string>  selectedUserList)
+        private static List<LayuiTreeNode> GetOrganizationUser(Guid organizationUniqueId,List<Sys_User> userList,List<Guid>  selectedUserList)
         {
             List<LayuiTreeNode> list = new List<LayuiTreeNode>();
 
@@ -466,7 +469,7 @@ namespace MIS.DAL
             foreach (var item in organizationUser)
             {
                 LayuiTreeNode layuiTreeNode = new LayuiTreeNode();
-                layuiTreeNode.Id = item.UniqueId;
+                layuiTreeNode.Id = item.UniqueId.ToString();
                 layuiTreeNode.Title = item.Name;
                 layuiTreeNode.NodeType = TreeNodeType.User.ToString();
                 layuiTreeNode.Checked = selectedUserList.Any(x => x == item.UniqueId); //选中

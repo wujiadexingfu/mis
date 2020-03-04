@@ -14,11 +14,11 @@ namespace MIS.EFDataSource
     
     public partial class Sys_User
     {
-        public string UniqueId { get; set; }
+        public System.Guid UniqueId { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
         public string PassWord { get; set; }
-        public string OrganizationUniqueId { get; set; }
+        public Nullable<System.Guid> OrganizationUniqueId { get; set; }
         public string Photo { get; set; }
         public string Email { get; set; }
         public Nullable<System.DateTime> BirthDay { get; set; }
@@ -26,8 +26,8 @@ namespace MIS.EFDataSource
         public string MobilePhone { get; set; }
         public string Status { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public string CreateUser { get; set; }
-        public string ModifyUser { get; set; }
+        public Nullable<System.Guid> CreateUser { get; set; }
+        public Nullable<System.Guid> ModifyUser { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
         public string Remark { get; set; }
         public Nullable<System.DateTime> StartExpiryDate { get; set; }

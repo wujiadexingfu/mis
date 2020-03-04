@@ -47,8 +47,8 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         [HttpPost]
         public HttpResponseMessage GetOrganizationTreeNodes()
         {
-            string parentUniqueId = "*";
-            var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.GetOrganizationTreeNodes(parentUniqueId));
+            var root = new Guid("00000000-0000-0000-0000-000000000000");
+            var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.GetOrganizationTreeNodes(root));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
@@ -79,7 +79,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage GetItemByUniqueId(string uniqueId)
+        public HttpResponseMessage GetItemByUniqueId(Guid uniqueId)
         {
 
             var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.GetItemByUniqueId(uniqueId));
@@ -132,7 +132,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [OperationFilterAttribute(OperationType.Delete)]
-        public HttpResponseMessage Delete(string uniqueId)
+        public HttpResponseMessage Delete(Guid uniqueId)
         {
             var result = JosnNetHelper.ObjectToJson(_sysOrganizationBLL.Delete(uniqueId));
             return new HttpResponseMessage()

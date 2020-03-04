@@ -5,6 +5,7 @@ using MIS.Model.Result;
 using MIS.Model.Sys.SysRole;
 using MIS.Model.Tree;
 using MIS.Utility;
+using MIS.Utility.GuidUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public SysRoleInputForm GetItemByUniqueId(string uniqueId)
+        public SysRoleInputForm GetItemByUniqueId(Guid uniqueId)
         {
             MISEntities db = new MISEntities();
             var item = db.Sys_Role.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
@@ -83,7 +84,7 @@ namespace MIS.DAL
                 else
                 {
                     Sys_Role item = new Sys_Role();
-                    item.UniqueId = Guid.NewGuid().ToString();
+                    item.UniqueId = GuidUtils.NewGuid();
                     item.Id = inputForm.Id;
                     item.Name = inputForm.Name;
                     item.CreateTime = DateTime.Now;
@@ -141,7 +142,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public RequestResult Delete(string uniqueId)
+        public RequestResult Delete(Guid uniqueId)
         {
             RequestResult result = new RequestResult();
 
@@ -186,9 +187,9 @@ namespace MIS.DAL
                 {
 
                     Sys_RoleOperationFunction roleOperationFunction = new Sys_RoleOperationFunction();
-                    roleOperationFunction.UniqueId = Guid.NewGuid().ToString();
+                    roleOperationFunction.UniqueId = GuidUtils.NewGuid();
                     roleOperationFunction.RoleUniqueId = inputForm.RoleUnqiueId;
-                    roleOperationFunction.OperationFunctionUniqueId = item.ToString();
+                    roleOperationFunction.OperationFunctionUniqueId = item;
                     roleOperationFunction.CreateTime = DateTime.Now;
                     roleOperationFunction.CreateUser = SessionUtils.GetAccountUnqiueId();
                     db.Sys_RoleOperationFunction.Add(roleOperationFunction);
@@ -225,9 +226,9 @@ namespace MIS.DAL
                 foreach (var item in inputForm.UserList)
                 {
                     Sys_UserRole userRole = new Sys_UserRole();
-                    userRole.UniqueId = Guid.NewGuid().ToString();
+                    userRole.UniqueId = GuidUtils.NewGuid();
                     userRole.RoleUniqueId = inputForm.RoleUniqueId;
-                    userRole.UserUniqueId = item.ToString();
+                    userRole.UserUniqueId = item;
                     userRole.CreateTime = DateTime.Now;
                     userRole.CreateUser = SessionUtils.GetAccountUnqiueId();
                     db.Sys_UserRole.Add(userRole);
@@ -249,7 +250,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public RequestResult DeleteRoleUser(string uniqueId)
+        public RequestResult DeleteRoleUser(Guid uniqueId)
         {
             RequestResult result = new RequestResult();
 

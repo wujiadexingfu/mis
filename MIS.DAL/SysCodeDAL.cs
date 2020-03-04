@@ -5,6 +5,7 @@ using MIS.Model.Result;
 using MIS.Model.Sys.SysCode;
 using MIS.Model.Tree;
 using MIS.Utility;
+using MIS.Utility.GuidUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,8 @@ namespace MIS.DAL
         /// <returns></returns>
         public List<TreeNode> InitTree()
         {
-            return GetSysCodeTreeNodes("*");
+            Guid root = new Guid("00000000-0000-0000-0000-000000000000");
+           return GetSysCodeTreeNodes(root);
         }
 
 
@@ -31,7 +33,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="parentUnqiueId"></param>
         /// <returns></returns>
-        public List<TreeNode> GetSysCodeTreeNodes(string parentUnqiueId)
+        public List<TreeNode> GetSysCodeTreeNodes(Guid parentUnqiueId)
         {
             MISEntities db = new MISEntities();
             var allorganizationList = db.Sys_Code.ToList();
@@ -47,7 +49,7 @@ namespace MIS.DAL
         /// <param name="parentUniqueId">父节点</param>
         /// <param name="allSysCodeList"></param>
         /// <returns></returns>
-        public static List<TreeNode> GetSysCodeChildTreeNodes(string parentUniqueId, List<Sys_Code> allSysCodeList)
+        public static List<TreeNode> GetSysCodeChildTreeNodes(Guid parentUniqueId, List<Sys_Code> allSysCodeList)
         {
 
             var treeNodeList = new List<TreeNode>();
@@ -57,7 +59,7 @@ namespace MIS.DAL
             {
                 treeNodeList.Add(new TreeNode()
                 {
-                    Id = item.UniqueId,
+                    Id = item.UniqueId.ToString(),
                     Text = item.CodeText,
                     Name = item.CodeText,
                     Icon = "layui-icon layui-icon-file-b",
@@ -82,7 +84,7 @@ namespace MIS.DAL
             try
             {
                 MISEntities db = new MISEntities();
-                if (db.Sys_Code.Any(x => x.UniqueId != inputForm.CodeValue && x.CodeValue == inputForm.CodeValue&&x.ParentUniqueId==inputForm.ParentUniqueId))
+                if (db.Sys_Code.Any(x => x.UniqueId != inputForm.UniqueId && x.CodeValue == inputForm.CodeValue&&x.ParentUniqueId==inputForm.ParentUniqueId))
                 {
                     result.ReturnFailedMessage("同一项目下,编号重复");
                 }
@@ -127,13 +129,12 @@ namespace MIS.DAL
                 else
                 {
 
-                    if (string.IsNullOrEmpty(inputForm.ParentUniqueId))
+                    if (inputForm.ParentUniqueId == null)
                     {
-                        inputForm.ParentUniqueId = "*";
+                        inputForm.ParentUniqueId = new Guid("00000000-0000-0000-0000-000000000000"); ;
                     }
                     Sys_Code model = new Sys_Code();
-                    model.UniqueId = Guid.NewGuid().ToString();
-
+                    model.UniqueId = GuidUtils.NewGuid();
                     model.CodeText = inputForm.CodeText;
                     model.CodeValue = inputForm.CodeValue;
                     model.ParentUniqueId = inputForm.ParentUniqueId;
@@ -158,7 +159,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public SysCodeInputForm GetItemByUniqueId(string uniqueId)
+        public SysCodeInputForm GetItemByUniqueId(Guid uniqueId)
         {
             MISEntities db = new MISEntities();
             return db.Sys_Code.Where(x => x.UniqueId == uniqueId).Select(x => new SysCodeInputForm()
@@ -177,7 +178,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public RequestResult Delete(string uniqueId)
+        public RequestResult Delete(Guid uniqueId)
         {
             RequestResult result = new RequestResult();
 
@@ -209,7 +210,7 @@ namespace MIS.DAL
         /// <param name="parentId"></param>
         /// <param name="allOrganizationList"></param>
         /// <returns></returns>
-        private static List<Sys_Code> GetSysCodeListByParendUniqueId(string parentUniqueId, List<Sys_Code> allSysCodeList)
+        private static List<Sys_Code> GetSysCodeListByParendUniqueId(Guid parentUniqueId, List<Sys_Code> allSysCodeList)
         {
             var sysCodeList = new List<Sys_Code>();
 

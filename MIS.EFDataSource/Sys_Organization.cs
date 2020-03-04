@@ -14,15 +14,15 @@ namespace MIS.EFDataSource
     
     public partial class Sys_Organization
     {
-        public string UniqueId { get; set; }
+        public System.Guid UniqueId { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
         public string Icon { get; set; }
-        public string ParentUniqueId { get; set; }
-        public string ManagerUniqueId { get; set; }
-        public string CreateUser { get; set; }
+        public Nullable<System.Guid> ParentUniqueId { get; set; }
+        public Nullable<System.Guid> ManagerUniqueId { get; set; }
+        public Nullable<System.Guid> CreateUser { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public string ModifyUser { get; set; }
+        public Nullable<System.Guid> ModifyUser { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
         public Nullable<int> Seq { get; set; }
         public string Status { get; set; }

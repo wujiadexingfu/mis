@@ -12,7 +12,7 @@ namespace MIS.Model.Sys.SysUser
         /// <summary>
         /// 角色的唯一编码
         /// </summary>
-        public string RoleUniqueId { get; set; }
+        public Guid RoleUniqueId { get; set; }
 
 
         /// <summary>

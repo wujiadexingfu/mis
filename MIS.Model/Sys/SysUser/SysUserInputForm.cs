@@ -11,7 +11,7 @@ namespace MIS.Model.Sys.SysUser
         /// <summary> 
         /// 唯一编码  
         /// </summary> 
-        public string UniqueId { get; set; }
+        public Guid UniqueId { get; set; }
 
         /// <summary> 
         /// 编号  
@@ -26,7 +26,7 @@ namespace MIS.Model.Sys.SysUser
         /// <summary> 
         /// 组织 
         /// </summary> 
-        public string OrganizationUniqueId { get; set; }
+        public Guid? OrganizationUniqueId { get; set; }
 
 
 

@@ -8,6 +8,6 @@ namespace MIS.Model.Sys.SysUser
 {
   public  class SysUserResetModel
     {
-        public List<string> selected { get; set; }
+        public List<Guid> selected { get; set; }
     }
 }

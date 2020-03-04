@@ -14,12 +14,12 @@ namespace MIS.EFDataSource
     
     public partial class Sys_Role
     {
-        public string UniqueId { get; set; }
+        public System.Guid UniqueId { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
-        public string CreateUser { get; set; }
+        public Nullable<System.Guid> CreateUser { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public string ModifyUser { get; set; }
+        public Nullable<System.Guid> ModifyUser { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
     }
 }

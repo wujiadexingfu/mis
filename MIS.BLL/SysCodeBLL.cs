@@ -49,7 +49,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="parentUnqiueId"></param>
         /// <returns></returns>
-        public List<TreeNode> GetSysCodeTreeNodes(string parentUnqiueId)
+        public List<TreeNode> GetSysCodeTreeNodes(Guid parentUnqiueId)
         {
             return _sysCodeDAL.GetSysCodeTreeNodes(parentUnqiueId);
         }
@@ -71,7 +71,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public SysCodeInputForm GetItemByUniqueId(string uniqueId)
+        public SysCodeInputForm GetItemByUniqueId(Guid uniqueId)
         {
             return _sysCodeDAL.GetItemByUniqueId(uniqueId);
         }
@@ -82,7 +82,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public RequestResult Delete(string uniqueId)
+        public RequestResult Delete(Guid uniqueId)
         {
             return _sysCodeDAL.Delete(uniqueId);
 

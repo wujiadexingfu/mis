@@ -11,7 +11,7 @@ namespace MIS.Model.Sys.SysOrganization
         /// <summary> 
         /// 唯一编码  
         /// </summary> 
-        public string UniqueId { get; set; }
+        public Guid UniqueId { get; set; }
 
         /// <summary> 
         /// 编号  

@@ -11,7 +11,7 @@ namespace MIS.Model.Sys.SysOrganization
         /// <summary> 
         /// 唯一编码  
         /// </summary> 
-        public string UniqueId { get; set; }
+        public Guid UniqueId { get; set; }
 
         /// <summary> 
         /// 编号  
@@ -31,12 +31,12 @@ namespace MIS.Model.Sys.SysOrganization
         /// <summary> 
         /// 父节点  
         /// </summary> 
-        public string ParentUniqueId { get; set; }
+        public Guid? ParentUniqueId { get; set; }
 
         /// <summary> 
         /// 负责人  
         /// </summary> 
-        public string ManagerUniqueId { get; set; }
+        public Guid? ManagerUniqueId { get; set; }
 
         /// <summary> 
         ///   

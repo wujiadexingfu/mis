@@ -24,7 +24,7 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        SysAnnouncementInputForm GetItemByUniqueId(string uniqueId);
+        SysAnnouncementInputForm GetItemByUniqueId(Guid uniqueId);
 
 
         /// <summary>
@@ -47,6 +47,6 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        RequestResult Delete(string uniqueId);
+        RequestResult Delete(Guid uniqueId);
     }
 }

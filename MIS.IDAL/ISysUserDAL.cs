@@ -64,7 +64,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        SysUserInputForm GetUserByUniqueId(string uniqueId);
+        SysUserInputForm GetUserByUniqueId(Guid uniqueId);
 
         /// <summary>
         /// 新增
@@ -86,7 +86,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        RequestResult Delete(string uniqueId);
+        RequestResult Delete(Guid uniqueId);
 
         /// <summary>
         /// 修改密码
@@ -122,6 +122,6 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="selectedUserList">选中值</param>
         /// <returns></returns>
-        List<LayuiTreeNode> GetOrganizationUser(List<string> selectedUserList);
+        List<LayuiTreeNode> GetOrganizationUser(List<Guid> selectedUserList);
     }
 }

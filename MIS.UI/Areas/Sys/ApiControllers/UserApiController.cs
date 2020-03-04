@@ -86,7 +86,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage GetUserByUniqueId(string  uniqueId)
+        public HttpResponseMessage GetUserByUniqueId(Guid uniqueId)
         {
 
             var result = JosnNetHelper.ObjectToJson(_sysUserBLL.GetUserByUniqueId(uniqueId));
@@ -103,7 +103,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [OperationFilterAttribute(OperationType.Delete)]
         [HttpGet]
-        public HttpResponseMessage Delete(string uniqueId)
+        public HttpResponseMessage Delete(Guid uniqueId)
         {
             var result = JosnNetHelper.ObjectToJson(_sysUserBLL.Delete(uniqueId));
             return new HttpResponseMessage()

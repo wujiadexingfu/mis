@@ -25,7 +25,7 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="parentId"></param>
         /// <returns></returns>
-        List<TreeNode> GetOrganizationTreeNodes(string parentId);
+        List<TreeNode> GetOrganizationTreeNodes(Guid parentId);
 
 
         /// <summary>
@@ -47,14 +47,14 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        SysOrganizationInputForm GetItemByUniqueId(string uniqueId);
+        SysOrganizationInputForm GetItemByUniqueId(Guid uniqueId);
 
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        RequestResult Delete(string uniqueId);
+        RequestResult Delete(Guid uniqueId);
 
 
         /// <summary>

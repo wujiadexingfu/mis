@@ -9,6 +9,6 @@ namespace MIS.Model.Sys.SysOrganization
 {
     public class SysOrganizationParameter: BaseParameter
     {
-        public string UniqueId { get; set; }
+        public Guid UniqueId { get; set; }
     }
 }

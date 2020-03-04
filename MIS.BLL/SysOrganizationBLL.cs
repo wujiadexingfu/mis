@@ -29,7 +29,7 @@ namespace MIS.BLL
             return _sysOrganizationDAL.InitTree();
         }
 
-        public List<TreeNode> GetOrganizationTreeNodes(string parentId)
+        public List<TreeNode> GetOrganizationTreeNodes(Guid parentId)
         {
             return _sysOrganizationDAL.GetOrganizationTreeNodes(parentId);
         }
@@ -59,7 +59,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public SysOrganizationInputForm GetItemByUniqueId(string uniqueId)
+        public SysOrganizationInputForm GetItemByUniqueId(Guid uniqueId)
         {
             return _sysOrganizationDAL.GetItemByUniqueId(uniqueId);
         }
@@ -69,7 +69,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public RequestResult Delete(string uniqueId)
+        public RequestResult Delete(Guid uniqueId)
         {
             return _sysOrganizationDAL.Delete(uniqueId);
         }

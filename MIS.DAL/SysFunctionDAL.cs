@@ -76,7 +76,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="operationUnqiueId">操作的唯一编码</param>
         /// <returns></returns>
-        public List<LayuiTreeNode> GetFunctionTreeByOperationUniqueId(string operationUnqiueId)
+        public List<LayuiTreeNode> GetFunctionTreeByOperationUniqueId(Guid operationUnqiueId)
         {
             MISEntities db = new MISEntities();
             var functionList = db.Sys_Function.ToList();
@@ -166,7 +166,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="userUniqueId"></param>
         /// <returns></returns>
-        public List<AccountFunctionOperation> GetAccountFunctionOperations(string userUniqueId)
+        public List<AccountFunctionOperation> GetAccountFunctionOperations(Guid userUniqueId)
         {
             MISEntities db = new MISEntities();
 
@@ -381,7 +381,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="operationUnqiueId"></param>
         /// <returns></returns>
-        public List<LayuiTreeNode> GetFunctionTreeByRoleUniqueId(string roleUnqiueId)
+        public List<LayuiTreeNode> GetFunctionTreeByRoleUniqueId(Guid roleUnqiueId)
         {
             MISEntities db = new MISEntities();
             var functionList = db.Sys_Function.ToList();  //所有的菜单信息
@@ -400,7 +400,7 @@ namespace MIS.DAL
         }
 
 
-        private static List<LayuiTreeNode> GetFunctionChildTreeNodesWithType(string parentId, List<Sys_Function> allFunctionList, List<string> selectedOperationFunctionList,List<view_OperationFunction> operationFunctionList)
+        private static List<LayuiTreeNode> GetFunctionChildTreeNodesWithType(string parentId, List<Sys_Function> allFunctionList, List<Guid?> selectedOperationFunctionList,List<view_OperationFunction> operationFunctionList)
         {
 
             var layuiTreeNodeList = new List<LayuiTreeNode>();
@@ -425,7 +425,7 @@ namespace MIS.DAL
 
         }
 
-        private static List<LayuiTreeNode> GetFunctionOperation(string functionId, List<string> selectedOperationFunctionList, List<view_OperationFunction> operationFunctionList)
+        private static List<LayuiTreeNode> GetFunctionOperation(string functionId, List<Guid?> selectedOperationFunctionList, List<view_OperationFunction> operationFunctionList)
         {
             List<LayuiTreeNode> list = new List<LayuiTreeNode>();
 
@@ -445,7 +445,7 @@ namespace MIS.DAL
                 if (!string.IsNullOrEmpty(item.Controller))
                 {
                     LayuiTreeNode layuiTreeNode = new LayuiTreeNode();
-                    layuiTreeNode.Id = item.OperationFunctionUniqueId;
+                    layuiTreeNode.Id = item.OperationFunctionUniqueId.ToString();
                     layuiTreeNode.Title = item.OperationName;
                     layuiTreeNode.NodeType = TreeNodeType.Operation.ToString();
                     layuiTreeNode.Checked = selectedOperationFunctionList.Any(x => x == item.OperationFunctionUniqueId);

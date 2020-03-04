@@ -25,7 +25,7 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        SysRoleInputForm GetItemByUniqueId(string uniqueId);
+        SysRoleInputForm GetItemByUniqueId(Guid uniqueId);
 
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        RequestResult Delete(string uniqueId);
+        RequestResult Delete(Guid uniqueId);
 
 
         /// <summary>
@@ -71,6 +71,6 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        RequestResult DeleteRoleUser(string uniqueId);
+        RequestResult DeleteRoleUser(Guid uniqueId);
     }
 }

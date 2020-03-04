@@ -22,8 +22,8 @@ namespace MIS.EFDataSource
         public string Icon { get; set; }
         public Nullable<int> Sort { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public string CreateUser { get; set; }
-        public string ModifyUser { get; set; }
+        public Nullable<System.Guid> CreateUser { get; set; }
+        public Nullable<System.Guid> ModifyUser { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
         public bool IsDisplay { get; set; }
         public string Description { get; set; }

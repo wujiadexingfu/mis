@@ -14,10 +14,10 @@ namespace MIS.EFDataSource
     
     public partial class Sys_RoleOperationFunction
     {
-        public string UniqueId { get; set; }
-        public string RoleUniqueId { get; set; }
-        public string OperationFunctionUniqueId { get; set; }
-        public string CreateUser { get; set; }
+        public System.Guid UniqueId { get; set; }
+        public Nullable<System.Guid> RoleUniqueId { get; set; }
+        public Nullable<System.Guid> OperationFunctionUniqueId { get; set; }
+        public Nullable<System.Guid> CreateUser { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
     }
 }

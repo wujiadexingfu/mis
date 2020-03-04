@@ -23,7 +23,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        SysOperationInputForm GetOperationByUniqueId(string uniqueId);
+        SysOperationInputForm GetOperationByUniqueId(Guid uniqueId);
 
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        RequestResult Delete(string uniqueId);
+        RequestResult Delete(Guid uniqueId);
 
 
         /// <summary>

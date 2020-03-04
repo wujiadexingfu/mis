@@ -5,6 +5,7 @@ using MIS.Model.Result;
 using MIS.Model.Sys.SysOrganization;
 using MIS.Model.Tree;
 using MIS.Utility;
+using MIS.Utility.GuidUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,8 @@ namespace MIS.DAL
 
         public List<TreeNode> InitTree()
         {
-            return GetOrganizationTreeNodes("*");
+            var root = new Guid("00000000-0000-0000-0000-000000000000");
+            return GetOrganizationTreeNodes(root);
         }
 
 
@@ -29,7 +31,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="parentId"></param>
         /// <returns></returns>
-        public List<TreeNode> GetOrganizationTreeNodes(string  parentId)
+        public List<TreeNode> GetOrganizationTreeNodes(Guid  parentId)
         {
             MISEntities db = new MISEntities();
             var allorganizationList = db.Sys_Organization.Where(x=>x.Status!=Status.Delete.ToString()).ToList();
@@ -44,7 +46,7 @@ namespace MIS.DAL
         /// <param name="parentId">父节点</param>
         /// <param name="allOrganizationList">所有组织信息</param>
         /// <returns></returns>
-        public static List<TreeNode> GetOrganizationChildTreeNodes(string parentId,List<Sys_Organization> allOrganizationList)
+        public static List<TreeNode> GetOrganizationChildTreeNodes(Guid parentId,List<Sys_Organization> allOrganizationList)
         {
 
             var treeNodeList=new  List<TreeNode>();
@@ -54,7 +56,7 @@ namespace MIS.DAL
             {
                 treeNodeList.Add(new TreeNode()
                 {
-                    Id=item.UniqueId,
+                    Id=item.UniqueId.ToString(),
                     Text =item.Name,
                     Name=item.Name,
                     Icon= "layui-icon layui-icon-file-b",
@@ -125,8 +127,12 @@ namespace MIS.DAL
                 }
                 else
                 {
+                    if (inputForm.ParentUniqueId == null)
+                    {
+                        inputForm.ParentUniqueId=new Guid("00000000-0000-0000-0000-000000000000");
+                    }
                     Sys_Organization model = new Sys_Organization();
-                    model.UniqueId = Guid.NewGuid().ToString();
+                    model.UniqueId = GuidUtils.NewGuid();
                     model.Id = inputForm.Id;
                     model.Name = inputForm.Name;
                     model.ManagerUniqueId = inputForm.ManagerUniqueId;
@@ -152,7 +158,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public SysOrganizationInputForm GetItemByUniqueId(string uniqueId)
+        public SysOrganizationInputForm GetItemByUniqueId(Guid uniqueId)
         {
             MISEntities db = new MISEntities();
             return db.Sys_Organization.Where(x => x.UniqueId == uniqueId).Select(x => new SysOrganizationInputForm()
@@ -172,7 +178,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public RequestResult Delete(string uniqueId)
+        public RequestResult Delete(Guid uniqueId)
         {
             RequestResult result = new RequestResult();
 
@@ -210,7 +216,7 @@ namespace MIS.DAL
         /// <param name="parentId"></param>
         /// <param name="allOrganizationList"></param>
         /// <returns></returns>
-        private static List<Sys_Organization> GetOrganizationListByParendId(string parentId, List<Sys_Organization> allOrganizationList)
+        private static List<Sys_Organization> GetOrganizationListByParendId(Guid parentId, List<Sys_Organization> allOrganizationList)
         {
             var organizationList = new List<Sys_Organization>();
 

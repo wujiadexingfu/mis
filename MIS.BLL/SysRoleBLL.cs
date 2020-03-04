@@ -34,7 +34,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public  SysRoleInputForm GetItemByUniqueId(string uniqueId)
+        public  SysRoleInputForm GetItemByUniqueId(Guid uniqueId)
         {
             return _sysRoleDAL.GetItemByUniqueId(uniqueId);
         }
@@ -66,7 +66,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-       public  RequestResult Delete(string uniqueId)
+       public  RequestResult Delete(Guid uniqueId)
         {
             return _sysRoleDAL.Delete(uniqueId);
         }
@@ -98,7 +98,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public RequestResult DeleteRoleUser(string uniqueId)
+        public RequestResult DeleteRoleUser(Guid uniqueId)
         {
             return _sysRoleDAL.DeleteRoleUser(uniqueId);
         }

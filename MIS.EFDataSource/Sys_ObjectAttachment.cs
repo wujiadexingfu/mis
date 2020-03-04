@@ -14,8 +14,8 @@ namespace MIS.EFDataSource
     
     public partial class Sys_ObjectAttachment
     {
-        public string UniqueId { get; set; }
-        public string AttachmentUniqueId { get; set; }
-        public string ObjectUniqueId { get; set; }
+        public System.Guid UniqueId { get; set; }
+        public Nullable<System.Guid> AttachmentUniqueId { get; set; }
+        public Nullable<System.Guid> ObjectUniqueId { get; set; }
     }
 }

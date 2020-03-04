@@ -40,14 +40,14 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="parentUnqiueId"></param>
         /// <returns></returns>
-        List<TreeNode> GetSysCodeTreeNodes(string parentUnqiueId);
+        List<TreeNode> GetSysCodeTreeNodes(Guid parentUnqiueId);
 
         /// <summary>
         /// 根据唯一编码获取数据
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        SysCodeInputForm GetItemByUniqueId(string uniqueId);
+        SysCodeInputForm GetItemByUniqueId(Guid uniqueId);
 
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        RequestResult Delete(string uniqueId);
+        RequestResult Delete(Guid uniqueId);
 
         /// <summary>
         /// 查询

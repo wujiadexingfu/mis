@@ -4,6 +4,7 @@ using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysOperation;
 using MIS.Utility;
+using MIS.Utility.GuidUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public SysOperationInputForm GetOperationByUniqueId(string uniqueId)
+        public SysOperationInputForm GetOperationByUniqueId(Guid uniqueId)
         {
             MISEntities db = new MISEntities();
             var item = db.Sys_Operation.Where(x => x.UniqueId == uniqueId).Select(x=>new SysOperationInputForm() {
@@ -81,7 +82,7 @@ namespace MIS.DAL
                 {
 
                     Sys_Operation operation = new Sys_Operation();
-                    operation.UniqueId = Guid.NewGuid().ToString();
+                    operation.UniqueId = GuidUtils.NewGuid();
                     operation.Id = inputForm.Id;
                     operation.Name = inputForm.Name;
                     operation.CreateTime = DateTime.Now;
@@ -139,7 +140,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public RequestResult Delete(string uniqueId)
+        public RequestResult Delete(Guid uniqueId)
         {
             RequestResult result = new RequestResult();
 
@@ -178,14 +179,9 @@ namespace MIS.DAL
 
                 foreach (var item in inputForm.FunctionList)
                 {
-                    //var isController = functionList.Any(x => !string.IsNullOrEmpty(x.Controller));
-                    //if (isController)
-                    //{
-                      
-                    //}
-
+ 
                     Sys_OperationFunction operationFunction = new Sys_OperationFunction();
-                    operationFunction.UniqueId = Guid.NewGuid().ToString();
+                    operationFunction.UniqueId = GuidUtils.NewGuid();
                     operationFunction.OperationUniqueId = inputForm.OperationUnqiueId;
                     operationFunction.FunctionId = item;
                     operationFunction.CreateUser = SessionUtils.GetAccountUnqiueId();

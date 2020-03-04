@@ -14,8 +14,8 @@ namespace MIS.EFDataSource
     
     public partial class view_OperationFunction
     {
-        public string OperationFunctionUniqueId { get; set; }
-        public string OperationUniqueId { get; set; }
+        public System.Guid OperationFunctionUniqueId { get; set; }
+        public System.Guid OperationUniqueId { get; set; }
         public string OperationId { get; set; }
         public string OperationName { get; set; }
         public string Id { get; set; }

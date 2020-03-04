@@ -40,7 +40,7 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        SysCodeInputForm GetItemByUniqueId(string uniqueId);
+        SysCodeInputForm GetItemByUniqueId(Guid uniqueId);
 
 
         /// <summary>
@@ -48,14 +48,14 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="parentUnqiueId"></param>
         /// <returns></returns>
-        List<TreeNode> GetSysCodeTreeNodes(string parentUnqiueId);
+        List<TreeNode> GetSysCodeTreeNodes(Guid parentUnqiueId);
 
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        RequestResult Delete(string uniqueId);
+        RequestResult Delete(Guid uniqueId);
 
         /// <summary>
         /// 查询

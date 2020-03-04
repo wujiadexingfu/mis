@@ -81,7 +81,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage GetItemByUniqueId(string uniqueId)
+        public HttpResponseMessage GetItemByUniqueId(Guid uniqueId)
         {
 
             var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.GetItemByUniqueId(uniqueId));
@@ -98,7 +98,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [OperationFilterAttribute(OperationType.Delete)]
-        public HttpResponseMessage Delete(string uniqueId)
+        public HttpResponseMessage Delete(Guid uniqueId)
         {
             var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.Delete(uniqueId));
             return new HttpResponseMessage()
@@ -150,7 +150,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage DeleteRoleUser(string uniqueId)
+        public HttpResponseMessage DeleteRoleUser(Guid uniqueId)
         {
 
             var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.DeleteRoleUser(uniqueId));

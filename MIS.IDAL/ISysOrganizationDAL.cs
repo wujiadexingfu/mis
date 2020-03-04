@@ -23,7 +23,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="parentId"></param>
         /// <returns></returns>
-        List<TreeNode> GetOrganizationTreeNodes(string parentId);
+        List<TreeNode> GetOrganizationTreeNodes(Guid parentId);
 
         /// <summary>
         /// 修改
@@ -44,14 +44,14 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        SysOrganizationInputForm GetItemByUniqueId(string uniqueId);
+        SysOrganizationInputForm GetItemByUniqueId(Guid uniqueId);
 
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        RequestResult Delete(string uniqueId);
+        RequestResult Delete(Guid uniqueId);
 
 
         /// <summary>

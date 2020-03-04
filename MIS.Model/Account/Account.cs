@@ -34,7 +34,7 @@ namespace MIS.Model.Account
        /// <summary>
        /// 唯一编码
        /// </summary>
-       public string UniqueId { get; set; }
+       public Guid UniqueId { get; set; }
 
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace MIS.Model.Account
        /// <summary>
        /// 组织
        /// </summary>
-       public string OrganizationUniqueId { get; set; }
+       public Guid? OrganizationUniqueId { get; set; }
        /// <summary>
        /// 职称
        /// </summary>

@@ -82,7 +82,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage GetItemByUniqueId(string uniqueId)
+        public HttpResponseMessage GetItemByUniqueId(Guid uniqueId)
         {
 
             var result = JosnNetHelper.ObjectToJson(_sysAnnouncementBLL.GetItemByUniqueId(uniqueId));
@@ -99,7 +99,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [OperationFilterAttribute(OperationType.Delete)]
         [HttpGet]
-        public HttpResponseMessage Delete(string uniqueId)
+        public HttpResponseMessage Delete(Guid uniqueId)
         {
             var result = JosnNetHelper.ObjectToJson(_sysAnnouncementBLL.Delete(uniqueId));
             return new HttpResponseMessage()

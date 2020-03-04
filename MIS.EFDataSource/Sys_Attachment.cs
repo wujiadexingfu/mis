@@ -14,15 +14,15 @@ namespace MIS.EFDataSource
     
     public partial class Sys_Attachment
     {
-        public string UniqueId { get; set; }
+        public System.Guid UniqueId { get; set; }
         public Nullable<int> FileSize { get; set; }
         public string Type { get; set; }
         public string Path { get; set; }
         public string FileName { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public string CreateUser { get; set; }
+        public Nullable<System.Guid> CreateUser { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
-        public string ModifyUser { get; set; }
+        public Nullable<System.Guid> ModifyUser { get; set; }
         public string FileExtension { get; set; }
     }
 }

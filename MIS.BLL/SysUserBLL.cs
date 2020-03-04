@@ -7,6 +7,7 @@ using MIS.Model.Sys.SysUser;
 using MIS.Model.Tree;
 using MIS.Utility;
 using MIS.Utility.EnumUtility;
+using System;
 using System.Collections.Generic;
 
 /********************************************************************************
@@ -92,7 +93,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public SysUserInputForm GetUserByUniqueId(string uniqueId)
+        public SysUserInputForm GetUserByUniqueId(Guid uniqueId)
         {
             return _sysUserDAL.GetUserByUniqueId(uniqueId);
         }
@@ -123,7 +124,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public  RequestResult Delete(string uniqueId)
+        public  RequestResult Delete(Guid uniqueId)
         {
             return _sysUserDAL.Delete(uniqueId);
         }
@@ -173,7 +174,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="selectedUserList">选中值</param>
         /// <returns></returns>
-       public  List<LayuiTreeNode> GetOrganizationUser(List<string> selectedUserList)
+       public  List<LayuiTreeNode> GetOrganizationUser(List<Guid> selectedUserList)
         {
             return _sysUserDAL.GetOrganizationUser(selectedUserList);
         }

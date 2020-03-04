@@ -30,7 +30,7 @@ namespace MIS.Utility
         /// 获取登录人员的唯一编码
         /// </summary>
         /// <returns></returns>
-        public static string GetAccountUnqiueId()
+        public static Guid? GetAccountUnqiueId()
         {
             var account = GetAccount();
             if (account != null)

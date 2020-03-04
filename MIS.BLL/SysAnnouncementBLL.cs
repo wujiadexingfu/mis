@@ -35,7 +35,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-       public  SysAnnouncementInputForm GetItemByUniqueId(string uniqueId)
+       public  SysAnnouncementInputForm GetItemByUniqueId(Guid uniqueId)
         {
             return _sysAnnouncementDAL.GetItemByUniqueId(uniqueId);
         }
@@ -67,7 +67,7 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        public   RequestResult Delete(string uniqueId)
+        public   RequestResult Delete(Guid uniqueId)
         {
             return _sysAnnouncementDAL.Delete(uniqueId);
         }

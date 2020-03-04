@@ -21,7 +21,7 @@ namespace MIS.EFDataSource
         public string Action { get; set; }
         public string OperationId { get; set; }
         public string OperationName { get; set; }
-        public string RoleUniqueId { get; set; }
-        public string UserUniqueId { get; set; }
+        public System.Guid RoleUniqueId { get; set; }
+        public System.Guid UserUniqueId { get; set; }
     }
 }

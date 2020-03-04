@@ -9,55 +9,67 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Contents" Type="varchar" MaxLength="4000" Nullable="false" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="Levels" Type="varchar" MaxLength="100" />
           <Property Name="CreateTime" Type="datetime" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
-          <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="ModifyTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Sys_AnnouncementUser">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="AnnouncementUniqueId" Type="varchar" MaxLength="40" />
-          <Property Name="UserUniqueId" Type="varchar" MaxLength="40" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AnnouncementUniqueId" Type="uniqueidentifier" />
+          <Property Name="UserUniqueId" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="Sys_Attachment">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FileSize" Type="int" />
           <Property Name="Type" Type="varchar" MaxLength="50" />
           <Property Name="Path" Type="varchar" MaxLength="200" />
           <Property Name="FileName" Type="varchar" MaxLength="200" />
           <Property Name="CreateTime" Type="datetime" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="ModifyTime" Type="datetime" />
-          <Property Name="ModifyUser" Type="varchar" MaxLength="200" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="FileExtension" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Sys_Code">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CodeText" Type="varchar" MaxLength="255" />
           <Property Name="CodeValue" Type="varchar" MaxLength="255" />
-          <Property Name="ParentUniqueId" Type="varchar" MaxLength="50" />
+          <Property Name="ParentUniqueId" Type="uniqueidentifier" />
           <Property Name="Sort" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="ModifyTime" Type="datetime" />
-          <Property Name="ModifyUser" Type="varchar" MaxLength="50" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Sys_File">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="10" />
+          <Property Name="ParentUnqiueId" Type="varchar" MaxLength="40" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
+          <Property Name="ModifyTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Sys_Function">
           <Key>
@@ -71,8 +83,8 @@
           <Property Name="Icon" Type="varchar" MaxLength="50" />
           <Property Name="Sort" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
-          <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="IsDisplay" Type="bit" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
@@ -81,45 +93,45 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="AttachmentUniqueId" Type="varchar" MaxLength="50" />
-          <Property Name="ObjectUniqueId" Type="varchar" MaxLength="50" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="AttachmentUniqueId" Type="uniqueidentifier" />
+          <Property Name="ObjectUniqueId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="Sys_Operation">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Id" Type="varchar" MaxLength="20" />
           <Property Name="CreateTime" Type="datetime" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
-          <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="ModifyTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Sys_OperationFunction">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="OperationUniqueId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OperationUniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FunctionId" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Sys_Organization">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Id" Type="varchar" MaxLength="20" />
           <Property Name="Name" Type="varchar" MaxLength="20" />
           <Property Name="Icon" Type="varchar" MaxLength="10" />
-          <Property Name="ParentUniqueId" Type="varchar" MaxLength="40" />
-          <Property Name="ManagerUniqueId" Type="varchar" MaxLength="40" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="ParentUniqueId" Type="uniqueidentifier" />
+          <Property Name="ManagerUniqueId" Type="uniqueidentifier" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
-          <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="Seq" Type="int" />
           <Property Name="Status" Type="varchar" MaxLength="50" />
@@ -128,33 +140,33 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Id" Type="varchar" MaxLength="40" />
           <Property Name="Name" Type="varchar" MaxLength="40" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
-          <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="ModifyTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Sys_RoleOperationFunction">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="RoleUniqueId" Type="varchar" MaxLength="50" />
-          <Property Name="OperationFunctionUniqueId" Type="varchar" MaxLength="50" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="50" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleUniqueId" Type="uniqueidentifier" />
+          <Property Name="OperationFunctionUniqueId" Type="uniqueidentifier" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="Sys_User">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Id" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="PassWord" Type="varchar" MaxLength="80" Nullable="false" />
-          <Property Name="OrganizationUniqueId" Type="varchar" MaxLength="40" />
+          <Property Name="OrganizationUniqueId" Type="uniqueidentifier" />
           <Property Name="Photo" Type="varchar" MaxLength="80" />
           <Property Name="Email" Type="varchar" MaxLength="40" />
           <Property Name="BirthDay" Type="datetime" />
@@ -162,8 +174,8 @@
           <Property Name="MobilePhone" Type="varchar" MaxLength="20" />
           <Property Name="Status" Type="varchar" MaxLength="20" />
           <Property Name="CreateTime" Type="datetime" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
-          <Property Name="ModifyUser" Type="varchar" MaxLength="40" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="Remark" Type="varchar" MaxLength="2000" />
           <Property Name="StartExpiryDate" Type="datetime" />
@@ -174,10 +186,10 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="UserUniqueId" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="RoleUniqueId" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="CreateUser" Type="varchar" MaxLength="40" />
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserUniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RoleUniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <!--生成过程中发现错误:
@@ -190,8 +202,8 @@
             <PropertyRef Name="FunctionId" />
             <PropertyRef Name="FunctionName" />
           </Key>
-          <Property Name="OperationFunctionUniqueId" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="OperationUniqueId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OperationFunctionUniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OperationUniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="OperationId" Type="varchar" MaxLength="20" />
           <Property Name="OperationName" Type="varchar" MaxLength="50" />
           <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
@@ -215,14 +227,15 @@
           <Property Name="Action" Type="varchar" MaxLength="100" />
           <Property Name="OperationId" Type="varchar" MaxLength="20" />
           <Property Name="OperationName" Type="varchar" MaxLength="50" />
-          <Property Name="RoleUniqueId" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="UserUniqueId" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="RoleUniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserUniqueId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityContainer Name="MISModelStoreContainer">
           <EntitySet Name="Sys_Announcement" EntityType="Self.Sys_Announcement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_AnnouncementUser" EntityType="Self.Sys_AnnouncementUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Attachment" EntityType="Self.Sys_Attachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Code" EntityType="Self.Sys_Code" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys_File" EntityType="Self.Sys_File" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Function" EntityType="Self.Sys_Function" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_ObjectAttachment" EntityType="Self.Sys_ObjectAttachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Operation" EntityType="Self.Sys_Operation" Schema="dbo" store:Type="Tables" />
@@ -267,6 +280,7 @@
           <EntitySet Name="Sys_AnnouncementUser" EntityType="MISModel.Sys_AnnouncementUser" />
           <EntitySet Name="Sys_Attachment" EntityType="MISModel.Sys_Attachment" />
           <EntitySet Name="Sys_Code" EntityType="MISModel.Sys_Code" />
+          <EntitySet Name="Sys_File" EntityType="MISModel.Sys_File" />
           <EntitySet Name="Sys_Function" EntityType="MISModel.Sys_Function" />
           <EntitySet Name="Sys_ObjectAttachment" EntityType="MISModel.Sys_ObjectAttachment" />
           <EntitySet Name="Sys_Operation" EntityType="MISModel.Sys_Operation" />
@@ -283,55 +297,67 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Contents" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="Levels" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="ModifyUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Sys_AnnouncementUser">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="AnnouncementUniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="UserUniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="AnnouncementUniqueId" Type="Guid" />
+          <Property Name="UserUniqueId" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
         </EntityType>
         <EntityType Name="Sys_Attachment">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
           <Property Name="FileSize" Type="Int32" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Path" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="FileName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
-          <Property Name="ModifyUser" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyUser" Type="Guid" />
           <Property Name="FileExtension" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Sys_Code">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
           <Property Name="CodeText" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="CodeValue" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ParentUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ParentUniqueId" Type="Guid" />
           <Property Name="Sort" Type="Int32" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
-          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyUser" Type="Guid" />
+        </EntityType>
+        <EntityType Name="Sys_File">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ParentUnqiueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="Guid" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Sys_Function">
           <Key>
@@ -345,8 +371,8 @@
           <Property Name="Icon" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Sort" Type="Int32" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="ModifyUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="IsDisplay" Type="Boolean" Nullable="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -355,45 +381,45 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AttachmentUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ObjectUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="AttachmentUniqueId" Type="Guid" />
+          <Property Name="ObjectUniqueId" Type="Guid" />
         </EntityType>
         <EntityType Name="Sys_Operation">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="ModifyUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Sys_OperationFunction">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="OperationUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="OperationUniqueId" Type="Guid" Nullable="false" />
           <Property Name="FunctionId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Sys_Organization">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
           <Property Name="Id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Icon" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ParentUniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="ManagerUniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ParentUniqueId" Type="Guid" />
+          <Property Name="ManagerUniqueId" Type="Guid" />
+          <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="Seq" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -402,33 +428,33 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
           <Property Name="Id" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ModifyUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Sys_RoleOperationFunction">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RoleUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="OperationFunctionUniqueId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="RoleUniqueId" Type="Guid" />
+          <Property Name="OperationFunctionUniqueId" Type="Guid" />
+          <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Sys_User">
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
           <Property Name="Id" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="PassWord" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="OrganizationUniqueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="OrganizationUniqueId" Type="Guid" />
           <Property Name="Photo" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="BirthDay" Type="DateTime" Precision="3" />
@@ -436,8 +462,8 @@
           <Property Name="MobilePhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="ModifyUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="ModifyUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="Remark" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="StartExpiryDate" Type="DateTime" Precision="3" />
@@ -448,10 +474,10 @@
           <Key>
             <PropertyRef Name="UniqueId" />
           </Key>
-          <Property Name="UniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="UserUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="RoleUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="CreateUser" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="UserUniqueId" Type="Guid" Nullable="false" />
+          <Property Name="RoleUniqueId" Type="Guid" Nullable="false" />
+          <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="view_OperationFunction">
@@ -462,8 +488,8 @@
             <PropertyRef Name="FunctionId" />
             <PropertyRef Name="FunctionName" />
           </Key>
-          <Property Name="OperationFunctionUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="OperationUniqueId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OperationFunctionUniqueId" Type="Guid" Nullable="false" />
+          <Property Name="OperationUniqueId" Type="Guid" Nullable="false" />
           <Property Name="OperationId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="OperationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -485,8 +511,8 @@
           <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="OperationId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="OperationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RoleUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="UserUniqueId" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="RoleUniqueId" Type="Guid" Nullable="false" />
+          <Property Name="UserUniqueId" Type="Guid" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -548,6 +574,19 @@
                 <ScalarProperty Name="ParentUniqueId" ColumnName="ParentUniqueId" />
                 <ScalarProperty Name="CodeValue" ColumnName="CodeValue" />
                 <ScalarProperty Name="CodeText" ColumnName="CodeText" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys_File">
+            <EntityTypeMapping TypeName="MISModel.Sys_File">
+              <MappingFragment StoreEntitySet="Sys_File">
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="ParentUnqiueId" ColumnName="ParentUnqiueId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
