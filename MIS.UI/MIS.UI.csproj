@@ -155,6 +155,8 @@
     <Compile Include="Areas\Sys\ApiControllers\OrganizationApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\RoleApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\SysCodeApiController.cs" />
+    <Compile Include="Areas\Sys\ApiControllers\SysFileApiController.cs" />
+    <Compile Include="Areas\Sys\ApiControllers\UploadApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\UserApiController.cs" />
     <Compile Include="Areas\Sys\Controllers\AnnouncementController.cs" />
     <Compile Include="Areas\Sys\Controllers\FunctionController.cs" />
@@ -162,6 +164,8 @@
     <Compile Include="Areas\Sys\Controllers\OrganizationController.cs" />
     <Compile Include="Areas\Sys\Controllers\RoleController.cs" />
     <Compile Include="Areas\Sys\Controllers\SysCodeController.cs" />
+    <Compile Include="Areas\Sys\Controllers\SysFileController.cs" />
+    <Compile Include="Areas\Sys\Controllers\UploadController.cs" />
     <Compile Include="Areas\Sys\Controllers\UserController.cs" />
     <Compile Include="Areas\Sys\SysAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2866,6 +2870,10 @@
     <Content Include="Areas\Sys\Views\Announcement\InputForm.cshtml" />
     <Content Include="Content\okadmin\lib\wangEditor\release\wangEditor.min.js.map" />
     <Content Include="Areas\Sys\Views\User\OrganizationUser.cshtml" />
+    <Content Include="Areas\Sys\Views\SysFile\Index.cshtml" />
+    <Content Include="Areas\Sys\Views\SysFile\Tree.cshtml" />
+    <Content Include="Areas\Sys\Views\SysFile\InputForm.cshtml" />
+    <Content Include="Areas\Sys\Views\Upload\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

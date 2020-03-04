@@ -1,0 +1,147 @@
+﻿
+@{
+
+    ViewBag.Title = "InputForm";
+    Layout = null;
+
+}
+
+<form class="layui-form" action="" name="sysFileForm" lay-filter="sysFileForm">
+
+    <button type="submit" class="layui-btn" lay-submit lay-filter="save">提交</button>
+    <input type="hidden" name="UniqueId" id="UniqueId" />
+    <table class="layui-table">
+        <tr>
+            <th>名称</th>
+            <td>
+                <input type="text" value="" name="Name" required lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input" />
+            </td>
+            <th>父节点</th>
+            <td>
+                <input type="text" name="ParentUniqueId" id="ParentUniqueId" lay-filter="ParentUniqueIdTreeSelect" class="layui-input">
+            </td>
+        </tr>
+
+        <tr>
+            <th>排序</th>
+            <td>
+                <input type="text" value="" lay-verify="required|number" name="Sort" placeholder="请输入排序" autocomplete="off" class="layui-input" />
+            </td>
+            <th></th>
+            <td></td>
+        </tr>
+    </table>
+</form>
+
+
+<script type="text/javascript">
+    layui.config({
+        base: '/Content/layui/lay/modules/',　
+    }).use(['form','treeSelect'], function () {
+        var form = layui.form;
+        var uniqueId = "@ViewBag.UniqueId";
+
+        var parentUniqueId= "@ViewBag.ParentUniqueId";
+        var treeSelect = layui.treeSelect;
+          treeSelect.render({
+                // 选择器
+              elem: '#ParentUniqueId',
+                // 数据
+              data: '@Url.Content("~/Api/Sys/SysFile/GetSysFileTreeNodes")',
+                // 异步加载方式：get/post，默认get
+                type: 'get',
+                // 占位符
+                placeholder: '请选择节点',
+                // 是否开启搜索功能：true/false，默认false
+                search: true,
+                // 点击回调
+                click: function (d) {
+                    console.log(d);
+                },
+                // 加载完成后的回调函数
+                success: function (d) {
+                    debugger
+                     // 因为treeSelect也是异步加载，所以checkNode必须等到treeSelect加载完成后才能使用，否则会报异常！
+                    if (uniqueId) {
+
+
+                        $.ajax({
+                            type: "Get",
+                            url: '@Url.Content("~/Api/Sys/SysFile/GetItemByUniqueId?uniqueId=")' + uniqueId,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'json',
+                            success: function (data) {
+                                //赋值
+                                debugger
+                                form.val('sysFileForm', data);
+                                if (data.ParentUniqueId != "00000000-0000-0000-0000-000000000000") {
+                                    debugger
+                                    treeSelect.checkNode('ParentUniqueIdTreeSelect', data.ParentUniqueId);
+                                }
+
+                            }
+                        });
+                    } else {
+                        if (parentUniqueId) {
+                            treeSelect.checkNode('ParentUniqueIdTreeSelect', parentUniqueId);
+                        }
+
+                    }
+                }
+            });
+
+
+        form.on('submit(save)', function (data) {
+            var data = JSON.stringify(data.field);
+            if (uniqueId) {
+                  $.ajax({
+                    url: '@Url.Content("~/api/Sys/SysFile/Edit")',
+                    type: "post",
+                    dataType: "json",
+                    headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                    data: data,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('修改成功');
+
+                              layer.closeAll();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+
+
+
+            } else {
+                debugger
+                  $.ajax({
+                    url: '@Url.Content("~/api/Sys/SysFile/Add")',
+                      type: "post",
+                      dataType: "json",
+                      headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                    data: data,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('新增成功');
+                              layer.closeAll();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+            }
+            return false;
+        });
+
+
+    });
+
+</script>
+

@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="ISysAnnouncementDAL.cs" />
     <Compile Include="ISysCodeDAL.cs" />
+    <Compile Include="ISysFileDAL.cs" />
     <Compile Include="ISysFunctionDAL.cs" />
     <Compile Include="ISysOperationDAL.cs" />
     <Compile Include="ISysOrganizationDAL.cs" />

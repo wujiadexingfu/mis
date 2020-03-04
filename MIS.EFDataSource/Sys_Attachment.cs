@@ -24,5 +24,6 @@ namespace MIS.EFDataSource
         public Nullable<System.DateTime> ModifyTime { get; set; }
         public Nullable<System.Guid> ModifyUser { get; set; }
         public string FileExtension { get; set; }
+        public string FileType { get; set; }
     }
 }

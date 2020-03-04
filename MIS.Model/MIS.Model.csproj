@@ -56,6 +56,9 @@
     <Compile Include="Sys\SysCode\SysCodeGrid.cs" />
     <Compile Include="Sys\SysCode\SysCodeInputForm.cs" />
     <Compile Include="Sys\SysCode\SysCodeParameter.cs" />
+    <Compile Include="Sys\SysFile\SysFileGrid.cs" />
+    <Compile Include="Sys\SysFile\SysFileInputForm.cs" />
+    <Compile Include="Sys\SysFile\SysFileParameter.cs" />
     <Compile Include="Sys\SysFunction\SysFunctionGrid.cs" />
     <Compile Include="Sys\SysFunction\SysFunctionInputForm.cs" />
     <Compile Include="Sys\SysFunction\SysFunctionParameter.cs" />

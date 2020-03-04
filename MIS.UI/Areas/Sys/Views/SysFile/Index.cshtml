@@ -1,0 +1,199 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using MIS.UI.Filters
+
+<script src="~/Content/jsTree/jstree.js"></script>
+<link href="~/Content/jsTree/themes/default/style.css" rel="stylesheet" />
+
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">
+
+                    <i class="layui-icon layui-icon-link"></i>查询条件
+                </div>
+                <div class="layui-card-body">
+                    <div id="divSysFileTree">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header ">
+                    <div class="layui-row">
+                        <div class="layui-col-md10 layui-col-sm8 layui-col-xs6">
+                            <i class="layui-icon layui-icon-table pull-right" style="font-size:20px"></i>
+                            查询结果
+                        </div>
+                        <div class="layui-col-md2  layui-col-sm4  layui-col-xs6">
+                            @if (CheckOperationFilterAttribute.CheckAdd())
+                            {
+                                <button class="layui-btn " lay-filter="btnAddSysFileCode" id="btnAddSysFileCode" onclick="Add('')"><i class="layui-icon"></i>添加</button>
+                            }
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="layui-card-body">
+                    <table id="sysFileTable" class="layui-table layui-form" lay-filter="sysFileTable"></table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="divUpload"></div>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+        var sysFileUniqueId = "";
+        layui.use(["layer", "table"], function () {
+
+            table = layui.table;
+
+            table.render({
+                elem: '#sysFileTable',
+                height: GLOBAL_TABLE_HEIGHT,
+
+                method: "post",
+                url: '@Url.Content("~/Api/Sys/SysFile/Query")',
+                page: GLOBAL_TABLE_PAGE, //开启分页
+                cols: [[
+
+                    { field: 'FileName', title: '文件名', sort: true }
+                    , { field: 'CreateUser', title: '上传人员', sort: true }
+                    , { field: 'CreateTime', title: '上传时间', sort: true, sort: true }
+                    , { fixed: 'right', width: 150, title: "操作", align: 'center', toolbar: '#bar' }
+                ]],
+                where: { UniqueId: sysFileUniqueId },
+                toolbar: GLOBAL_TABLE_TOOBAR,
+                limit: GLOBAL_TABLE_LIMIT,
+                limits: GLOBAL_TABLE_LIMITS,
+                loading: true,
+                skin: GLOBAL_TABLE_SKIN, //行边框风格
+                even: GLOBAL_TABLE_EVEN //开启隔行背景
+            });
+
+
+
+            table.on('tool(sysFileTable)', function (obj) {
+                debugger
+                var data = obj.data;
+                var uniqueId = data.UniqueId;
+                if (obj.event === 'edit') {
+                 Edit(uniqueId);
+                } else if (obj.event === 'delete') {
+                    Delete(uniqueId)
+                }
+            });
+
+            InitSysFileTree();
+        });
+
+         function InitSysFileTree() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Content("~/Sys/SysFile/Tree")',
+                async: false,
+                dataType: "html",
+                success: function (data) {
+                    $("#divSysFileTree").html(data);
+                }
+             });
+
+
+               $.ajax({
+                         url: '@Url.Content("~/Sys/Upload/Index")' ,
+                         type: "get",
+                         dataType:"html",
+                          success: function (result) {
+                           $("#divUpload").html(result);
+                     }
+                 });
+
+
+            };
+          function Add(uniqueId) {
+                $.ajax({
+                         url: '@Url.Content("~/Sys/SysFile/InputForm?uniqueId=")' + "" + "&parentUniqueId=" + uniqueId,
+                         type: "get",
+                         dataType:"html",
+                         success: function (result) {
+                             layer.open({
+                             type: 1,
+                             title: "新增文件信息",
+                             content: result,
+                             area: ["800px", "500px"],
+                             shade: 0.3, //不显示遮罩
+                             end: function () {
+                                 RefreshSysFileTable();
+                                 InitSysFileTree();
+                             }
+                         });
+                     }
+                 });
+
+            }
+
+            function Edit(uniqueId) {
+                   $.ajax({
+                         url: '@Url.Content("~/Sys/SysFile/InputForm?uniqueId=")' + uniqueId  ,
+                         type: "get",
+                         dataType:"html",
+                         success: function (result) {
+                             layer.open({
+                             type: 1,
+                             title: "修改文件信息",
+                             content: result,
+                             area: ["800px", "500px"],
+                             shade: 0.3, //不显示遮罩
+                             end: function () {
+                                 RefreshSysFileTable();
+                                 InitSysFileTree();
+                             }
+                         });
+                     }
+                 });
+
+
+            }
+
+        function Delete(uniqueId) {
+              layer.confirm('是否删除数据', function (index) {
+                        $.ajax({
+                            url: '@Url.Content("~/api/Sys/SysFile/Delete")?uniqueId=' + uniqueId ,
+                            type: "get",
+                             success: function (result) {
+                              if (result.IsSuccess) {
+                                  layer.msg('删除成功');
+                                  InitSysFileTree();
+                                  RefreshSysFileTable();
+                              } else {
+                                  layer.msg(result.Message);
+                              }
+                        }
+                    });
+
+                    });
+            }
+
+        function RefreshSysFileTable() {
+            debugger
+            table.reload('sysFileTable', {
+                where: { UniqueId: sysFileUniqueId },
+                }, 'data');
+            }
+    </script>
+}

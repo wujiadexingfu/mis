@@ -44,6 +44,7 @@
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="FileExtension" Type="varchar" MaxLength="50" />
+          <Property Name="FileType" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Sys_Code">
           <Key>
@@ -65,11 +66,12 @@
           </Key>
           <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="10" />
-          <Property Name="ParentUnqiueId" Type="varchar" MaxLength="40" />
+          <Property Name="ParentUniqueId" Type="uniqueidentifier" />
           <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="Sort" Type="int" />
         </EntityType>
         <EntityType Name="Sys_Function">
           <Key>
@@ -332,6 +334,7 @@
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="Guid" />
           <Property Name="FileExtension" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FileType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Sys_Code">
           <Key>
@@ -353,11 +356,12 @@
           </Key>
           <Property Name="UniqueId" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ParentUnqiueId" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ParentUniqueId" Type="Guid" />
           <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="Sort" Type="Int32" />
         </EntityType>
         <EntityType Name="Sys_Function">
           <Key>
@@ -550,6 +554,7 @@
           <EntitySetMapping Name="Sys_Attachment">
             <EntityTypeMapping TypeName="MISModel.Sys_Attachment">
               <MappingFragment StoreEntitySet="Sys_Attachment">
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
                 <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
                 <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
@@ -581,11 +586,12 @@
           <EntitySetMapping Name="Sys_File">
             <EntityTypeMapping TypeName="MISModel.Sys_File">
               <MappingFragment StoreEntitySet="Sys_File">
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
                 <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="ParentUnqiueId" ColumnName="ParentUnqiueId" />
+                <ScalarProperty Name="ParentUniqueId" ColumnName="ParentUniqueId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>

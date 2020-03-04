@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="ISysAnnouncementBLL.cs" />
     <Compile Include="ISysCodeBLL.cs" />
+    <Compile Include="ISysFileBLL.cs" />
     <Compile Include="ISysFunctionBLL.cs" />
     <Compile Include="ISysOperationBLL.cs" />
     <Compile Include="ISysOrganizationBLL.cs" />
