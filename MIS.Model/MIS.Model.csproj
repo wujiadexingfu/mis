@@ -53,6 +53,7 @@
     <Compile Include="Sys\SysAnnouncement\SysAnnouncementGrid.cs" />
     <Compile Include="Sys\SysAnnouncement\SysAnnouncementInputForm.cs" />
     <Compile Include="Sys\SysAnnouncement\SysAnnouncementParameter.cs" />
+    <Compile Include="Sys\SysAttachmentInputForm.cs" />
     <Compile Include="Sys\SysCode\SysCodeGrid.cs" />
     <Compile Include="Sys\SysCode\SysCodeInputForm.cs" />
     <Compile Include="Sys\SysCode\SysCodeParameter.cs" />
