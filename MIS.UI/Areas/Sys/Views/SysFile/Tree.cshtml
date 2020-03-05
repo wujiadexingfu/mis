@@ -56,6 +56,17 @@
                             Delete(id);
 
                         }
+                    },
+                    "上传": {
+                        "label": "上传",
+                        "icon": "layui-icon layui-icon-upload",
+                        "action": function (data) {
+                            var inst = $.jstree.reference(data.reference),
+                                obj = inst.get_node(data.reference);
+                            var id = obj.id;
+                            Upload(id,"");
+
+                        }
                     }
                 }
             },

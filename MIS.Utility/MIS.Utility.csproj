@@ -70,7 +70,9 @@
     <Compile Include="Zip\ZipFileHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Utility.Config.xml" />
+    <Content Include="Utility.Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

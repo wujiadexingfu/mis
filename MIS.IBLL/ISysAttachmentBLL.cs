@@ -5,19 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
-namespace MIS.IDAL
+namespace MIS.IBLL
 {
-   public interface ISysAttachmentDAL
+    public interface ISysAttachmentBLL
     {
-
         /// <summary>
-        /// 新增
+        /// 上传文件，保存记录到数据库中
         /// </summary>
-        /// <param name="inputForm"></param>
+        /// <param name="file"></param>
         /// <returns></returns>
-        RequestResult Add(SysAttachmentInputForm inputForm);
-
+        RequestResult Add(HttpPostedFile file);
 
         /// <summary>
         /// 修改
@@ -26,8 +25,7 @@ namespace MIS.IDAL
         /// <returns></returns>
         RequestResult Edit(SysAttachmentInputForm inputForm);
 
-        /// <summary>
-        /// 删除文件记录
+        /// 删除
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
@@ -38,6 +36,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
-        SysAttachmentInputForm GetItemByUniqueId(Guid uniqueId);
+        SysAttachmentInputForm GetItemByUnqiueId(Guid uniqueId);
     }
+        
 }

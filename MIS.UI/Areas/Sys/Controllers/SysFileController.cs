@@ -25,5 +25,13 @@ namespace MIS.UI.Areas.Sys.Controllers
             ViewBag.ParentUniqueId = parentUniqueId;
             return View();
         }
+
+        public ActionResult UploadFile(string attachmentUniqueId,string objectUniqueId)
+        {
+            ViewBag.AttachmentUniqueId = attachmentUniqueId;
+            ViewBag.objectUniqueId = objectUniqueId;
+            return View();
+        }
+
     }
 }

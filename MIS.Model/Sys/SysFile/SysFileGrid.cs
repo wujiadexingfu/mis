@@ -27,5 +27,11 @@ namespace MIS.Model.Sys.SysFile
         /// 上传时间
         /// </summary>
         public string CreateTime { get; set; }
+
+
+        /// <summary>
+        /// 对象的唯一编码
+        /// </summary>
+        public Guid? ObjectUniqueId { get; set; }
     }
 }

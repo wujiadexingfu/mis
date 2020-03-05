@@ -150,6 +150,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Sys\ApiControllers\AnnouncementApiController.cs" />
+    <Compile Include="Areas\Sys\ApiControllers\DownLoadApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\FunctionApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\OperationApiController.cs" />
     <Compile Include="Areas\Sys\ApiControllers\OrganizationApiController.cs" />
@@ -2874,6 +2875,7 @@
     <Content Include="Areas\Sys\Views\SysFile\Tree.cshtml" />
     <Content Include="Areas\Sys\Views\SysFile\InputForm.cshtml" />
     <Content Include="Areas\Sys\Views\Upload\Index.cshtml" />
+    <Content Include="Areas\Sys\Views\SysFile\UploadFile.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

@@ -8,6 +8,8 @@ namespace MIS.Model.Sys
 {
    public class SysAttachmentInputForm
     {
+        public Guid UniqueId { get; set; }
+
         /// <summary>
         /// 文件大小
         /// </summary>
@@ -32,5 +34,30 @@ namespace MIS.Model.Sys
         /// 文件扩展名
         /// </summary>
         public string FileExtension { get; set; }
+
+        /// <summary>
+        /// 关联对象的唯一编码
+        /// </summary>
+        public Guid? AttachmentUniqueId { get; set; }
+
+
+        /// <summary>
+        /// 唯一编码
+        /// </summary>
+        public Guid? ObjectUniqueId { get; set; }
+
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string Remark { get; set; }
+
+
+        public string FullFileName
+        {
+            get {
+                return FileName + FileExtension;
+            }
+        }
+
     }
 }

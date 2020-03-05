@@ -138,5 +138,29 @@ namespace MIS.Utility.EnumUtility
             Delete
         }
 
+
+        /// <summary>
+        /// 文件类型
+        /// </summary>
+        public enum FileType
+        {
+            /// <summary>
+            /// 失效的
+            /// </summary>
+            Invalidation,
+
+            /// <summary>
+            /// 公共的
+            /// </summary>
+            Public,
+
+            /// <summary>
+            /// 私人的
+            /// </summary>
+            Private
+
+
+        }
+
     }
 }

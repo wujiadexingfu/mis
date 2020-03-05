@@ -52,10 +52,14 @@
     </div>
 </div>
 
-<div id="divUpload"></div>
-
+<script type="text/html" id="downloadFileTemplate">
+    <a  href="/api/Sys/DownLoad/DownLoadFile?uniqueId={{d.UniqueId}}" style="color:blue;text-decoration:underline">d.FileName</a>
+</script>
 
 @section scripts{
+
+
+
 
     <script type="text/javascript">
         var sysFileUniqueId = "";
@@ -72,7 +76,7 @@
                 page: GLOBAL_TABLE_PAGE, //开启分页
                 cols: [[
 
-                    { field: 'FileName', title: '文件名', sort: true }
+                    { field: 'FileName', title: '文件名', sort: true, templet:"#downloadFileTemplate" }
                     , { field: 'CreateUser', title: '上传人员', sort: true }
                     , { field: 'CreateTime', title: '上传时间', sort: true, sort: true }
                     , { fixed: 'right', width: 150, title: "操作", align: 'center', toolbar: '#bar' }
@@ -92,10 +96,11 @@
                 debugger
                 var data = obj.data;
                 var uniqueId = data.UniqueId;
+                var objectUniqueId = data.ObjectUniqueId;
                 if (obj.event === 'edit') {
-                 Edit(uniqueId);
+                    Upload(objectUniqueId, uniqueId);
                 } else if (obj.event === 'delete') {
-                    Delete(uniqueId)
+                    DeleteFile(uniqueId)
                 }
             });
 
@@ -114,15 +119,7 @@
              });
 
 
-               $.ajax({
-                         url: '@Url.Content("~/Sys/Upload/Index")' ,
-                         type: "get",
-                         dataType:"html",
-                          success: function (result) {
-                           $("#divUpload").html(result);
-                     }
-                 });
-
+             
 
             };
           function Add(uniqueId) {
@@ -168,7 +165,52 @@
                  });
 
 
-            }
+        }
+        function Upload(objectUniqueId,attachmentUniqueId) {
+              $.ajax({
+                  url: '@Url.Content("~/Sys/SysFile/UploadFile?objectUniqueId=")' + objectUniqueId + "&attachmentUniqueId=" + attachmentUniqueId ,
+                 type: "get",
+                 dataType:"html",
+                 success: function (result) {
+                      layer.open({
+                      type: 1,
+                      title: "上传信息",
+                      content: result,
+                      area: ["800px", "500px"],
+                      shade: 0.3, //不显示遮罩
+                      end: function () {
+                          RefreshSysFileTable();
+                       
+                      }
+                   });
+                }
+              });
+        }
+
+
+        function DeleteFile(uniqueId) {
+
+
+            layer.confirm('是否删除数据', function (index) {
+             $.ajax({
+             url: '@Url.Content("~/api/Sys/Upload/Delete")?uniqueId=' + uniqueId ,
+             type: "get",
+                  success: function (result) {
+                  if (result.IsSuccess) {
+                      RefreshSysFileTable();   
+                      layer.close(index);
+                      layer.msg('删除成功');
+
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+
+            });
+           
+        }
+
 
         function Delete(uniqueId) {
               layer.confirm('是否删除数据', function (index) {

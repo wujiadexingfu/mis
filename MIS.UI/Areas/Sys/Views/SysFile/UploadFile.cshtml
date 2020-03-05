@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "UploadFile";
+    Layout = null;
+}
+
+
+<form class="layui-form" action="" name="uploadFileForm" lay-filter="uploadFileForm">
+
+    <button type="submit" class="layui-btn" lay-submit lay-filter="saveUploadFileForm">提交</button>
+    <input type="hidden" name="ObjectUniqueId" id="ObjectUniqueId" lay-verify="required" />
+    <input type="hidden" name="AttachmentUniqueId" id="AttachmentUniqueId"  lay-verify="required"  />
+    <table class="layui-table">
+        <tr>
+            <th>文件名</th>
+            <td>
+                <input type="text" value="" name="FileName"  lay-verify="required" placeholder="请输入文件名" autocomplete="off" class="layui-input" />
+            </td>
+            <th>文件类型</th>
+            <td>
+                <select name="FileType" id="FileType">
+                    <option></option>
+
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>备注</th>
+            <td colspan="3">
+                <input type="text" value="" name="Remark" placeholder="请输入备注" autocomplete="off" class="layui-input" />
+            </td>
+        </tr>
+
+        <tr><td>上传</td><td colspan="3"><div id="divUploadFile"></div></td></tr>
+
+    </table>
+</form>
+
+
+
+
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form;
+        var attachmentUniqueId = "@ViewBag.AttachmentUniqueId";
+        var objectUniqueId = "@ViewBag.ObjectUniqueId";
+
+        $("#ObjectUniqueId").val(objectUniqueId);
+        $.selectExtens("FileType", "FileType");
+        form.render("select");            // 刷性select，显示出数据
+
+
+
+        if (attachmentUniqueId != "") {
+
+            $.ajax({
+                type: "Get",
+                url: '@Url.Content("~/Api/Sys/Upload/GetItemByUniqueId?uniqueId=")' + attachmentUniqueId,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (data) {
+                    debugger
+                    form.val('uploadFileForm', data);
+
+                       $.ajax({
+                        url: '@Url.Content("~/Sys/Upload/Index")',
+                        type: "get",
+                        dataType: "html",
+                        success: function (result) {
+                            $("#divUploadFile").html(result);
+                            $("#ObjectUniqueId").val(objectUniqueId);
+                        }
+                    });
+                }
+            });
+        } else {
+            $.ajax({
+                        url: '@Url.Content("~/Sys/Upload/Index")',
+                        type: "get",
+                        dataType: "html",
+                        success: function (result) {
+                            $("#divUploadFile").html(result);
+                        }
+                    });
+        }
+
+
+
+        
+
+
+        form.on('submit(saveUploadFileForm)', function (data) {
+
+            debugger
+            var data = JSON.stringify(data.field);
+
+                 $.ajax({
+                    url: '@Url.Content("~/api/Sys/Upload/Edit")',
+                    type: "post",
+                    dataType: "json",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-HTTP-Method-Override": "POST"
+                    },
+                    data: data,
+                    async: false,
+                    success: function (result) {
+                        if (result.IsSuccess) {
+                            layer.msg('新增成功');
+                            layer.closeAll();
+                        } else {
+                            debugger
+                            layer.msg(result.Message);
+                        }
+                    }
+                });
+
+
+            return false;
+        });
+
+
+   
+
+
+
+
+    });
+
+</script>

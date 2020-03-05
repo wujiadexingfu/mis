@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MIS.Utility.EnumUtility.SystemEnums;
 
 namespace MIS.DAL
 {
@@ -228,18 +229,25 @@ namespace MIS.DAL
         {
             using (MISEntities db = new MISEntities())
             {
+
+                var privateFileType = FileType.Private.ToString() ;
+                var publicFileType= FileType.Public.ToString();
+                var createUser = SessionUtils.GetAccountUnqiueId();
+
                 var query = (from x in db.Sys_ObjectAttachment
                              join x1 in db.Sys_Attachment on x.AttachmentUniqueId equals x1.UniqueId
-                             where x.ObjectUniqueId == parameter.UniqueId
+                             where x.ObjectUniqueId == parameter.UniqueId &&((x1.FileType==privateFileType&&x1.CreateUser== createUser)||x1.FileType==publicFileType)
+
                              select new  {
                                   x1.CreateTime,
                                   x1.CreateUser,
                                   x1.FileName,
-                                  x1.UniqueId
-                             }).AsQueryable();
+                                  x1.UniqueId,
+                                  x.ObjectUniqueId
+                             }).AsQueryable(); 
 
 
-                var count = query.Count();
+                 var count = query.Count();
                 var list = query.OrderBy(x => x.CreateTime).Skip((parameter.Page - 1) * parameter.Limit).Take(parameter.Limit).ToList();
 
                 var fileGridList = new List<SysFileGrid>();
@@ -254,6 +262,7 @@ namespace MIS.DAL
                     model.CreateTime = item.CreateTime.Value.ToString(DateTimeFormatter.YYYYMMDDHHMMSS);
                     model.CreateUser = userList.Where(x => x.UniqueId == item.CreateUser).FirstOrDefault().Name;
                     model.FileName = item.FileName;
+                    model.ObjectUniqueId = item.ObjectUniqueId;
                     fileGridList.Add(model);
                 }
 
@@ -261,5 +270,9 @@ namespace MIS.DAL
                 return pageData;
             }
         }
+
+
+       
+
     }
 }

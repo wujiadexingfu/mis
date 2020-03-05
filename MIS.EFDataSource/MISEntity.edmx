@@ -45,6 +45,7 @@
           <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="FileExtension" Type="varchar" MaxLength="50" />
           <Property Name="FileType" Type="varchar" MaxLength="50" />
+          <Property Name="Remark" Type="varchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="Sys_Code">
           <Key>
@@ -335,6 +336,7 @@
           <Property Name="ModifyUser" Type="Guid" />
           <Property Name="FileExtension" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FileType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Sys_Code">
           <Key>
@@ -554,6 +556,7 @@
           <EntitySetMapping Name="Sys_Attachment">
             <EntityTypeMapping TypeName="MISModel.Sys_Attachment">
               <MappingFragment StoreEntitySet="Sys_Attachment">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="FileType" ColumnName="FileType" />
                 <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
                 <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />

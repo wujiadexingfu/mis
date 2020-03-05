@@ -25,5 +25,6 @@ namespace MIS.EFDataSource
         public Nullable<System.Guid> ModifyUser { get; set; }
         public string FileExtension { get; set; }
         public string FileType { get; set; }
+        public string Remark { get; set; }
     }
 }
