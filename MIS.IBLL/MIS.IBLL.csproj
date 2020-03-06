@@ -45,6 +45,7 @@
     <Compile Include="ISysCodeBLL.cs" />
     <Compile Include="ISysFileBLL.cs" />
     <Compile Include="ISysFunctionBLL.cs" />
+    <Compile Include="ISysLogBLL.cs" />
     <Compile Include="ISysOperationBLL.cs" />
     <Compile Include="ISysOrganizationBLL.cs" />
     <Compile Include="ISysRoleBLL.cs" />

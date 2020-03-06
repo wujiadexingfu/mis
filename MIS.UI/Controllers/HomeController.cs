@@ -24,7 +24,6 @@ namespace MIS.UI.Controllers
 ;            ViewBag.Title = "Home Page";
 
             ViewBag.UserName = ((Account)HttpContext.Session[Constant.Account]).Name;
-
             return View();
         }
 

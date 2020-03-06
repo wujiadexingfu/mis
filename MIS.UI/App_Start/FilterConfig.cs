@@ -9,7 +9,9 @@ namespace MIS.UI
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add( DependencyResolver.Current.GetService<ExceptionHandleFilterAttribute>());
             filters.Add(new AccountFilterAttribute());
+         
         }
     }
 }

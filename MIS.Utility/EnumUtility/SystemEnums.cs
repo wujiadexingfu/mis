@@ -162,5 +162,41 @@ namespace MIS.Utility.EnumUtility
 
         }
 
+
+        public enum LogLevel
+        {
+            /// <summary>
+            /// 追踪
+            /// </summary>
+            Trace,
+
+            /// <summary>
+            /// 调试
+            /// </summary>
+            Debug,
+
+            /// <summary>
+            /// 信息
+            /// </summary>
+            Info,
+
+            /// <summary>
+            /// 警告
+            /// </summary>
+            Warn,
+
+            /// <summary>
+            /// 异常
+            /// </summary>
+            Error,
+
+            /// <summary>
+            ///严重
+            /// </summary>
+            Fatal
+
+
+        }
+
     }
 }

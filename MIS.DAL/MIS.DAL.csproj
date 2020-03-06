@@ -55,6 +55,7 @@
     <Compile Include="SysCodeDAL.cs" />
     <Compile Include="SysFileDAL.cs" />
     <Compile Include="SysFunctionDAL.cs" />
+    <Compile Include="SysLogDAL.cs" />
     <Compile Include="SysOperationDAL.cs" />
     <Compile Include="SysOrganizationDAL.cs" />
     <Compile Include="SysRoleDAL.cs" />

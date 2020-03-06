@@ -18,7 +18,11 @@ namespace MIS.DAL
     public  class SysOrganizationDAL: ISysOrganizationDAL
     {
 
-
+        private ISysLogDAL _sysLogDAL;
+        public SysOrganizationDAL(ISysLogDAL sysLogDAL)
+        {
+            _sysLogDAL = sysLogDAL;
+        }
         public List<TreeNode> InitTree()
         {
             var root = new Guid("00000000-0000-0000-0000-000000000000");
@@ -103,6 +107,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -148,6 +153,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -205,6 +211,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;

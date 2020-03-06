@@ -16,6 +16,12 @@ namespace MIS.DAL
    public class SysAttachmentDAL: ISysAttachmentDAL
     {
 
+        private ISysLogDAL _sysLogDAL;
+        public SysAttachmentDAL(ISysLogDAL sysLogDAL)
+        {
+            _sysLogDAL = sysLogDAL;
+        }
+
         /// <summary>
         /// 新增
         /// </summary>
@@ -46,6 +52,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -92,6 +99,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -124,6 +132,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;

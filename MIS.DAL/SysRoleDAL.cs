@@ -16,6 +16,13 @@ namespace MIS.DAL
 {
    public class SysRoleDAL:ISysRoleDAL
     {
+
+        private ISysLogDAL _sysLogDAL;
+        public SysRoleDAL(ISysLogDAL sysLogDAL)
+        {
+            _sysLogDAL = sysLogDAL;
+        }
+
         /// <summary>
         /// 查询
         /// </summary>
@@ -97,6 +104,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -132,6 +140,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -156,6 +165,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -200,6 +210,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -239,6 +250,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -266,6 +278,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;

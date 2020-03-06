@@ -15,6 +15,12 @@ namespace MIS.DAL
 {
    public  class SysOperationDAL: ISysOperationDAL
     {
+        private ISysLogDAL _sysLogDAL;
+        public SysOperationDAL(ISysLogDAL sysLogDAL)
+        {
+            _sysLogDAL = sysLogDAL;
+        }
+
         /// <summary>
         /// 查询操作信息
         /// </summary>
@@ -95,6 +101,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -130,6 +137,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -154,6 +162,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -195,6 +204,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;

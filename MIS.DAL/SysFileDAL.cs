@@ -18,6 +18,12 @@ namespace MIS.DAL
 {
    public class SysFileDAL: ISysFileDAL
     {
+        private ISysLogDAL _sysLogDAL;
+        public SysFileDAL(ISysLogDAL sysLogDAL)
+        {
+            _sysLogDAL = sysLogDAL;
+        }
+
         /// <summary>
         /// 初始化文件树
         /// </summary>
@@ -104,6 +110,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -148,6 +155,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -197,6 +205,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;

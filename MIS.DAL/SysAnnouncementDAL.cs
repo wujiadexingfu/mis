@@ -16,6 +16,15 @@ namespace MIS.DAL
 {
    public class SysAnnouncementDAL: ISysAnnouncementDAL
     {
+        private ISysLogDAL _sysLogDAL;
+        private ISysCodeDAL _sysCodeDAL;
+
+        public SysAnnouncementDAL(ISysLogDAL sysLogDAL, ISysCodeDAL sysCodeDAL)
+        {
+            _sysLogDAL = sysLogDAL;
+            _sysCodeDAL = sysCodeDAL;
+        }
+
         /// <summary>
         /// 查询
         /// </summary>
@@ -34,8 +43,8 @@ namespace MIS.DAL
                 var count = query.Count();
                 var data = query.OrderBy(x => x.CreateTime).Skip((parameter.Page - 1) * parameter.Limit).Take(parameter.Limit).ToList();
 
-                SysCodeDAL sysCodeDAL = new SysCodeDAL();
-                var codeList = sysCodeDAL.GetSysCodeByCodeValue("AnnouncementLevels");
+             
+                var codeList = _sysCodeDAL.GetSysCodeByCodeValue("AnnouncementLevels");
 
                 foreach (var item in data)
                 {
@@ -122,6 +131,7 @@ namespace MIS.DAL
             catch (Exception ex)
             {
                 result.ReturnFailedMessage(ex.Message);
+                _sysLogDAL.WriteLog(ex);
             }
             return result;
         }
@@ -165,10 +175,6 @@ namespace MIS.DAL
                     db.Sys_AnnouncementUser.Add(sysAnnouncementUser);
 
                 }
-
-
-
-
                 db.SaveChanges();
                 result.Success();
 
@@ -176,6 +182,7 @@ namespace MIS.DAL
             catch (Exception ex)
             {
                 result.ReturnFailedMessage(ex.Message);
+                _sysLogDAL.WriteLog(ex);
             }
             return result;
         }
@@ -204,6 +211,7 @@ namespace MIS.DAL
             catch (Exception ex)
             {
                 result.ReturnFailedMessage(ex.Message);
+                _sysLogDAL.WriteLog(ex);
             }
             return result;
         }

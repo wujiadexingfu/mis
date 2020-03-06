@@ -46,6 +46,7 @@
     <Compile Include="SysCodeBLL.cs" />
     <Compile Include="SysFileBLL.cs" />
     <Compile Include="SysFunctionBLL.cs" />
+    <Compile Include="SysLogBLL.cs" />
     <Compile Include="SysOperationBLL.cs" />
     <Compile Include="SysOrganizationBLL.cs" />
     <Compile Include="SysRoleBLL.cs" />

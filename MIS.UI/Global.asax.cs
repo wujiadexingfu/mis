@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using MIS.UI.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,11 @@ namespace MIS.UI
             //使用Autofac提供的RegisterControllers扩展方法来对程序集中所有的Controller一次性的完成注册
             // builder.RegisterControllers(Assembly.GetExecutingAssembly());//生成具体的实例
             builder.RegisterControllers(Assembly.GetExecutingAssembly()).PropertiesAutowired(); // 这样支持属性注入
+
+            builder.RegisterType<ExceptionHandleFilterAttribute>();
+            builder.RegisterFilterProvider();
+          
+
             var container = builder.Build();
             //下面就是使用MVC的扩展 更改了MVC中的注入方式.
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
@@ -81,6 +87,13 @@ namespace MIS.UI
             Assembly serpAss = Assembly.Load("MIS.BLL");
             //创建serAss中的所有类的instance以此类的实现接口存储
             builder.RegisterTypes(serpAss.GetTypes()).AsImplementedInterfaces();
+
+            builder.RegisterType<ExceptionHandleFilterAttribute>();
+
+
+            builder.RegisterFilterProvider();
+            builder.RegisterWebApiFilterProvider(config);
+                ;
 
             var container = builder.Build();
             // Set the WebApi dependency resolver.

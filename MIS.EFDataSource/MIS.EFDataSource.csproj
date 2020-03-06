@@ -78,6 +78,9 @@
     <Compile Include="Sys_Code.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Sys_ExceptionLog.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Sys_File.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>

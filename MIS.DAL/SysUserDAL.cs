@@ -44,13 +44,20 @@ namespace MIS.DAL
 {
   public    class SysUserDAL:ISysUserDAL
     {
-       /// <summary>
-       /// 登录
-       /// </summary>
-       /// <param name="Id">用户编号</param>
-       /// <param name="password">密码</param>
-       /// <returns></returns>
-      public SystemEnums.LoginStatus Login(string Id, string password)
+        private ISysLogDAL _sysLogDAL;
+        public SysUserDAL(ISysLogDAL sysLogDAL)
+        {
+            _sysLogDAL = sysLogDAL;
+        }
+
+
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="Id">用户编号</param>
+        /// <param name="password">密码</param>
+        /// <returns></returns>
+        public SystemEnums.LoginStatus Login(string Id, string password)
       {
 
             MISEntities db = new MISEntities();
@@ -109,6 +116,7 @@ namespace MIS.DAL
 
         public PageData Query(SysUserParameter parameter)
         {
+       
             using (MISEntities db = new MISEntities())
             {
                 var query = db.Sys_User.AsQueryable();
@@ -222,6 +230,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL .WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -267,6 +276,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -293,6 +303,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -320,6 +331,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;

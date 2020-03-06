@@ -29,6 +29,7 @@ namespace MIS.EFDataSource
         public virtual DbSet<Sys_AnnouncementUser> Sys_AnnouncementUser { get; set; }
         public virtual DbSet<Sys_Attachment> Sys_Attachment { get; set; }
         public virtual DbSet<Sys_Code> Sys_Code { get; set; }
+        public virtual DbSet<Sys_ExceptionLog> Sys_ExceptionLog { get; set; }
         public virtual DbSet<Sys_File> Sys_File { get; set; }
         public virtual DbSet<Sys_Function> Sys_Function { get; set; }
         public virtual DbSet<Sys_ObjectAttachment> Sys_ObjectAttachment { get; set; }

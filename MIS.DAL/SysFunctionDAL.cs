@@ -18,6 +18,12 @@ namespace MIS.DAL
 {
    public class SysFunctionDAL:ISysFunctionDAL
     {
+        private ISysLogDAL _sysLogDAL;
+        public SysFunctionDAL(ISysLogDAL sysLogDAL)
+        {
+            _sysLogDAL = sysLogDAL;
+        }
+
         /// <summary>
         /// 根据当前登录用户获取到菜单目录
         /// </summary>
@@ -216,6 +222,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -265,6 +272,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;
@@ -321,6 +329,7 @@ namespace MIS.DAL
             }
             catch (Exception ex)
             {
+                _sysLogDAL.WriteLog(ex);
                 result.ReturnFailedMessage(ex.Message);
             }
             return result;

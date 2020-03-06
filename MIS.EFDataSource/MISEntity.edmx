@@ -61,6 +61,18 @@
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="ModifyUser" Type="uniqueidentifier" />
         </EntityType>
+        <EntityType Name="Sys_ExceptionLog">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TargetSite" Type="varchar" MaxLength="200" />
+          <Property Name="LogLevel" Type="varchar" MaxLength="10" />
+          <Property Name="Message" Type="varchar" MaxLength="4000" />
+          <Property Name="StackTrace" Type="varchar" MaxLength="4000" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="Sys_File">
           <Key>
             <PropertyRef Name="UniqueId" />
@@ -238,6 +250,7 @@
           <EntitySet Name="Sys_AnnouncementUser" EntityType="Self.Sys_AnnouncementUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Attachment" EntityType="Self.Sys_Attachment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Code" EntityType="Self.Sys_Code" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sys_ExceptionLog" EntityType="Self.Sys_ExceptionLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_File" EntityType="Self.Sys_File" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_Function" EntityType="Self.Sys_Function" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_ObjectAttachment" EntityType="Self.Sys_ObjectAttachment" Schema="dbo" store:Type="Tables" />
@@ -283,6 +296,7 @@
           <EntitySet Name="Sys_AnnouncementUser" EntityType="MISModel.Sys_AnnouncementUser" />
           <EntitySet Name="Sys_Attachment" EntityType="MISModel.Sys_Attachment" />
           <EntitySet Name="Sys_Code" EntityType="MISModel.Sys_Code" />
+          <EntitySet Name="Sys_ExceptionLog" EntityType="MISModel.Sys_ExceptionLog" />
           <EntitySet Name="Sys_File" EntityType="MISModel.Sys_File" />
           <EntitySet Name="Sys_Function" EntityType="MISModel.Sys_Function" />
           <EntitySet Name="Sys_ObjectAttachment" EntityType="MISModel.Sys_ObjectAttachment" />
@@ -351,6 +365,18 @@
           <Property Name="CreateUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="Guid" />
+        </EntityType>
+        <EntityType Name="Sys_ExceptionLog">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="TargetSite" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LogLevel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="StackTrace" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Sys_File">
           <Key>
@@ -582,6 +608,19 @@
                 <ScalarProperty Name="ParentUniqueId" ColumnName="ParentUniqueId" />
                 <ScalarProperty Name="CodeValue" ColumnName="CodeValue" />
                 <ScalarProperty Name="CodeText" ColumnName="CodeText" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sys_ExceptionLog">
+            <EntityTypeMapping TypeName="MISModel.Sys_ExceptionLog">
+              <MappingFragment StoreEntitySet="Sys_ExceptionLog">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="StackTrace" ColumnName="StackTrace" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="LogLevel" ColumnName="LogLevel" />
+                <ScalarProperty Name="TargetSite" ColumnName="TargetSite" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>

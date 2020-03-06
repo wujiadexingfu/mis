@@ -172,6 +172,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\AccountFilterAttribute.cs" />
     <Compile Include="Filters\CheckOperationFilterAttribute.cs" />
+    <Compile Include="Filters\ExceptionHandleFilterAttribute.cs" />
     <Compile Include="Filters\OperationFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
