@@ -50,6 +50,7 @@
     <Compile Include="ISysOrganizationBLL.cs" />
     <Compile Include="ISysRoleBLL.cs" />
     <Compile Include="ISysUserBLL.cs" />
+    <Compile Include="IWorkFlowChartBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

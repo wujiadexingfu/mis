@@ -72,5 +72,12 @@ namespace MIS.IBLL
         /// <param name="uniqueId"></param>
         /// <returns></returns>
         RequestResult DeleteRoleUser(Guid uniqueId);
+
+
+        /// <summary>
+        /// 获取所有的角色信息
+        /// </summary>
+        /// <returns></returns>
+         List<SysRoleGrid> GetRoleList();
     }
 }

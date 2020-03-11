@@ -1,6 +1,8 @@
 ﻿using MIS.IBLL;
-using MIS.Model.Sys.SysRole;
+using MIS.Model.WorkFlow.WorkFlowChart;
+using MIS.Model.WorkFlow.WorkFlowStep;
 using MIS.UI.Filters;
+using MIS.Utility.GuidUtility;
 using MIS.Utility.Serialize;
 using System;
 using System.Collections.Generic;
@@ -11,14 +13,14 @@ using System.Text;
 using System.Web.Http;
 using static MIS.Utility.EnumUtility.SystemEnums;
 
-namespace MIS.UI.Areas.Sys.ApiControllers
+namespace MIS.UI.Areas.WorkFlow.ApiControllers
 {
-    public class RoleApiController : ApiController
+    public class WorkFlowChartApiController : ApiController
     {
-        private ISysRoleBLL _sysRoleBLL;
-        public RoleApiController(ISysRoleBLL sysRoleBLL)
+        private IWorkFlowChartBLL _workFlowChartBLL;
+        public WorkFlowChartApiController(IWorkFlowChartBLL workFlowChartBLL)
         {
-            _sysRoleBLL = sysRoleBLL;
+            this._workFlowChartBLL = workFlowChartBLL;
         }
 
         /// <summary>
@@ -29,9 +31,9 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         [HttpGet]
         [HttpPost]
         [OperationFilterAttribute(OperationType.Query)]
-        public HttpResponseMessage Query(SysRoleParameter parameter)
+        public HttpResponseMessage Query(WorkFlowChartParameter parameter)
         {
-            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.Query(parameter));
+            var result = JosnNetHelper.ObjectToJson(_workFlowChartBLL.Query(parameter));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
@@ -47,10 +49,10 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [OperationFilterAttribute(OperationType.Edit)]
         [HttpPost]
-        public HttpResponseMessage Edit(SysRoleInputForm inputForm)
+        public HttpResponseMessage Edit(WorkFlowChartInputForm inputForm)
         {
 
-            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.Edit(inputForm));
+            var result = JosnNetHelper.ObjectToJson(_workFlowChartBLL.Edit(inputForm));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
@@ -64,9 +66,9 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         /// <returns></returns>
         [HttpPost]
         [OperationFilterAttribute(OperationType.Add)]
-        public HttpResponseMessage Add(SysRoleInputForm inputForm)
+        public HttpResponseMessage Add(WorkFlowChartInputForm inputForm)
         {
-            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.Add(inputForm));
+            var result = JosnNetHelper.ObjectToJson(_workFlowChartBLL.Add(inputForm));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
@@ -75,7 +77,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
 
 
         /// <summary>
-        /// 根据唯一编码获取角色信息
+        /// 根据唯一编码获取流程图信息
         /// </summary>
         /// <param name="uniqueId"></param>
         /// <returns></returns>
@@ -84,7 +86,7 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         public HttpResponseMessage GetItemByUniqueId(Guid uniqueId)
         {
 
-            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.GetItemByUniqueId(uniqueId));
+            var result = JosnNetHelper.ObjectToJson(_workFlowChartBLL.GetItemByUniqueId(uniqueId));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
@@ -100,82 +102,42 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         [OperationFilterAttribute(OperationType.Delete)]
         public HttpResponseMessage Delete(Guid uniqueId)
         {
-            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.Delete(uniqueId));
+            var result = JosnNetHelper.ObjectToJson(_workFlowChartBLL.Delete(uniqueId));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
             };
         }
 
+        /// <summary>
+        /// 获取到一个Guid
+        /// </summary>
+        /// <returns></returns>
+        public HttpResponseMessage GetGuid()
+        {
+            var guid = GuidUtils.NewGuid().ToString();
+    
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(guid, Encoding.UTF8, "application/json"),
+            };
+        }
 
         /// <summary>
-        ///  添加用户菜单和操作权限的关联
+        /// 保存节点，不存在则新增，存在则修改
         /// </summary>
         /// <param name="inputForm"></param>
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage AddRoleOperationFunction(SysRoleOperationFunctionInputForm inputForm)
+        public HttpResponseMessage SaveWorkFlowStep(WorkFlowStepInputForm inputForm)
         {
 
-            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.AddRoleOperationFunction(inputForm));
+            var result = JosnNetHelper.ObjectToJson(_workFlowChartBLL.SaveWorkFlowStep(inputForm));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
             };
-        }
-
-        /// <summary>
-        /// 添加角色和用户的关联
-        /// </summary>
-        /// <param name="inputForm"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [HttpPost]
-        public HttpResponseMessage AddRoleUser(SysRoleUserInputForm inputForm)
-        {
-
-            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.AddRoleUser(inputForm));
-            return new HttpResponseMessage()
-            {
-                Content = new StringContent(result, Encoding.UTF8, "application/json"),
-            };
-        }
-
-
-        /// <summary>
-        /// 删除角色用户的关联
-        /// </summary>
-        /// <param name="uniqueId"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [HttpPost]
-        public HttpResponseMessage DeleteRoleUser(Guid uniqueId)
-        {
-
-            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.DeleteRoleUser(uniqueId));
-            return new HttpResponseMessage()
-            {
-                Content = new StringContent(result, Encoding.UTF8, "application/json"),
-            };
-        }
-
-        /// <summary>
-        /// 获取所有的角色信息
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [HttpPost]
-        public HttpResponseMessage GetRoleList()
-        {
-
-            var result = JosnNetHelper.ObjectToJson(_sysRoleBLL.GetRoleList());
-            return new HttpResponseMessage()
-            {
-                Content = new StringContent(result, Encoding.UTF8, "application/json"),
-            };
-        }
-
-
+        }   
     }
 }

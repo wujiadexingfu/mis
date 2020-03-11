@@ -207,6 +207,54 @@
           <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="WorkFlow_Chart">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="FlowChartContent" Type="varchar" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="WorkFlow_Line">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="FromStepId" Type="varchar" MaxLength="50" />
+          <Property Name="ToStepId" Type="varchar" MaxLength="50" />
+          <Property Name="WorkFlowChartUniqueId" Type="uniqueidentifier" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
+          <Property Name="ModifyTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WorkFlow_Step">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WorkFlowChartUniqueId" Type="uniqueidentifier" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="StepId" Type="varchar" MaxLength="50" />
+          <Property Name="StepLeft" Type="float" />
+          <Property Name="StepTop" Type="float" />
+          <Property Name="StepState" Type="varchar" MaxLength="50" />
+          <Property Name="AuditingType" Type="varchar" MaxLength="50" />
+          <Property Name="IsBegin" Type="bit" />
+          <Property Name="ActionUrl" Type="varchar" MaxLength="500" />
+          <Property Name="StepRole" Type="uniqueidentifier" />
+          <Property Name="SaveFunction" Type="varchar" MaxLength="50" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="TableName" Type="varchar" MaxLength="50" />
+        </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“MIS.dbo.view_OperationFunction”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="view_OperationFunction">
@@ -261,6 +309,9 @@
           <EntitySet Name="Sys_RoleOperationFunction" EntityType="Self.Sys_RoleOperationFunction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_User" EntityType="Self.Sys_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_UserRole" EntityType="Self.Sys_UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkFlow_Chart" EntityType="Self.WorkFlow_Chart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkFlow_Line" EntityType="Self.WorkFlow_Line" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkFlow_Step" EntityType="Self.WorkFlow_Step" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="view_OperationFunction" EntityType="Self.view_OperationFunction" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [view_OperationFunction].[OperationFunctionUniqueId] AS [OperationFunctionUniqueId], 
@@ -307,6 +358,9 @@
           <EntitySet Name="Sys_RoleOperationFunction" EntityType="MISModel.Sys_RoleOperationFunction" />
           <EntitySet Name="Sys_User" EntityType="MISModel.Sys_User" />
           <EntitySet Name="Sys_UserRole" EntityType="MISModel.Sys_UserRole" />
+          <EntitySet Name="WorkFlow_Chart" EntityType="MISModel.WorkFlow_Chart" />
+          <EntitySet Name="WorkFlow_Line" EntityType="MISModel.WorkFlow_Line" />
+          <EntitySet Name="WorkFlow_Step" EntityType="MISModel.WorkFlow_Step" />
           <EntitySet Name="view_OperationFunction" EntityType="MISModel.view_OperationFunction" />
           <EntitySet Name="view_UserRoleOperationFunction" EntityType="MISModel.view_UserRoleOperationFunction" />
         </EntityContainer>
@@ -511,6 +565,54 @@
           <Property Name="RoleUniqueId" Type="Guid" Nullable="false" />
           <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WorkFlow_Chart">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="Guid" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="FlowChartContent" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="WorkFlow_Line">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FromStepId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ToStepId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkFlowChartUniqueId" Type="Guid" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="Guid" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WorkFlow_Step">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="WorkFlowChartUniqueId" Type="Guid" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StepId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StepLeft" Type="Double" />
+          <Property Name="StepTop" Type="Double" />
+          <Property Name="StepState" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuditingType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsBegin" Type="Boolean" />
+          <Property Name="ActionUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="StepRole" Type="Guid" />
+          <Property Name="SaveFunction" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="Guid" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="view_OperationFunction">
           <Key>
@@ -765,6 +867,57 @@
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="RoleUniqueId" ColumnName="RoleUniqueId" />
                 <ScalarProperty Name="UserUniqueId" ColumnName="UserUniqueId" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkFlow_Chart">
+            <EntityTypeMapping TypeName="MISModel.WorkFlow_Chart">
+              <MappingFragment StoreEntitySet="WorkFlow_Chart">
+                <ScalarProperty Name="FlowChartContent" ColumnName="FlowChartContent" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkFlow_Line">
+            <EntityTypeMapping TypeName="MISModel.WorkFlow_Line">
+              <MappingFragment StoreEntitySet="WorkFlow_Line">
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="WorkFlowChartUniqueId" ColumnName="WorkFlowChartUniqueId" />
+                <ScalarProperty Name="ToStepId" ColumnName="ToStepId" />
+                <ScalarProperty Name="FromStepId" ColumnName="FromStepId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkFlow_Step">
+            <EntityTypeMapping TypeName="MISModel.WorkFlow_Step">
+              <MappingFragment StoreEntitySet="WorkFlow_Step">
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="SaveFunction" ColumnName="SaveFunction" />
+                <ScalarProperty Name="StepRole" ColumnName="StepRole" />
+                <ScalarProperty Name="ActionUrl" ColumnName="ActionUrl" />
+                <ScalarProperty Name="IsBegin" ColumnName="IsBegin" />
+                <ScalarProperty Name="AuditingType" ColumnName="AuditingType" />
+                <ScalarProperty Name="StepState" ColumnName="StepState" />
+                <ScalarProperty Name="StepTop" ColumnName="StepTop" />
+                <ScalarProperty Name="StepLeft" ColumnName="StepLeft" />
+                <ScalarProperty Name="StepId" ColumnName="StepId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="WorkFlowChartUniqueId" ColumnName="WorkFlowChartUniqueId" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>

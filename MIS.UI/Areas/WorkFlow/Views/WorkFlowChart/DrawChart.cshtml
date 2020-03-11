@@ -1,0 +1,410 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "DrawChart";
+    Layout = null;
+}
+
+<link href="~/Content/gooflow/demo/default.css" rel="stylesheet" />
+
+<link href="~/Content/gooflow/codebase/fonts/iconflow.css" rel="stylesheet" />
+<link href="~/Content/gooflow/codebase/GooFlow.css" rel="stylesheet" />
+
+<script src="~/Content/gooflow/codebase/GooFunc.js"></script>
+<script src="~/Content/gooflow/plugin/printThis.js"></script>
+<script src="~/Content/gooflow/codebase/GooFlow.js"></script>
+<script src="~/Content/gooflow/codebase/GooFlow.export.js"></script>
+<script src="~/Content/gooflow/codebase/GooFlow.color.js"></script>
+<script src="~/Content/gooflow/plugin/json2.js"></script>
+<script src="~/Content/gooflow/demo/data2.js"></script>
+
+
+
+<button type="submit" class="layui-btn" lay-submit lay-filter="saveWorkFlowChartInputForm">提交</button>
+
+<div style="padding: 20px;">
+
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+            <div class="layui-card ">
+                <div class="layui-card-header">
+
+                    图形
+                </div>
+                <div class="layui-card-body">
+
+
+                    <div id="workFlowChart" style="width:1000px;height:600px;"></div>
+
+
+
+
+                    请输入缩放值：<input type="text" id="scaleValue" value="0.5" />
+                    <input id="scale" type="button" value='缩放' onclick="ResetScale()" />
+                    <input id="submit" type="button" value='导出结果' onclick="Export()" />
+                    <input id="submit" type="button" value='清空' onclick="demo.clearData()" />
+<textarea id="result" row="6"></textarea>
+
+                    <button type="button" id="btnClick">确认</button>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="layui-col-md4">
+            <div class="layui-card ">
+                <div class="layui-card-header">
+
+                    节点/连线信息
+                </div>
+                <div class="layui-card-body layui-table-body layui-table-main">
+
+                    <form class="layui-form" action="" id="nodeForm" lay-filter="nodeForm">
+
+                        <input type="hidden" name="StepId" id="StepId" />
+                        <input type="hidden" name="WorkFlowChartUniqueId" id="WorkFlowChartUniqueId" />
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">名称</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="Name" autocomplete="off" id="Name" placeholder="请输入名称" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">横坐标</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="StepLeft" id="StepLeft" lay-verify="required" placeholder="请输入横坐标" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">纵坐标</label>
+                            <div class="layui-input-block">
+                                <input type="tel" name="StepTop" id="StepTop" lay-verify="required" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">节点状态</label>
+                            <div class="layui-input-block">
+
+                                <select name="StepState" id="StepState" lay-verify="required">
+                                    <option></option>
+                                </select>
+
+
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">审核类型</label>
+                            <div class="layui-input-block">
+
+                                <select name="AuditingType" id="AuditingType" lay-verify="required">
+                                    <option></option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">角色</label>
+                            <div class="layui-input-block">
+
+                                <select name="StepRole" id="StepRole" lay-verify="required">
+                                    <option></option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">是否为起始节点</label>
+                            <div class="layui-input-block">
+
+
+                                <select name="IsBegin" id="IsBegin" lay-verify="required">
+                                    <option value="true">是</option>
+                                    <option value="false">否</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">链接路径</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="ActionUrl" id="ActionUrl" lay-verify="required" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">保存方法</label>
+                            <div class="layui-input-block">
+                                <input type="tel" name="SaveFunction" id="SaveFunction" lay-verify="required" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">表名</label>
+                            <div class="layui-input-block">
+                                <input type="tel" name="TableName" lay-verify="required" id="TableName" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <input type="button" class="layui-btn" lay-submit value="保存" lay-filter="saveNodeForm" />
+
+                        </div>
+
+                    </form>
+
+                   
+                    <form class="layui-form" action="" id="lineForm" lay-filter="lineForm">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">名称</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="LineName" autocomplete="off" placeholder="请输入名称" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <input type="button" class="layui-btn" lay-submit="" value="保存" />
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+
+    layui.use(['form', "laydate", 'layedit'], function () {
+        var form = layui.form;
+
+        var uniqueId = "@ViewBag.UniqueId";
+        var flowChartContent;
+
+
+        $("#nodeForm").show();
+        $("#lineForm").hide();
+
+
+        var property = {
+            toolBtns: ["start round mix", "end round", "node"],
+            haveHead: true,
+            // headLabel: true,
+            headBtns: ["undo", "redo"],//如果haveHead=true，则定义HEAD区的按钮
+            haveTool: true,
+            //haveDashed: true,
+            // haveGroup: true,
+            useOperStack: true
+        };
+        //取代setNodeRemarks方法，采用更灵活的注释配置
+        GooFlow.prototype.remarks.toolBtns = {
+            cursor: "选择指针",
+            direct: "结点连线",
+            dashed: "关联虚线",
+            start: "入口结点",
+            "end": "结束结点",
+            "task": "任务结点",
+            node: "自动结点",
+            chat: "决策结点",
+            state: "状态结点",
+            plug: "附加插件",
+            fork: "分支结点",
+            "join": "联合结点",
+            "complex": "复合结点",
+            group: "组织划分框编辑开关"
+        };
+
+        GooFlow.prototype.color = {
+            main: "#20A0FF",   //绘图器HEAD/图标的颜色
+            font: "#15428B",   //默认文字颜色
+            node: "#C0CCDA",   //结点背景色
+            line: "#1D8CE0",   //连线/结点选中时边框颜色
+            lineFont: "#15428B",   //连线上文字的颜色（优先级大于“默认文字颜色”）
+            mark: "#FFFF00",   //连线被选中/元素都标注时颜色
+            mix: "#B6F700",   //复合结点自定义背景颜色
+            mixFont: "#777"   //复合结点自定义文字颜色
+        };
+
+
+        GooFlow.prototype.remarks.headBtns = {
+            new: "新建流程",
+            open: "打开流程",
+            save: "保存结果",
+            undo: "撤销",
+            redo: "重做",
+            reload: "刷新流程",
+            print: "打印流程图"
+        };
+        GooFlow.prototype.remarks.extendRight = "工作区向右扩展";
+        GooFlow.prototype.remarks.extendBottom = "工作区向下扩展";
+        var gooFlowChart;
+        $(document).ready(function () {
+            gooFlowChart = $.createGooFlow($("#workFlowChart"), property);
+
+
+            $.selectExtens("StepState", "WorkFlowState");
+            $.selectExtens("AuditingType", "WorkFlowAuditingType");
+
+
+            $.ajax({
+                type: "Get",
+                url: "/Api/Sys/Role/GetRoleList",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    //赋值
+                    var html = "";
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<option value="' + data[i].UniqueId + '" id="' + data[i].UniqueId + '" >' + data[i].Name + '</option>';
+                    };
+                    $("#StepRole").append(html);
+
+                }
+            });
+
+
+
+
+            form.render("select");            // 刷性select，显示出数据
+
+            $.ajax({
+                type: "Get",
+                url: '@Url.Content("~/Api/WorkFlow/WorkFlowChart/GetItemByUniqueId?uniqueId=")' + uniqueId,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                async: false,
+                success: function (data) {
+                    //赋值
+                    debugger
+                    flowChartContent = JSON.parse(data.FlowChartContent);
+
+                }
+            });
+
+            gooFlowChart.onItemRightClick = function (id, type) {
+                console.log("onItemRightClick: " + id + "," + type);
+                return true;//返回false可以阻止浏览器默认的右键菜单事件
+            }
+            gooFlowChart.onItemDbClick = function (id, type) {
+                console.log("onItemDbClick: " + id + "," + type);
+                return true;//返回false可以阻止原组件自带的双击直接编辑事件
+            }
+            gooFlowChart.onPrintClick = function () {
+                demo.print(0.8);
+            }
+
+
+
+            gooFlowChart.onItemFocus = function (id, type) {
+
+                var obj;
+                if (type == "line") {
+
+                    $("#nodeForm").hide();
+                    $("#lineForm").show();
+                    obj = this.$lineData[id];
+
+
+
+
+
+                } else {
+                    debugger
+                    $("#nodeForm").show();
+                    $("#lineForm").hide();
+                    obj = this.$nodeData[id];
+                    $("#StepId").val(id);
+                    $("#Name").val(obj.name);
+                    $("#StepLeft").val(obj.left);
+                    $("#StepTop").val(obj.top);
+                    $("#WorkFlowChartUniqueId").val(uniqueId);
+                }
+
+
+
+                return true;
+            }
+
+            $("#btnClick").click(function () {
+                //alert("123");
+                //demo.focusItem("1583743287809", true);
+
+                // demo.moveNode("1583743287809", 500, 500);
+                //demo.setName("1583743287809", "This is a node", "node");
+                demo.setTitle("this  is  a node title")
+            });
+
+        });
+      
+        //function Export() {
+        //    document.getElementById("result").value = JSON.stringify(demo.exportData());
+        //}
+        //function ResetScale() {
+        //    demo.resetScale(parseFloat(document.getElementById("scaleValue").value));
+        //}
+        //window.onresize = function () {
+        //    demo.reinitSize(window.innerWidth - 15, window.innerHeight - 30);
+        //}
+
+
+        form.on('submit(saveNodeForm)', function (data) {
+
+            debugger
+            var data = JSON.stringify(data.field);
+                $.ajax({
+                    url: '@Url.Content("~/api/WorkFlow/WorkFlowChart/SaveWorkFlowStep")',
+                    type: "post",
+                    dataType: "json",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-HTTP-Method-Override": "POST"
+                    },
+                    data: data,
+                    async: false,
+                    success: function (result) {
+                        if (result.IsSuccess) {
+                            layer.msg('修改成功');
+                            gooFlowChart.moveNode(data.field.StepId, data.field.StepLeft, data.field.StepTop);
+                            gooFlowChart.setName(data.field.StepId, data.field.Name, "node");
+
+
+                        } else {
+                            debugger
+                            layer.msg(result.Message);
+                        }
+                    }
+                });
+
+
+
+          
+
+            alert("OK");
+            return false;
+        });
+
+
+
+
+    });
+
+
+   
+
+
+
+</script>

@@ -284,5 +284,21 @@ namespace MIS.DAL
             return result;
         }
 
+
+        /// <summary>
+        /// 获取所有的角色信息
+        /// </summary>
+        /// <returns></returns>
+        public  List<SysRoleGrid> GetRoleList()
+        {
+            MISEntities db = new MISEntities();
+            return db.Sys_Role.Select(x=>new SysRoleGrid()
+            {
+                Id =x.Id,
+                UniqueId=x.UniqueId,
+                Name =x.Name
+            }).ToList();
+        }
+
     }
 }

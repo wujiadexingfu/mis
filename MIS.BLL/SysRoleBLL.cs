@@ -102,5 +102,16 @@ namespace MIS.BLL
         {
             return _sysRoleDAL.DeleteRoleUser(uniqueId);
         }
+
+        /// <summary>
+        /// 获取所有的角色信息
+        /// </summary>
+        /// <returns></returns>
+        public List<SysRoleGrid> GetRoleList()
+        {
+            return _sysRoleDAL.GetRoleList();
+
+        }
+
     }
 }

@@ -51,6 +51,7 @@
     <Compile Include="SysOrganizationBLL.cs" />
     <Compile Include="SysRoleBLL.cs" />
     <Compile Include="SysUserBLL.cs" />
+    <Compile Include="WorkFlowChartBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MIS.IBLL\MIS.IBLL.csproj">

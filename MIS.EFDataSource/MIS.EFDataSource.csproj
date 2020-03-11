@@ -117,6 +117,15 @@
     <Compile Include="view_UserRoleOperationFunction.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="WorkFlow_Chart.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkFlow_Line.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkFlow_Step.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="MISEntity.edmx">
