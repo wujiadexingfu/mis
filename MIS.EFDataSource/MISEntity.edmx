@@ -224,10 +224,14 @@
             <PropertyRef Name="UniqueId" />
           </Key>
           <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LineId" Type="varchar" MaxLength="50" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="FromStepId" Type="varchar" MaxLength="50" />
           <Property Name="ToStepId" Type="varchar" MaxLength="50" />
           <Property Name="WorkFlowChartUniqueId" Type="uniqueidentifier" />
+          <Property Name="FromStepUniqueId" Type="uniqueidentifier" />
+          <Property Name="ToStemUnqiueId" Type="uniqueidentifier" />
+          <Property Name="LineType" Type="varchar" MaxLength="50" />
           <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="ModifyUser" Type="uniqueidentifier" />
@@ -583,10 +587,14 @@
             <PropertyRef Name="UniqueId" />
           </Key>
           <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="LineId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FromStepId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ToStepId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="WorkFlowChartUniqueId" Type="Guid" />
+          <Property Name="FromStepUniqueId" Type="Guid" />
+          <Property Name="ToStemUnqiueId" Type="Guid" />
+          <Property Name="LineType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="Guid" />
@@ -891,10 +899,14 @@
                 <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="LineType" ColumnName="LineType" />
+                <ScalarProperty Name="ToStemUnqiueId" ColumnName="ToStemUnqiueId" />
+                <ScalarProperty Name="FromStepUniqueId" ColumnName="FromStepUniqueId" />
                 <ScalarProperty Name="WorkFlowChartUniqueId" ColumnName="WorkFlowChartUniqueId" />
                 <ScalarProperty Name="ToStepId" ColumnName="ToStepId" />
                 <ScalarProperty Name="FromStepId" ColumnName="FromStepId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LineId" ColumnName="LineId" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>

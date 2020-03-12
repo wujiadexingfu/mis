@@ -11,7 +11,7 @@ namespace MIS.Model.WorkFlow.WorkFlowStep
         /// <summary>
         /// 流程图的唯一编码
         /// </summary>
-        public Guid WorkFlowChartUniqueId { get; set; }
+        public Guid? WorkFlowChartUniqueId { get; set; }
 
         /// <summary>
         /// 名称
@@ -47,7 +47,7 @@ namespace MIS.Model.WorkFlow.WorkFlowStep
         /// <summary>
         /// 是否为起始节点
         /// </summary>
-        public bool IsBegin { get; set; }
+        public bool? IsBegin { get; set; }
 
         /// <summary>
         /// 链接路径

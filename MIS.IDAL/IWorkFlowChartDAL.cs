@@ -1,6 +1,7 @@
 ﻿using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.WorkFlow.WorkFlowChart;
+using MIS.Model.WorkFlow.WorkFlowLine;
 using MIS.Model.WorkFlow.WorkFlowStep;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,37 @@ namespace MIS.IDAL
         RequestResult SaveWorkFlowStep(WorkFlowStepInputForm inputForm);
 
 
+        /// <summary>
+        /// 保存连线，不存在则新增，存在则修改
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        RequestResult SaveWorkFlowLine(WorkFlowLineInputForm inputForm);
 
+
+
+        /// <summary>
+        /// 保存流程图信息
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <param name="workFlowChartStepNodes"></param>
+        /// <param name="workFlowLineNodes"></param>
+        /// <returns></returns>
+        RequestResult SaveWorkFlowChartContent(WorkFlowChartInputForm inputForm, List<WorkFlowStepNode> workFlowChartStepNodes, List<WorkFlowLineNode> workFlowLineNodes);
+
+        /// <summary>
+        /// 获取节点的信息
+        /// </summary>
+        /// <param name="stepId"></param>
+        /// <returns></returns>
+        WorkFlowStepInputForm GetWorkFlowStepByStepId(string stepId);
+
+
+        /// <summary>
+        ///   获取连线的信息
+        /// </summary>
+        /// <param name="lineId"></param>
+        /// <returns></returns>
+        WorkFlowLineInputForm GetWorkFlowLineByLineId(string lineId);
     }
 }

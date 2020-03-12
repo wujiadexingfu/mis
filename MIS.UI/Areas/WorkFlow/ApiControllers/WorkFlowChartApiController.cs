@@ -1,5 +1,6 @@
 ﻿using MIS.IBLL;
 using MIS.Model.WorkFlow.WorkFlowChart;
+using MIS.Model.WorkFlow.WorkFlowLine;
 using MIS.Model.WorkFlow.WorkFlowStep;
 using MIS.UI.Filters;
 using MIS.Utility.GuidUtility;
@@ -138,6 +139,77 @@ namespace MIS.UI.Areas.WorkFlow.ApiControllers
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
             };
-        }   
+        }
+
+        /// <summary>
+        /// 保存连线，不存在则新增，存在则修改
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage SaveWorkFlowLine(WorkFlowLineInputForm inputForm)
+        {
+
+            var result = JosnNetHelper.ObjectToJson(_workFlowChartBLL.SaveWorkFlowLine(inputForm));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+        /// <summary>
+        /// 保存流程图信息
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage SaveWorkFlowChartContent(WorkFlowChartInputForm inputForm)
+        {
+
+            var result = JosnNetHelper.ObjectToJson(_workFlowChartBLL.SaveWorkFlowChartContent(inputForm));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+        /// <summary>
+        /// 获取节点的信息
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage GetWorkFlowStepByStepId(string stepId)
+        {
+
+            var result = JosnNetHelper.ObjectToJson(_workFlowChartBLL.GetWorkFlowStepByStepId(stepId));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+
+        /// <summary>
+        /// 获取节点的信息
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage GetWorkFlowLineByLineId(string lineId)
+        {
+
+            var result = JosnNetHelper.ObjectToJson(_workFlowChartBLL.GetWorkFlowLineByLineId(lineId));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+
     }
 }

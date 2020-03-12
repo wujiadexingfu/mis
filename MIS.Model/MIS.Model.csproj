@@ -87,7 +87,11 @@
     <Compile Include="Tree\TreeNodeState.cs" />
     <Compile Include="WorkFlow\WorkFlowChart\WorkFlowChartGrid.cs" />
     <Compile Include="WorkFlow\WorkFlowChart\WorkFlowChartInputForm.cs" />
+    <Compile Include="WorkFlow\WorkFlowChart\WorkFlowChartNode.cs" />
     <Compile Include="WorkFlow\WorkFlowChart\WorkFlowChartParameter.cs" />
+    <Compile Include="WorkFlow\WorkFlowChart\WorkFlowLineNode.cs" />
+    <Compile Include="WorkFlow\WorkFlowChart\WorkFlowStepNode.cs" />
+    <Compile Include="WorkFlow\WorkFlowLine\WorkFlowLineInputForm.cs" />
     <Compile Include="WorkFlow\WorkFlowStep\WorkFlowStepInputForm.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,10 +15,14 @@ namespace MIS.EFDataSource
     public partial class WorkFlow_Line
     {
         public System.Guid UniqueId { get; set; }
+        public string LineId { get; set; }
         public string Name { get; set; }
         public string FromStepId { get; set; }
         public string ToStepId { get; set; }
         public Nullable<System.Guid> WorkFlowChartUniqueId { get; set; }
+        public Nullable<System.Guid> FromStepUniqueId { get; set; }
+        public Nullable<System.Guid> ToStemUnqiueId { get; set; }
+        public string LineType { get; set; }
         public Nullable<System.Guid> CreateUser { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.Guid> ModifyUser { get; set; }

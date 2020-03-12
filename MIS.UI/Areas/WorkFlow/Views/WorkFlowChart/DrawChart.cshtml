@@ -1,6 +1,5 @@
 ﻿
 @{
-    /**/
 
     ViewBag.Title = "DrawChart";
     Layout = null;
@@ -16,12 +15,12 @@
 <script src="~/Content/gooflow/codebase/GooFlow.js"></script>
 <script src="~/Content/gooflow/codebase/GooFlow.export.js"></script>
 <script src="~/Content/gooflow/codebase/GooFlow.color.js"></script>
-<script src="~/Content/gooflow/plugin/json2.js"></script>
-<script src="~/Content/gooflow/demo/data2.js"></script>
+@*<script src="~/Content/gooflow/plugin/json2.js"></script>
+<script src="~/Content/gooflow/demo/data2.js"></script>*@
 
 
 
-<button type="submit" class="layui-btn" lay-submit lay-filter="saveWorkFlowChartInputForm">提交</button>
+<button type="submit" class="layui-btn" lay-submit lay-filter="saveWorkFlowChartInputForm" id="saveWorkFlowChartInputForm">提交</button>
 
 <div style="padding: 20px;">
 
@@ -33,22 +32,7 @@
                     图形
                 </div>
                 <div class="layui-card-body">
-
-
                     <div id="workFlowChart" style="width:1000px;height:600px;"></div>
-
-
-
-
-                    请输入缩放值：<input type="text" id="scaleValue" value="0.5" />
-                    <input id="scale" type="button" value='缩放' onclick="ResetScale()" />
-                    <input id="submit" type="button" value='导出结果' onclick="Export()" />
-                    <input id="submit" type="button" value='清空' onclick="demo.clearData()" />
-<textarea id="result" row="6"></textarea>
-
-                    <button type="button" id="btnClick">确认</button>
-
-
                 </div>
 
 
@@ -104,7 +88,7 @@
                             <div class="layui-input-block">
 
                                 <select name="AuditingType" id="AuditingType" lay-verify="required">
-                                    <option></option>
+                                    <option value=""></option>
                                 </select>
 
                             </div>
@@ -140,7 +124,7 @@
                                 <input type="text" name="ActionUrl" id="ActionUrl" lay-verify="required" autocomplete="off" class="layui-input">
                             </div>
                         </div>
-
+                       
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">保存方法</label>
@@ -163,16 +147,33 @@
                     </form>
 
                    
-                    <form class="layui-form" action="" id="lineForm" lay-filter="lineForm">
+                    <form class="layui-form" action="" id="lineForm" lay-filter="lineForm" style="height:500px">
+
+                        <input type="hidden" name="LineId" id="LineId" />
+                        <input type="hidden" name="FromStepId" id="FromStepId" />
+                        <input type="hidden" name="ToStepId" id="ToStepId" />
+                        <input type="hidden" name="WorkFlowChartUniqueId" id="LineWorkFlowChartUniqueId" />
+                        <input type="hidden" name="LineName" id="LineName" />
+
+
                         <div class="layui-form-item">
                             <label class="layui-form-label">名称</label>
                             <div class="layui-input-block">
-                                <input type="text" name="LineName" autocomplete="off" placeholder="请输入名称" class="layui-input">
+
+                                <select name="LineType" id="LineType"  lay-filter="LineType" lay-verify="required">
+                                    <option></option>
+                                </select>
                             </div>
                         </div>
 
+
+
+
+
+
                         <div class="layui-form-item">
-                            <input type="button" class="layui-btn" lay-submit="" value="保存" />
+                 
+                            <input type="button" class="layui-btn" lay-submit value="保存" lay-filter="saveLineForm" />
                         </div>
                     </form>
 
@@ -250,13 +251,17 @@
         };
         GooFlow.prototype.remarks.extendRight = "工作区向右扩展";
         GooFlow.prototype.remarks.extendBottom = "工作区向下扩展";
+
         var gooFlowChart;
+
+
         $(document).ready(function () {
             gooFlowChart = $.createGooFlow($("#workFlowChart"), property);
 
 
             $.selectExtens("StepState", "WorkFlowState");
             $.selectExtens("AuditingType", "WorkFlowAuditingType");
+            $.selectExtens("LineType","WorkFlowLineType")
 
 
             $.ajax({
@@ -295,18 +300,6 @@
                 }
             });
 
-            gooFlowChart.onItemRightClick = function (id, type) {
-                console.log("onItemRightClick: " + id + "," + type);
-                return true;//返回false可以阻止浏览器默认的右键菜单事件
-            }
-            gooFlowChart.onItemDbClick = function (id, type) {
-                console.log("onItemDbClick: " + id + "," + type);
-                return true;//返回false可以阻止原组件自带的双击直接编辑事件
-            }
-            gooFlowChart.onPrintClick = function () {
-                demo.print(0.8);
-            }
-
 
 
             gooFlowChart.onItemFocus = function (id, type) {
@@ -317,21 +310,21 @@
                     $("#nodeForm").hide();
                     $("#lineForm").show();
                     obj = this.$lineData[id];
-
-
-
-
+                    //$("#LineId").val(id);
+                    //$("#FromStepId").val(obj.from);
+                    //$("#ToStepId").val(obj.to);
+                    //$("#LineWorkFlowChartUniqueId").val(uniqueId);
+                    GetWorkFlowLineByLineId(id, obj);
 
                 } else {
                     debugger
                     $("#nodeForm").show();
                     $("#lineForm").hide();
                     obj = this.$nodeData[id];
-                    $("#StepId").val(id);
-                    $("#Name").val(obj.name);
-                    $("#StepLeft").val(obj.left);
-                    $("#StepTop").val(obj.top);
-                    $("#WorkFlowChartUniqueId").val(uniqueId);
+                  
+
+                    GetWorkFlowStepByStepId(id,obj);
+                  
                 }
 
 
@@ -339,31 +332,26 @@
                 return true;
             }
 
-            $("#btnClick").click(function () {
-                //alert("123");
-                //demo.focusItem("1583743287809", true);
-
-                // demo.moveNode("1583743287809", 500, 500);
-                //demo.setName("1583743287809", "This is a node", "node");
-                demo.setTitle("this  is  a node title")
-            });
+            if (flowChartContent != null) {
+                gooFlowChart.loadData(flowChartContent);
+            }
+           
 
         });
       
-        //function Export() {
-        //    document.getElementById("result").value = JSON.stringify(demo.exportData());
-        //}
-        //function ResetScale() {
-        //    demo.resetScale(parseFloat(document.getElementById("scaleValue").value));
-        //}
-        //window.onresize = function () {
-        //    demo.reinitSize(window.innerWidth - 15, window.innerHeight - 30);
-        //}
+
+        form.on('select(LineType)', function (data) {
+            $("#LineName").val(this.innerText);
+
+        });
 
 
+
+        ///保存节点信息
         form.on('submit(saveNodeForm)', function (data) {
 
             debugger
+            var jsonData = data.field;
             var data = JSON.stringify(data.field);
                 $.ajax({
                     url: '@Url.Content("~/api/WorkFlow/WorkFlowChart/SaveWorkFlowStep")',
@@ -378,8 +366,12 @@
                     success: function (result) {
                         if (result.IsSuccess) {
                             layer.msg('修改成功');
-                            gooFlowChart.moveNode(data.field.StepId, data.field.StepLeft, data.field.StepTop);
-                            gooFlowChart.setName(data.field.StepId, data.field.Name, "node");
+                            debugger
+                            ///调整节点的位置
+                            gooFlowChart.moveNode(jsonData.StepId, jsonData.StepLeft, jsonData.StepTop);
+
+                            //设置节点的名称
+                            gooFlowChart.setName(jsonData.StepId, jsonData.Name, "node");
 
 
                         } else {
@@ -388,17 +380,119 @@
                         }
                     }
                 });
+            return false;
+        });
+
+        ///保存连线信息
+        form.on('submit(saveLineForm)', function (data) {
+
+            debugger
+            var jsonData = data.field;
+            var data = JSON.stringify(data.field);
+                $.ajax({
+                    url: '@Url.Content("~/api/WorkFlow/WorkFlowChart/SaveWorkFlowLine")',
+                    type: "post",
+                    dataType: "json",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-HTTP-Method-Override": "POST"
+                    },
+                    data: data,
+                    async: false,
+                    success: function (result) {
+                        if (result.IsSuccess) {
+                            layer.msg('修改成功');
+ 
+                            //设置节点的名称
+                            gooFlowChart.setName(jsonData.LineId, jsonData.LineName, "line");
 
 
-
-          
-
-            alert("OK");
+                        } else {
+                            debugger
+                            layer.msg(result.Message);
+                        }
+                    }
+                });
             return false;
         });
 
 
+        $("#saveWorkFlowChartInputForm").click(function () {
+            var data = { "UniqueId": uniqueId, "FlowChartContent": JSON.stringify(gooFlowChart.exportData()) };
+                 $.ajax({
+                    url: '@Url.Content("~/api/WorkFlow/WorkFlowChart/SaveWorkFlowChartContent")',
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('新增成功');
+                              refreshNotSelectRoleUserTable()
+                              layer.closeAll();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
 
+        });
+
+
+        function GetWorkFlowStepByStepId(stepId,obj) {
+                 $.ajax({
+                type: "Get",
+                url: '@Url.Content("~/Api/WorkFlow/WorkFlowChart/GetWorkFlowStepByStepId?stepId=")' + stepId,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+       
+                success: function (data) {
+                    //赋值
+                    debugger
+
+                    if (data.IsBegin) {
+                        data.IsBegin = "true";
+                    } else {
+                        data.IsBegin = "false";
+                    }
+
+
+                    form.val('nodeForm', data);
+                    $("#StepId").val(stepId);
+                    $("#Name").val(obj.name);
+                    $("#StepLeft").val(obj.left);
+                    $("#StepTop").val(obj.top);
+                    $("#WorkFlowChartUniqueId").val(uniqueId);
+
+                  
+                   
+
+                }
+            });
+        }
+
+        function GetWorkFlowLineByLineId(lineId,obj) {
+                 $.ajax({
+                type: "Get",
+                     url: '@Url.Content("~/Api/WorkFlow/WorkFlowChart/GetWorkFlowLineByLineId?lineId=")' + lineId,
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+       
+                success: function (data) {
+                    //赋值
+                    debugger
+                  
+                    form.val('lineForm', data);
+                  
+                    $("#LineId").val(lineId);
+                    $("#FromStepId").val(obj.from);
+                    $("#ToStepId").val(obj.to);
+                    $("#LineWorkFlowChartUniqueId").val(uniqueId);
+
+                }
+            });
+        }
+
+        
 
     });
 
