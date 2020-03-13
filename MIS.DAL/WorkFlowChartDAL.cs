@@ -340,7 +340,7 @@ namespace MIS.DAL
                     if (!saveWorkFlowLines.Any(x => x.LineId == item.Id)) //判断，有连线尚未保存
                     {
                         checkLine = true;
-                        message += string.Format("{0}连线尚未保存！", item.Name);
+                        message += string.Format("连线尚未保存！");
                         break;
                     }
                 }
