@@ -11,14 +11,7 @@ namespace MIS.IBLL
 {
    public  interface IWorkFlowInstanceBLL
     {
-        /// <summary>
-        /// 添加一个流程实例，默认开始节点为起始节点
-        /// </summary>
-        /// <param name="workFlowChartUniqueId"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        RequestResult AddInstanceDraftStep(Guid workFlowChartUniqueId, string name);
-
+  
 
         /// <summary>
         /// 获取流程图的提交按钮

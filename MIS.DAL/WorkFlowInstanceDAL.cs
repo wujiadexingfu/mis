@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MIS.Utility.EnumUtility.SystemEnums;
 
 namespace MIS.DAL
 {
@@ -28,7 +29,7 @@ namespace MIS.DAL
         /// <param name="workFlowChartUniqueId"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public RequestResult AddInstanceDraftStep(Guid workFlowChartUniqueId,string name)
+        public RequestResult AddInstanceDraftStep(string name, WorkFlowChartType workFlowChartType) 
         {
             RequestResult result = new RequestResult();
 
@@ -36,7 +37,12 @@ namespace MIS.DAL
             {
                 MISEntities db = new MISEntities();
 
-                var firstStep = db.WorkFlow_Step.Where(x => x.WorkFlowChartUniqueId == workFlowChartUniqueId && x.IsBegin == true).FirstOrDefault();
+                var workFlowChart = db.WorkFlow_Chart.Where(x => x.WorkFlowType == workFlowChartType.ToString()).FirstOrDefault();
+
+                
+
+
+                var firstStep = db.WorkFlow_Step.Where(x => x.WorkFlowChartUniqueId == workFlowChart.UniqueId && x.IsBegin == true).FirstOrDefault();
                 if (firstStep == null)
                 {
                     result.ReturnFailedMessage("没有设置起始节点!");
@@ -46,7 +52,7 @@ namespace MIS.DAL
                     WorkFlow_Instance instance = new WorkFlow_Instance();
                     instance.UniqueId = GuidUtils.NewGuid();
                     instance.Name = name;
-                    instance.WorkFlowChartUniqueId = workFlowChartUniqueId;
+                    instance.WorkFlowChartUniqueId = workFlowChart.UniqueId;
                     instance.CurrentStepUniqueId = firstStep.UniqueId;
                     instance.CurrentStepName = firstStep.Name;
                     instance.CreateTime = DateTime.Now;
@@ -146,16 +152,6 @@ namespace MIS.DAL
 
 
                 db.WorkFlow_InstanceLog.Add(workFlowInstanceLog);
-
-
-                
-
-
-
-
-
-
-
 
                 db.SaveChanges();
                 result.Success();

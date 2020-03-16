@@ -21,5 +21,6 @@ namespace MIS.EFDataSource
         public Nullable<System.Guid> ModifyUser { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
         public string FlowChartContent { get; set; }
+        public string WorkFlowType { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MIS.Utility.EnumUtility.SystemEnums;
 
 namespace MIS.DAL
 {
@@ -124,8 +125,7 @@ namespace MIS.DAL
                     db.WorkFlow_ReginsterUser.Add(item);
                     db.SaveChanges();
 
-
-                    _workFlowInstanceDAL.AddInstanceDraftStep()
+                    var objectUniqueId = item.UniqueId;
 
                     result.Success();
                 }
@@ -144,22 +144,47 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="inputForm"></param>
         /// <returns></returns>
-        public RequestResult Edit(SysRoleInputForm inputForm)
+        public RequestResult Edit(WorkFlowRegisterUserInputForm inputForm)
         {
             RequestResult result = new RequestResult();
 
             try
             {
                 MISEntities db = new MISEntities();
-                if (db.Sys_Role.Any(x => x.Id == inputForm.Id && x.UniqueId != inputForm.UniqueId))
+                if (db.WorkFlow_ReginsterUser.Any(x => x.Id == inputForm.Id && x.UniqueId != inputForm.UniqueId))
                 {
                     result.ReturnFailedMessage("编号重复");
                 }
                 else
                 {
-                    Sys_Role item = db.Sys_Role.Where(x => x.UniqueId == inputForm.UniqueId).FirstOrDefault();
+                    WorkFlow_ReginsterUser item = db.WorkFlow_ReginsterUser.Where(x => x.UniqueId == inputForm.UniqueId).FirstOrDefault();
                     item.Id = inputForm.Id;
                     item.Name = inputForm.Name;
+                    item.ModifyTime = DateTime.Now;
+                    item.BirthDay = inputForm.BirthDay;
+                    item.Remark = inputForm.Remark;
+
+
+                    if (inputForm.ResisterUserType == ResisterUserType.SupervisorAudit.ToString())
+                    {
+                        item.SupervisorAudit= SessionUtils.GetAccountUnqiueId();
+                        item.SupervisorAuditTime = DateTime.Now;
+
+                    }
+
+                    if (inputForm.ResisterUserType == ResisterUserType.SupervisorReview.ToString())
+                    {
+                        item.SupervisorAudit = SessionUtils.GetAccountUnqiueId();
+                        item.SupervisorReviewTime = DateTime.Now;
+                    }
+
+                    if (inputForm.ResisterUserType == ResisterUserType.FinalAudit.ToString())
+                    {
+                        item.FinalAudit = SessionUtils.GetAccountUnqiueId();
+                        item.FinalAuditTime = DateTime.Now;
+                    }
+
+
                     item.ModifyTime = DateTime.Now;
                     item.ModifyUser = SessionUtils.GetAccountUnqiueId();
                     db.SaveChanges();
@@ -187,8 +212,12 @@ namespace MIS.DAL
             try
             {
                 MISEntities db = new MISEntities();
-                var item = db.Sys_Role.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
-                db.Sys_Role.Remove(item);
+                var item = db.WorkFlow_ReginsterUser.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
+                db.WorkFlow_ReginsterUser.Remove(item);
+
+                var workFlowInstance = db.WorkFlow_Instance.Where(x => x.ObjectUniqueId == item.UniqueId).FirstOrDefault();
+                db.WorkFlow_Instance.Remove(workFlowInstance);
+
                 db.SaveChanges();
                 result.Success();
             }

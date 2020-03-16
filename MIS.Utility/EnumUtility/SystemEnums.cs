@@ -218,5 +218,14 @@ namespace MIS.Utility.EnumUtility
 
         }
 
+
+        public enum WorkFlowChartType
+        {
+            /// <summary>
+            /// 注册用户
+            /// </summary>
+            RegisterUser
+        }
+
     }
 }

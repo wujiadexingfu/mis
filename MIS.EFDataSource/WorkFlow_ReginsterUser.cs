@@ -19,13 +19,13 @@ namespace MIS.EFDataSource
         public string Name { get; set; }
         public Nullable<System.DateTime> BirthDay { get; set; }
         public Nullable<System.Guid> SupervisorAudit { get; set; }
-        public Nullable<System.DateTime> SupervisorAuditDate { get; set; }
+        public Nullable<System.DateTime> SupervisorAuditTime { get; set; }
         public Nullable<System.Guid> SupervisorReview { get; set; }
-        public Nullable<System.DateTime> SupervisorReviewDate { get; set; }
+        public Nullable<System.DateTime> SupervisorReviewTime { get; set; }
         public Nullable<System.Guid> FinalAudit { get; set; }
-        public Nullable<System.Guid> FinalAuditDate { get; set; }
-        public string Remark { get; set; }
+        public Nullable<System.DateTime> FinalAuditTime { get; set; }
         public Nullable<System.Guid> WorkFlowInstanceUniqueId { get; set; }
+        public string Remark { get; set; }
         public Nullable<System.Guid> CreateUser { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.Guid> ModifyUser { get; set; }

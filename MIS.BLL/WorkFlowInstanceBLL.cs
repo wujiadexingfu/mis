@@ -19,16 +19,6 @@ namespace MIS.BLL
             _workFlowInstanceDAL = workFlowInstanceDAL;
         }
 
-        /// <summary>
-        /// 添加一个流程实例，默认开始节点为起始节点
-        /// </summary>
-        /// <param name="workFlowChartUniqueId"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public RequestResult AddInstanceDraftStep(Guid workFlowChartUniqueId, string name)
-        {
-            return _workFlowInstanceDAL.AddInstanceDraftStep(workFlowChartUniqueId, name);
-        }
 
 
         /// <summary>

@@ -23,5 +23,6 @@ namespace MIS.EFDataSource
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.Guid> ModifyUser { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
+        public Nullable<System.Guid> ObjectUniqueId { get; set; }
     }
 }

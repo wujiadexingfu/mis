@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Web.Http;
+using static MIS.Utility.EnumUtility.SystemEnums;
 
 namespace MIS.UI.Areas.WorkFlow.ApiControllers
 {
@@ -21,22 +22,6 @@ namespace MIS.UI.Areas.WorkFlow.ApiControllers
         }
 
 
-        /// <summary>
-        /// 添加一个流程实例，默认开始节点为起始节点
-        /// </summary>
-        /// <param name="inputForm"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [HttpPost]
-        public HttpResponseMessage AddInstanceDraftStep(Guid workFlowChartUniqueId, string name)
-        {
-
-            var result = JosnNetHelper.ObjectToJson(_workFlowInstanceBLL.AddInstanceDraftStep(workFlowChartUniqueId, name));
-            return new HttpResponseMessage()
-            {
-                Content = new StringContent(result, Encoding.UTF8, "application/json"),
-            };
-        }
 
 
         /// <summary>

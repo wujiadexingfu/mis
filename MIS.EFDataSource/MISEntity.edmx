@@ -218,6 +218,7 @@
           <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="FlowChartContent" Type="varchar" MaxLength="4000" />
+          <Property Name="WorkFlowType" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="WorkFlow_Instance">
           <Key>
@@ -232,6 +233,7 @@
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="ModifyUser" Type="uniqueidentifier" />
           <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="ObjectUniqueId" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="WorkFlow_InstanceLog">
           <Key>
@@ -274,13 +276,13 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="BirthDay" Type="datetime" />
           <Property Name="SupervisorAudit" Type="uniqueidentifier" />
-          <Property Name="SupervisorAuditDate" Type="datetime" />
+          <Property Name="SupervisorAuditTime" Type="datetime" />
           <Property Name="SupervisorReview" Type="uniqueidentifier" />
-          <Property Name="SupervisorReviewDate" Type="datetime" />
+          <Property Name="SupervisorReviewTime" Type="datetime" />
           <Property Name="FinalAudit" Type="uniqueidentifier" />
-          <Property Name="FinalAuditDate" Type="uniqueidentifier" />
-          <Property Name="Remark" Type="varchar" MaxLength="500" />
+          <Property Name="FinalAuditTime" Type="datetime" />
           <Property Name="WorkFlowInstanceUniqueId" Type="uniqueidentifier" />
+          <Property Name="Remark" Type="varchar" MaxLength="500" />
           <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="ModifyUser" Type="uniqueidentifier" />
@@ -664,6 +666,7 @@
           <Property Name="ModifyUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="FlowChartContent" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="WorkFlowType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WorkFlow_Instance">
           <Key>
@@ -678,6 +681,7 @@
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="Guid" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="ObjectUniqueId" Type="Guid" />
         </EntityType>
         <EntityType Name="WorkFlow_InstanceLog">
           <Key>
@@ -720,13 +724,13 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BirthDay" Type="DateTime" Precision="3" />
           <Property Name="SupervisorAudit" Type="Guid" />
-          <Property Name="SupervisorAuditDate" Type="DateTime" Precision="3" />
+          <Property Name="SupervisorAuditTime" Type="DateTime" Precision="3" />
           <Property Name="SupervisorReview" Type="Guid" />
-          <Property Name="SupervisorReviewDate" Type="DateTime" Precision="3" />
+          <Property Name="SupervisorReviewTime" Type="DateTime" Precision="3" />
           <Property Name="FinalAudit" Type="Guid" />
-          <Property Name="FinalAuditDate" Type="Guid" />
-          <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FinalAuditTime" Type="DateTime" Precision="3" />
           <Property Name="WorkFlowInstanceUniqueId" Type="Guid" />
+          <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="Guid" />
@@ -1028,6 +1032,7 @@
           <EntitySetMapping Name="WorkFlow_Chart">
             <EntityTypeMapping TypeName="MISModel.WorkFlow_Chart">
               <MappingFragment StoreEntitySet="WorkFlow_Chart">
+                <ScalarProperty Name="WorkFlowType" ColumnName="WorkFlowType" />
                 <ScalarProperty Name="FlowChartContent" ColumnName="FlowChartContent" />
                 <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
@@ -1041,6 +1046,7 @@
           <EntitySetMapping Name="WorkFlow_Instance">
             <EntityTypeMapping TypeName="MISModel.WorkFlow_Instance">
               <MappingFragment StoreEntitySet="WorkFlow_Instance">
+                <ScalarProperty Name="ObjectUniqueId" ColumnName="ObjectUniqueId" />
                 <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
@@ -1094,13 +1100,13 @@
                 <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
-                <ScalarProperty Name="WorkFlowInstanceUniqueId" ColumnName="WorkFlowInstanceUniqueId" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="FinalAuditDate" ColumnName="FinalAuditDate" />
+                <ScalarProperty Name="WorkFlowInstanceUniqueId" ColumnName="WorkFlowInstanceUniqueId" />
+                <ScalarProperty Name="FinalAuditTime" ColumnName="FinalAuditTime" />
                 <ScalarProperty Name="FinalAudit" ColumnName="FinalAudit" />
-                <ScalarProperty Name="SupervisorReviewDate" ColumnName="SupervisorReviewDate" />
+                <ScalarProperty Name="SupervisorReviewTime" ColumnName="SupervisorReviewTime" />
                 <ScalarProperty Name="SupervisorReview" ColumnName="SupervisorReview" />
-                <ScalarProperty Name="SupervisorAuditDate" ColumnName="SupervisorAuditDate" />
+                <ScalarProperty Name="SupervisorAuditTime" ColumnName="SupervisorAuditTime" />
                 <ScalarProperty Name="SupervisorAudit" ColumnName="SupervisorAudit" />
                 <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

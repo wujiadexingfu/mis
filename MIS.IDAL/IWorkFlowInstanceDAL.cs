@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MIS.Utility.EnumUtility.SystemEnums;
 
 namespace MIS.IDAL
 {
@@ -17,7 +18,7 @@ namespace MIS.IDAL
         /// <param name="workFlowChartUniqueId"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        RequestResult AddInstanceDraftStep(Guid workFlowChartUniqueId, string name);
+        RequestResult AddInstanceDraftStep(string name, WorkFlowChartType workFlowChartType);
 
 
         /// <summary>
