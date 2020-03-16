@@ -85,12 +85,20 @@
     <Compile Include="Tree\LayuiTreeNode.cs" />
     <Compile Include="Tree\TreeNode.cs" />
     <Compile Include="Tree\TreeNodeState.cs" />
+    <Compile Include="WorkFlowInstance\WorkFlowRegisterUser\WorkFlowRegisterUserGrid.cs" />
+    <Compile Include="WorkFlowInstance\WorkFlowRegisterUser\WorkFlowRegisterUserInputForm.cs" />
+    <Compile Include="WorkFlowInstance\WorkFlowRegisterUser\WorkFlowRegisterUserParameter.cs" />
     <Compile Include="WorkFlow\WorkFlowChart\WorkFlowChartGrid.cs" />
     <Compile Include="WorkFlow\WorkFlowChart\WorkFlowChartInputForm.cs" />
     <Compile Include="WorkFlow\WorkFlowChart\WorkFlowChartNode.cs" />
     <Compile Include="WorkFlow\WorkFlowChart\WorkFlowChartParameter.cs" />
     <Compile Include="WorkFlow\WorkFlowChart\WorkFlowLineNode.cs" />
     <Compile Include="WorkFlow\WorkFlowChart\WorkFlowStepNode.cs" />
+    <Compile Include="WorkFlow\WorkFlowInstanceLog\WorkFlowInstanceLogGrid.cs" />
+    <Compile Include="WorkFlow\WorkFlowInstanceLog\WorkFlowInstanceLogInputForm.cs" />
+    <Compile Include="WorkFlow\WorkFlowInstanceLog\WorkFlowInstanceLogParameter.cs" />
+    <Compile Include="WorkFlow\WorkFlowInstance\WorkFlowInstanceChart.cs" />
+    <Compile Include="WorkFlow\WorkFlowInstance\WorkFlowInstanceSubmitSelectItem.cs" />
     <Compile Include="WorkFlow\WorkFlowLine\WorkFlowLineInputForm.cs" />
     <Compile Include="WorkFlow\WorkFlowStep\WorkFlowStepInputForm.cs" />
   </ItemGroup>

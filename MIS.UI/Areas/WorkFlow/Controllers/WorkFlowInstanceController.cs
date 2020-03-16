@@ -9,11 +9,21 @@ namespace MIS.UI.Areas.WorkFlow.Controllers
     public class WorkFlowInstanceController : Controller
     {
        
-        public ActionResult Index(string tableName,string workFlowInstanceUniqueId)
+        public ActionResult Index(string workFlowInstanceUniqueId)
         {
-            ViewBag.TableName = tableName;
+
+            workFlowInstanceUniqueId = "40100104-47EB-451B-A400-232F6D7BEDC6";
             ViewBag.workFlowInstanceUniqueId = workFlowInstanceUniqueId;
             return View();
         }
+
+
+        public ActionResult InputForm(string workFlowInstanceUniqueId,string lineUniqueId)
+        {
+            ViewBag.WorkFlowInstanceUniqueId = workFlowInstanceUniqueId;
+            ViewBag.LineUniqueId = lineUniqueId;
+            return View();
+        }
+
     }
 }

@@ -1,0 +1,176 @@
+﻿using MIS.EFDataSource;
+using MIS.IDAL;
+using MIS.Model.Result;
+using MIS.Model.WorkFlow.WorkFlowInstance;
+using MIS.Model.WorkFlow.WorkFlowInstanceLog;
+using MIS.Utility;
+using MIS.Utility.GuidUtility;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MIS.DAL
+{
+  public  class WorkFlowInstanceDAL:IWorkFlowInstanceDAL
+    {
+
+        private ISysLogDAL _sysLogDAL;
+        public WorkFlowInstanceDAL(ISysLogDAL sysLogDAL)
+        {
+            _sysLogDAL = sysLogDAL;
+        }
+
+        /// <summary>
+        /// 添加一个流程实例，默认开始节点为起始节点
+        /// </summary>
+        /// <param name="workFlowChartUniqueId"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public RequestResult AddInstanceDraftStep(Guid workFlowChartUniqueId,string name)
+        {
+            RequestResult result = new RequestResult();
+
+            try
+            {
+                MISEntities db = new MISEntities();
+
+                var firstStep = db.WorkFlow_Step.Where(x => x.WorkFlowChartUniqueId == workFlowChartUniqueId && x.IsBegin == true).FirstOrDefault();
+                if (firstStep == null)
+                {
+                    result.ReturnFailedMessage("没有设置起始节点!");
+                }
+                else
+                {
+                    WorkFlow_Instance instance = new WorkFlow_Instance();
+                    instance.UniqueId = GuidUtils.NewGuid();
+                    instance.Name = name;
+                    instance.WorkFlowChartUniqueId = workFlowChartUniqueId;
+                    instance.CurrentStepUniqueId = firstStep.UniqueId;
+                    instance.CurrentStepName = firstStep.Name;
+                    instance.CreateTime = DateTime.Now;
+                    instance.CreateUser = SessionUtils.GetAccountUnqiueId();
+                    db.WorkFlow_Instance.Add(instance);
+                    db.SaveChanges();
+                    result.ReturnData(instance.UniqueId);
+                }  
+
+            }
+            catch (Exception ex)
+            {
+                _sysLogDAL.WriteLog(ex);
+                result.ReturnFailedMessage(ex.Message);
+            }
+            return result;
+
+        }
+
+        /// <summary>
+        /// 获取流程图的提交按钮
+        /// </summary>
+        /// <param name="workFlowInstanceUniqueId"></param>
+        /// <returns></returns>
+        public List<WorkFlowInstanceSubmitSelectItem> GetWorkFlowInstanceSubmitSelectItem(Guid workFlowInstanceUniqueId)
+        {
+            List<WorkFlowInstanceSubmitSelectItem> list = new List<WorkFlowInstanceSubmitSelectItem>();
+            MISEntities db = new MISEntities();
+
+            var workFlowInstance = db.WorkFlow_Instance.Where(x => x.UniqueId == workFlowInstanceUniqueId).FirstOrDefault();
+            var currentStepUniqueId = workFlowInstance.CurrentStepUniqueId; //当前流程所在节点的状态
+            var stepLineList = db.view_workflowStepLine.Where(x => x.FromStepUniqueId == currentStepUniqueId).ToList();
+            foreach (var item in stepLineList)
+            {
+                WorkFlowInstanceSubmitSelectItem selectItem = new WorkFlowInstanceSubmitSelectItem();
+                selectItem.Text = item.Name;
+                selectItem.Value = item.LineUniqueId.ToString();
+                list.Add(selectItem);
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 获取流程图和当前节点的信息
+        /// </summary>
+        /// <param name="workFlowInstanceUniqueId"></param>
+        /// <returns></returns>
+        public WorkFlowInstanceChart GetWorkFlowInstanceChart(Guid workFlowInstanceUniqueId)
+        {
+
+            MISEntities db = new MISEntities();
+            WorkFlowInstanceChart item = new WorkFlowInstanceChart();
+            var instance = db.WorkFlow_Instance.Where(x => x.UniqueId == workFlowInstanceUniqueId).FirstOrDefault();
+
+            item.ChartContent = db.WorkFlow_Chart.Where(x => x.UniqueId == instance.WorkFlowChartUniqueId.Value).FirstOrDefault().FlowChartContent;
+
+            var step = db.WorkFlow_Step.Where(x => x.UniqueId == instance.CurrentStepUniqueId).FirstOrDefault();
+            item.MarkedId = step.StepId;
+
+            return item;
+        }
+
+
+        /// <summary>
+        /// 提交操作
+        /// </summary>
+        /// <param name="workFlowInstanceLogInputForm"></param>
+        /// <returns></returns>
+        public RequestResult WorkFlowInstanceSubmit(WorkFlowInstanceLogInputForm workFlowInstanceLogInputForm)
+        {
+            RequestResult result = new RequestResult();
+
+            try
+            {
+                MISEntities db = new MISEntities();
+                var instance = db.WorkFlow_Instance.Where(x => x.UniqueId == workFlowInstanceLogInputForm.WorkFlowInstanceUniqueId).FirstOrDefault();
+                var workFlowStepLine = db.view_workflowStepLine.Where(x => x.LineUniqueId == workFlowInstanceLogInputForm.LineUniqueId).FirstOrDefault();
+
+                instance.CurrentStepName = workFlowStepLine.ToStepName;
+                instance.CurrentStepUniqueId = workFlowStepLine.ToStepUniqueId;
+
+                instance.ModifyTime = DateTime.Now;
+                instance.ModifyUser = SessionUtils.GetAccountUnqiueId(); 
+
+
+                WorkFlow_InstanceLog workFlowInstanceLog = new WorkFlow_InstanceLog();
+                workFlowInstanceLog.UniqueId = GuidUtils.NewGuid();
+                workFlowInstanceLog.WorkFlowChartUniqueId = instance.WorkFlowChartUniqueId;
+
+                workFlowInstanceLog.WorkFlowInstanceUniqueId = workFlowInstanceLogInputForm.WorkFlowInstanceUniqueId;
+                workFlowInstanceLog.FromStepUniqueId = workFlowStepLine.FromStepUniqueId;
+                workFlowInstanceLog.ToStepUniqueId = workFlowStepLine.ToStepUniqueId;
+                workFlowInstanceLog.LineUniqueId = workFlowInstanceLogInputForm.LineUniqueId;
+                workFlowInstanceLog.Remark = workFlowInstanceLogInputForm.Remark;
+                workFlowInstanceLog.CreateUser = SessionUtils.GetAccountUnqiueId();
+                workFlowInstanceLog.CreateTime = DateTime.Now;
+
+
+                db.WorkFlow_InstanceLog.Add(workFlowInstanceLog);
+
+
+                
+
+
+
+
+
+
+
+
+                db.SaveChanges();
+                result.Success();
+
+            }
+            catch (Exception ex)
+            {
+                _sysLogDAL.WriteLog(ex);
+                result.ReturnFailedMessage(ex.Message);
+            }
+            return result;
+
+        }
+
+
+
+    }
+}

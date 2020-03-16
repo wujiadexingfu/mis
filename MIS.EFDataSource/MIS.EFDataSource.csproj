@@ -117,10 +117,22 @@
     <Compile Include="view_UserRoleOperationFunction.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="view_workflowStepLine.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="WorkFlow_Chart.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="WorkFlow_Instance.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkFlow_InstanceLog.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="WorkFlow_Line.cs">
+      <DependentUpon>MISEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorkFlow_ReginsterUser.cs">
       <DependentUpon>MISEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="WorkFlow_Step.cs">

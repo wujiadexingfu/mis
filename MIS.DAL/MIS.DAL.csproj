@@ -61,6 +61,8 @@
     <Compile Include="SysRoleDAL.cs" />
     <Compile Include="SysUserDAL.cs" />
     <Compile Include="WorkFlowChartDAL.cs" />
+    <Compile Include="WorkFlowInstanceDAL.cs" />
+    <Compile Include="WorkFlowRegisterUserDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MIS.AdoNetDataSource\MIS.AdoNetDataSource.csproj">

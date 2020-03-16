@@ -1,5 +1,6 @@
 ﻿using MIS.IBLL;
 using MIS.Model.WorkFlow.WorkFlowChart;
+using MIS.Model.WorkFlow.WorkFlowInstanceLog;
 using MIS.Model.WorkFlow.WorkFlowLine;
 using MIS.Model.WorkFlow.WorkFlowStep;
 using MIS.UI.Filters;
@@ -210,6 +211,24 @@ namespace MIS.UI.Areas.WorkFlow.ApiControllers
             };
         }
 
+        /// <summary>
+        /// 获取流程日志
+        /// </summary>
+        /// <param name="inputForm"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [HttpPost]
+        public HttpResponseMessage GetWorkFlowInstanceLogs(WorkFlowInstanceLogParameter parameter)
+        {
+
+            var result = JosnNetHelper.ObjectToJson(_workFlowChartBLL.GetWorkFlowInstanceLogs(parameter));
+            return new HttpResponseMessage()
+            {
+                Content = new StringContent(result, Encoding.UTF8, "application/json"),
+            };
+        }
+
+        
 
     }
 }

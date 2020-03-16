@@ -142,6 +142,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Sys\Models\" />
     <Folder Include="Areas\Sys\Views\Shared\" />
+    <Folder Include="Areas\WorkFlowInstance\Models\" />
+    <Folder Include="Areas\WorkFlowInstance\Views\Shared\" />
     <Folder Include="Areas\WorkFlow\Models\" />
     <Folder Include="Areas\WorkFlow\Views\Shared\" />
     <Folder Include="Models\" />
@@ -171,7 +173,11 @@
     <Compile Include="Areas\Sys\Controllers\UploadController.cs" />
     <Compile Include="Areas\Sys\Controllers\UserController.cs" />
     <Compile Include="Areas\Sys\SysAreaRegistration.cs" />
+    <Compile Include="Areas\WorkFlowInstance\ApiControllers\WorkFlowRegisterUserApiController.cs" />
+    <Compile Include="Areas\WorkFlowInstance\Controllers\WorkFlowRegisterUserController.cs" />
+    <Compile Include="Areas\WorkFlowInstance\WorkFlowInstanceAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\ApiControllers\WorkFlowChartApiController.cs" />
+    <Compile Include="Areas\WorkFlow\ApiControllers\WorkFlowInstanceApiController.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\WorkFlowChartController.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\WorkFlowInstanceController.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
@@ -2922,6 +2928,14 @@
     <Content Include="Content\gooflow\plugin\jquery.min.map" />
     <Content Include="Content\gooflow\设计器API说明书.doc" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowInstance\Index.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\WorkFlowInstance\InputForm.cshtml" />
+    <Content Include="Areas\WorkFlowInstance\Views\web.config" />
+    <Content Include="Areas\WorkFlowInstance\Views\WorkFlowRegisterUser\Draft.cshtml" />
+    <Content Include="Areas\WorkFlowInstance\Views\WorkFlowRegisterUser\SupervisorAudit.cshtml" />
+    <Content Include="Areas\WorkFlowInstance\Views\WorkFlowRegisterUser\SupervisorReview.cshtml" />
+    <Content Include="Areas\WorkFlowInstance\Views\WorkFlowRegisterUser\FinalAudit.cshtml" />
+    <Content Include="Areas\WorkFlowInstance\Views\WorkFlowRegisterUser\End.cshtml" />
+    <Content Include="Areas\WorkFlowInstance\Views\WorkFlowRegisterUser\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

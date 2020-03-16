@@ -3,6 +3,7 @@ using MIS.IDAL;
 using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.WorkFlow.WorkFlowChart;
+using MIS.Model.WorkFlow.WorkFlowInstanceLog;
 using MIS.Model.WorkFlow.WorkFlowLine;
 using MIS.Model.WorkFlow.WorkFlowStep;
 using MIS.Utility;
@@ -359,9 +360,8 @@ namespace MIS.DAL
                         var line = saveWorkFlowLines.Where(x => x.LineId == item.Id).FirstOrDefault();  //连线
 
                         line.FromStepUniqueId = formStep.UniqueId;
-                        line.ToStemUnqiueId = toStep.UniqueId;
+                        line.ToStepUnqiueId = toStep.UniqueId;
                     }
-
 
 
                     var deleteWorkFlowNodeStepIdList= savedWorkFlowSteps.Select(x=>x.StepId).Except(workFlowChartStepNodes.Select(x=>x.Id)).ToList();  //之前保存，后来删除的节点
@@ -459,6 +459,54 @@ namespace MIS.DAL
             }
             return item;
         }
+
+        /// <summary>
+        /// 获取流程日志
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public PageData GetWorkFlowInstanceLogs(WorkFlowInstanceLogParameter parameter)
+        {
+
+     
+
+            using (MISEntities db = new MISEntities())
+            {
+                var query = db.WorkFlow_InstanceLog.Where(x => x.WorkFlowInstanceUniqueId == parameter.WorkFlowInstanceUniqueId).AsQueryable();
+
+                var count = query.Count();
+                var list = query.OrderByDescending(x => x.CreateTime).Skip((parameter.Page - 1) * parameter.Limit).Take(parameter.Limit).Select(x => x).ToList();
+
+
+                var workFlowInstance = db.WorkFlow_Instance.Where(x => x.UniqueId == parameter.WorkFlowInstanceUniqueId).FirstOrDefault();
+
+                var stepList = db.WorkFlow_Step.Where(x => x.WorkFlowChartUniqueId == workFlowInstance.WorkFlowChartUniqueId).ToList();
+                var lineList = db.WorkFlow_Line.Where(x => x.WorkFlowChartUniqueId == workFlowInstance.WorkFlowChartUniqueId).ToList();
+                var userList = db.Sys_User.ToList();
+
+
+                List<WorkFlowInstanceLogGrid> result = new List<WorkFlowInstanceLogGrid>();
+                foreach (var item in list)
+                {
+                    WorkFlowInstanceLogGrid workFlowInstanceLogGrid = new WorkFlowInstanceLogGrid();
+                    workFlowInstanceLogGrid.UniqueId = item.UniqueId;
+                    workFlowInstanceLogGrid.FromStepName = stepList.Where(x => x.UniqueId == item.FromStepUniqueId).FirstOrDefault().Name; 
+                    workFlowInstanceLogGrid.LineName = lineList.Where(x=>x.UniqueId==item.LineUniqueId).FirstOrDefault().Name;
+                    workFlowInstanceLogGrid.CreateUser = userList.Where(x => x.UniqueId == item.CreateUser).FirstOrDefault().Name;
+                    workFlowInstanceLogGrid.Remark = item.Remark;
+                    workFlowInstanceLogGrid.CreateTime = item.CreateTime.Value.ToString(DateTimeFormatter.YYYYMMDDHHMMSS);
+
+                    result.Add(workFlowInstanceLogGrid);
+                }
+
+                PageData pageData = new PageData(count, result);
+                return pageData;
+            }
+
+
+        }
+
+
 
     }
 }

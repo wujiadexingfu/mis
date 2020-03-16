@@ -180,25 +180,49 @@ namespace MIS.DAL
             try
             {
                 MISEntities db = new MISEntities();
-                var deleteOperationFunctionList = db.Sys_OperationFunction.Where(x => x.OperationUniqueId == inputForm.OperationUnqiueId).ToList();
-                db.Sys_OperationFunction.RemoveRange(deleteOperationFunctionList); //首先删除原来的操作和菜单的数据
-                var functionList = db.Sys_Function.ToList();
-
+                var existsOperationFunctionList = db.Sys_OperationFunction.Where(x => x.OperationUniqueId == inputForm.OperationUnqiueId).ToList();
+                //db.Sys_OperationFunction.RemoveRange(deleteOperationFunctionList); //首先删除原来的操作和菜单的数据
+                //  var functionList = db.Sys_Function.ToList();
+                var deleteOperationFunctionList = new List<Sys_OperationFunction>();
 
 
                 foreach (var item in inputForm.FunctionList)
                 {
- 
-                    Sys_OperationFunction operationFunction = new Sys_OperationFunction();
-                    operationFunction.UniqueId = GuidUtils.NewGuid();
-                    operationFunction.OperationUniqueId = inputForm.OperationUnqiueId;
-                    operationFunction.FunctionId = item;
-                    operationFunction.CreateUser = SessionUtils.GetAccountUnqiueId();
-                    operationFunction.CreateTime = DateTime.Now;
-                    db.Sys_OperationFunction.Add(operationFunction);
+
+                    if (existsOperationFunctionList.Any(x =>  x.FunctionId == item))  //存在，无视
+                    {
+
+                    }
+                    else {
+                        Sys_OperationFunction operationFunction = new Sys_OperationFunction();
+                        operationFunction.UniqueId = GuidUtils.NewGuid();
+                        operationFunction.OperationUniqueId = inputForm.OperationUnqiueId;
+                        operationFunction.FunctionId = item;
+                        operationFunction.CreateUser = SessionUtils.GetAccountUnqiueId();
+                        operationFunction.CreateTime = DateTime.Now;
+                        db.Sys_OperationFunction.Add(operationFunction);
+                    }
+
+                }
+
+                foreach (var item in existsOperationFunctionList)
+                {
+                    if (inputForm.FunctionList.Any(x => x.Contains(item.FunctionId)))
+                    {
+
+                    }
+                    else
+                    {
+                        deleteOperationFunctionList.Add(item);
+                    }
+
+
 
 
                 }
+
+                db.Sys_OperationFunction.RemoveRange(deleteOperationFunctionList);
+
                 db.SaveChanges();
                 result.Success();
             }

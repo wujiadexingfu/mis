@@ -198,5 +198,25 @@ namespace MIS.Utility.EnumUtility
 
         }
 
+        public enum ResisterUserType
+        {
+            /// <summary>
+            /// 审核
+            /// </summary>
+            SupervisorAudit,
+
+            /// <summary>
+            /// 复审
+            /// </summary>
+            SupervisorReview,
+
+            /// <summary>
+            /// 终审
+            /// </summary>
+            FinalAudit
+
+
+        }
+
     }
 }

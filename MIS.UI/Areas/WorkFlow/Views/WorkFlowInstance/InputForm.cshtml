@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "InputForm";
+    Layout = null;
+}
+
+
+
+<form class="layui-form" action="" name="flowInstanceInputForm" lay-filter="flowInstanceInputForm">
+
+    <button type="submit" class="layui-btn" lay-submit lay-filter="WorkFlowInstanceSubmit">提交</button>
+    <input type="hidden" name="WorkFlowInstanceUniqueId" id="WorkFlowInstanceUniqueId" />
+    <input type="hidden" name="LineUniqueId" id="LineUniqueId" />
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+          
+            <textarea placeholder="请输入备注"   name="Remark" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+</form>
+
+
+<script>
+
+    layui.use(['form', "laydate"], function () {
+        var form = layui.form;
+        var workFlowInstanceUniqueId = "@ViewBag.workFlowInstanceUniqueId";
+        var lineUniqueId = "@ViewBag.LineUniqueId";
+        var laydate = layui.laydate;
+
+        $("#WorkFlowInstanceUniqueId").val(workFlowInstanceUniqueId);
+        $("#LineUniqueId").val(lineUniqueId);
+    
+
+        form.on('submit(WorkFlowInstanceSubmit)', function (data) {
+            debugger
+            var data = JSON.stringify(data.field);
+
+
+           $.ajax({
+                    url: '@Url.Content("~/api/WorkFlow/WorkFlowInstance/WorkFlowInstanceSubmit")',
+                    type: "post",
+                    dataType: "json",
+                    headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                      data: data,
+                      async: false,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('提交成功');
+                              layer.closeAll();
+                          } else {
+                              debugger
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+
+
+
+            return false;
+        });
+
+        form.render();
+
+      
+
+    });
+
+</script>

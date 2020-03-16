@@ -219,6 +219,34 @@
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="FlowChartContent" Type="varchar" MaxLength="4000" />
         </EntityType>
+        <EntityType Name="WorkFlow_Instance">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" />
+          <Property Name="WorkFlowChartUniqueId" Type="uniqueidentifier" />
+          <Property Name="CurrentStepUniqueId" Type="uniqueidentifier" />
+          <Property Name="CurrentStepName" Type="varchar" MaxLength="50" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
+          <Property Name="ModifyTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WorkFlow_InstanceLog">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WorkFlowChartUniqueId" Type="uniqueidentifier" />
+          <Property Name="WorkFlowInstanceUniqueId" Type="uniqueidentifier" />
+          <Property Name="FromStepUniqueId" Type="uniqueidentifier" />
+          <Property Name="ToStepUniqueId" Type="uniqueidentifier" />
+          <Property Name="LineUniqueId" Type="uniqueidentifier" />
+          <Property Name="Remark" Type="varchar" MaxLength="500" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="WorkFlow_Line">
           <Key>
             <PropertyRef Name="UniqueId" />
@@ -230,8 +258,29 @@
           <Property Name="ToStepId" Type="varchar" MaxLength="50" />
           <Property Name="WorkFlowChartUniqueId" Type="uniqueidentifier" />
           <Property Name="FromStepUniqueId" Type="uniqueidentifier" />
-          <Property Name="ToStemUnqiueId" Type="uniqueidentifier" />
+          <Property Name="ToStepUnqiueId" Type="uniqueidentifier" />
           <Property Name="LineType" Type="varchar" MaxLength="50" />
+          <Property Name="CreateUser" Type="uniqueidentifier" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="ModifyUser" Type="uniqueidentifier" />
+          <Property Name="ModifyTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WorkFlow_ReginsterUser">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Id" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="BirthDay" Type="datetime" />
+          <Property Name="SupervisorAudit" Type="uniqueidentifier" />
+          <Property Name="SupervisorAuditDate" Type="datetime" />
+          <Property Name="SupervisorReview" Type="uniqueidentifier" />
+          <Property Name="SupervisorReviewDate" Type="datetime" />
+          <Property Name="FinalAudit" Type="uniqueidentifier" />
+          <Property Name="FinalAuditDate" Type="uniqueidentifier" />
+          <Property Name="Remark" Type="varchar" MaxLength="500" />
+          <Property Name="WorkFlowInstanceUniqueId" Type="uniqueidentifier" />
           <Property Name="CreateUser" Type="uniqueidentifier" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="ModifyUser" Type="uniqueidentifier" />
@@ -297,6 +346,22 @@
           <Property Name="RoleUniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserUniqueId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“MIS.dbo.view_workflowStepLine”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="view_workflowStepLine">
+          <Key>
+            <PropertyRef Name="LineUniqueId" />
+            <PropertyRef Name="FromStepUniqueId" />
+            <PropertyRef Name="ToStepUniqueId" />
+          </Key>
+          <Property Name="LineUniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="WorkFlowChartUniqueId" Type="uniqueidentifier" />
+          <Property Name="FromStepUniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FromStepName" Type="varchar" MaxLength="50" />
+          <Property Name="ToStepUniqueId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ToStepName" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityContainer Name="MISModelStoreContainer">
           <EntitySet Name="Sys_Announcement" EntityType="Self.Sys_Announcement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_AnnouncementUser" EntityType="Self.Sys_AnnouncementUser" Schema="dbo" store:Type="Tables" />
@@ -314,7 +379,10 @@
           <EntitySet Name="Sys_User" EntityType="Self.Sys_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_UserRole" EntityType="Self.Sys_UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkFlow_Chart" EntityType="Self.WorkFlow_Chart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkFlow_Instance" EntityType="Self.WorkFlow_Instance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkFlow_InstanceLog" EntityType="Self.WorkFlow_InstanceLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkFlow_Line" EntityType="Self.WorkFlow_Line" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkFlow_ReginsterUser" EntityType="Self.WorkFlow_ReginsterUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorkFlow_Step" EntityType="Self.WorkFlow_Step" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="view_OperationFunction" EntityType="Self.view_OperationFunction" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -341,6 +409,17 @@
     [view_UserRoleOperationFunction].[UserUniqueId] AS [UserUniqueId]
     FROM [dbo].[view_UserRoleOperationFunction] AS [view_UserRoleOperationFunction]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="view_workflowStepLine" EntityType="Self.view_workflowStepLine" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [view_workflowStepLine].[LineUniqueId] AS [LineUniqueId], 
+    [view_workflowStepLine].[Name] AS [Name], 
+    [view_workflowStepLine].[WorkFlowChartUniqueId] AS [WorkFlowChartUniqueId], 
+    [view_workflowStepLine].[FromStepUniqueId] AS [FromStepUniqueId], 
+    [view_workflowStepLine].[FromStepName] AS [FromStepName], 
+    [view_workflowStepLine].[ToStepUniqueId] AS [ToStepUniqueId], 
+    [view_workflowStepLine].[ToStepName] AS [ToStepName]
+    FROM [dbo].[view_workflowStepLine] AS [view_workflowStepLine]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -363,10 +442,14 @@
           <EntitySet Name="Sys_User" EntityType="MISModel.Sys_User" />
           <EntitySet Name="Sys_UserRole" EntityType="MISModel.Sys_UserRole" />
           <EntitySet Name="WorkFlow_Chart" EntityType="MISModel.WorkFlow_Chart" />
+          <EntitySet Name="WorkFlow_Instance" EntityType="MISModel.WorkFlow_Instance" />
+          <EntitySet Name="WorkFlow_InstanceLog" EntityType="MISModel.WorkFlow_InstanceLog" />
           <EntitySet Name="WorkFlow_Line" EntityType="MISModel.WorkFlow_Line" />
+          <EntitySet Name="WorkFlow_ReginsterUser" EntityType="MISModel.WorkFlow_ReginsterUser" />
           <EntitySet Name="WorkFlow_Step" EntityType="MISModel.WorkFlow_Step" />
           <EntitySet Name="view_OperationFunction" EntityType="MISModel.view_OperationFunction" />
           <EntitySet Name="view_UserRoleOperationFunction" EntityType="MISModel.view_UserRoleOperationFunction" />
+          <EntitySet Name="view_workflowStepLine" EntityType="MISModel.view_workflowStepLine" />
         </EntityContainer>
         <EntityType Name="Sys_Announcement">
           <Key>
@@ -582,6 +665,34 @@
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="FlowChartContent" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="WorkFlow_Instance">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="WorkFlowChartUniqueId" Type="Guid" />
+          <Property Name="CurrentStepUniqueId" Type="Guid" />
+          <Property Name="CurrentStepName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="Guid" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WorkFlow_InstanceLog">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="WorkFlowChartUniqueId" Type="Guid" />
+          <Property Name="WorkFlowInstanceUniqueId" Type="Guid" />
+          <Property Name="FromStepUniqueId" Type="Guid" />
+          <Property Name="ToStepUniqueId" Type="Guid" />
+          <Property Name="LineUniqueId" Type="Guid" />
+          <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="WorkFlow_Line">
           <Key>
             <PropertyRef Name="UniqueId" />
@@ -593,8 +704,29 @@
           <Property Name="ToStepId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="WorkFlowChartUniqueId" Type="Guid" />
           <Property Name="FromStepUniqueId" Type="Guid" />
-          <Property Name="ToStemUnqiueId" Type="Guid" />
+          <Property Name="ToStepUnqiueId" Type="Guid" />
           <Property Name="LineType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateUser" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="Guid" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WorkFlow_ReginsterUser">
+          <Key>
+            <PropertyRef Name="UniqueId" />
+          </Key>
+          <Property Name="UniqueId" Type="Guid" Nullable="false" />
+          <Property Name="Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDay" Type="DateTime" Precision="3" />
+          <Property Name="SupervisorAudit" Type="Guid" />
+          <Property Name="SupervisorAuditDate" Type="DateTime" Precision="3" />
+          <Property Name="SupervisorReview" Type="Guid" />
+          <Property Name="SupervisorReviewDate" Type="DateTime" Precision="3" />
+          <Property Name="FinalAudit" Type="Guid" />
+          <Property Name="FinalAuditDate" Type="Guid" />
+          <Property Name="Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="WorkFlowInstanceUniqueId" Type="Guid" />
           <Property Name="CreateUser" Type="Guid" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUser" Type="Guid" />
@@ -655,6 +787,20 @@
           <Property Name="OperationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="RoleUniqueId" Type="Guid" Nullable="false" />
           <Property Name="UserUniqueId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="view_workflowStepLine">
+          <Key>
+            <PropertyRef Name="LineUniqueId" />
+            <PropertyRef Name="FromStepUniqueId" />
+            <PropertyRef Name="ToStepUniqueId" />
+          </Key>
+          <Property Name="LineUniqueId" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkFlowChartUniqueId" Type="Guid" />
+          <Property Name="FromStepUniqueId" Type="Guid" Nullable="false" />
+          <Property Name="FromStepName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ToStepUniqueId" Type="Guid" Nullable="false" />
+          <Property Name="ToStepName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -892,6 +1038,36 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="WorkFlow_Instance">
+            <EntityTypeMapping TypeName="MISModel.WorkFlow_Instance">
+              <MappingFragment StoreEntitySet="WorkFlow_Instance">
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CurrentStepName" ColumnName="CurrentStepName" />
+                <ScalarProperty Name="CurrentStepUniqueId" ColumnName="CurrentStepUniqueId" />
+                <ScalarProperty Name="WorkFlowChartUniqueId" ColumnName="WorkFlowChartUniqueId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkFlow_InstanceLog">
+            <EntityTypeMapping TypeName="MISModel.WorkFlow_InstanceLog">
+              <MappingFragment StoreEntitySet="WorkFlow_InstanceLog">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="LineUniqueId" ColumnName="LineUniqueId" />
+                <ScalarProperty Name="ToStepUniqueId" ColumnName="ToStepUniqueId" />
+                <ScalarProperty Name="FromStepUniqueId" ColumnName="FromStepUniqueId" />
+                <ScalarProperty Name="WorkFlowInstanceUniqueId" ColumnName="WorkFlowInstanceUniqueId" />
+                <ScalarProperty Name="WorkFlowChartUniqueId" ColumnName="WorkFlowChartUniqueId" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="WorkFlow_Line">
             <EntityTypeMapping TypeName="MISModel.WorkFlow_Line">
               <MappingFragment StoreEntitySet="WorkFlow_Line">
@@ -900,13 +1076,35 @@
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="LineType" ColumnName="LineType" />
-                <ScalarProperty Name="ToStemUnqiueId" ColumnName="ToStemUnqiueId" />
+                <ScalarProperty Name="ToStepUnqiueId" ColumnName="ToStepUnqiueId" />
                 <ScalarProperty Name="FromStepUniqueId" ColumnName="FromStepUniqueId" />
                 <ScalarProperty Name="WorkFlowChartUniqueId" ColumnName="WorkFlowChartUniqueId" />
                 <ScalarProperty Name="ToStepId" ColumnName="ToStepId" />
                 <ScalarProperty Name="FromStepId" ColumnName="FromStepId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LineId" ColumnName="LineId" />
+                <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkFlow_ReginsterUser">
+            <EntityTypeMapping TypeName="MISModel.WorkFlow_ReginsterUser">
+              <MappingFragment StoreEntitySet="WorkFlow_ReginsterUser">
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="WorkFlowInstanceUniqueId" ColumnName="WorkFlowInstanceUniqueId" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="FinalAuditDate" ColumnName="FinalAuditDate" />
+                <ScalarProperty Name="FinalAudit" ColumnName="FinalAudit" />
+                <ScalarProperty Name="SupervisorReviewDate" ColumnName="SupervisorReviewDate" />
+                <ScalarProperty Name="SupervisorReview" ColumnName="SupervisorReview" />
+                <ScalarProperty Name="SupervisorAuditDate" ColumnName="SupervisorAuditDate" />
+                <ScalarProperty Name="SupervisorAudit" ColumnName="SupervisorAudit" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UniqueId" ColumnName="UniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -960,6 +1158,19 @@
                 <ScalarProperty Name="Area" ColumnName="Area" />
                 <ScalarProperty Name="FunctionName" ColumnName="FunctionName" />
                 <ScalarProperty Name="FunctionId" ColumnName="FunctionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_workflowStepLine">
+            <EntityTypeMapping TypeName="MISModel.view_workflowStepLine">
+              <MappingFragment StoreEntitySet="view_workflowStepLine">
+                <ScalarProperty Name="ToStepName" ColumnName="ToStepName" />
+                <ScalarProperty Name="ToStepUniqueId" ColumnName="ToStepUniqueId" />
+                <ScalarProperty Name="FromStepName" ColumnName="FromStepName" />
+                <ScalarProperty Name="FromStepUniqueId" ColumnName="FromStepUniqueId" />
+                <ScalarProperty Name="WorkFlowChartUniqueId" ColumnName="WorkFlowChartUniqueId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LineUniqueId" ColumnName="LineUniqueId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

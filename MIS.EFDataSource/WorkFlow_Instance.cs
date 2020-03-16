@@ -12,17 +12,13 @@ namespace MIS.EFDataSource
     using System;
     using System.Collections.Generic;
     
-    public partial class WorkFlow_Line
+    public partial class WorkFlow_Instance
     {
         public System.Guid UniqueId { get; set; }
-        public string LineId { get; set; }
         public string Name { get; set; }
-        public string FromStepId { get; set; }
-        public string ToStepId { get; set; }
         public Nullable<System.Guid> WorkFlowChartUniqueId { get; set; }
-        public Nullable<System.Guid> FromStepUniqueId { get; set; }
-        public Nullable<System.Guid> ToStepUnqiueId { get; set; }
-        public string LineType { get; set; }
+        public Nullable<System.Guid> CurrentStepUniqueId { get; set; }
+        public string CurrentStepName { get; set; }
         public Nullable<System.Guid> CreateUser { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.Guid> ModifyUser { get; set; }

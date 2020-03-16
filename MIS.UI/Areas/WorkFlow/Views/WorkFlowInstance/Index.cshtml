@@ -3,33 +3,54 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/gooflow/demo/default.css" rel="stylesheet" />
 
+<link href="~/Content/gooflow/codebase/fonts/iconflow.css" rel="stylesheet" />
+<link href="~/Content/gooflow/codebase/GooFlow.css" rel="stylesheet" />
+
+<script src="~/Content/gooflow/codebase/GooFunc.js"></script>
+<script src="~/Content/gooflow/plugin/printThis.js"></script>
+<script src="~/Content/gooflow/codebase/GooFlow.js"></script>
+<script src="~/Content/gooflow/codebase/GooFlow.export.js"></script>
+<script src="~/Content/gooflow/codebase/GooFlow.color.js"></script>
 
 <div style="padding: 20px; background-color: #F2F2F2;">
     <div class="layui-row layui-col-space15">
-        <div class="layui-col-md8">
+        <div class="layui-col-md7">
             <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
+                <div class="layui-card-header">
+                    <form class="layui-form" action="" style="width:100px">
+                        <select id="submitOption" lay-filter="submitOption">
+
+                            <option></option>
+
+                        </select>
+                    </form>
+                </div>
                 <div class="layui-card-body">
-                    卡片式面板面板通常用于非白色背景色的主体内<br>
-                    从而映衬出边框投影
+                    <div id="workFlowForm"></div>
+
+                    @*<div id="workFlowChart" style="width:1000px;height:800px;"></div>*@
                 </div>
             </div>
         </div>
 
-        <div class="layui-col-md4" style="">
-            <div class="layui-card">
-                <div class="layui-card-header">卡片面板</div>
+        <div class="layui-col-md5">
+            <div class="layui-card" style="height:400px">
+                <div class="layui-card-header">流程日志</div>
                 <div class="layui-card-body">
-                    结合 layui 的栅格系统<br>
-                    轻松实现响应式布局
+
+                    <table id="workFlowInstanceLogTable" class="layui-table layui-form" lay-filter="workFlowInstanceLogTable"></table>
+
                 </div>
             </div>
 
             <div class="layui-card">
-                <div class="layui-card-header">标题</div>
+                <div class="layui-card-header">
+
+                </div>
                 <div class="layui-card-body">
-                    内容
+                    <div id="workFlowChart" style="height:300px;"></div>
                 </div>
             </div>
 
@@ -37,8 +58,175 @@
 
         </div>
 
+
+
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        var workFlowInstanceUniqueId = "@ViewBag.workFlowInstanceUniqueId";
+        var gooFlowChart;
+    var form = null;
+   var table = "";
+    layui.use(["layer", "table", "element"], function () {
+        table = layui.table;
+        form = layui.form;
+
+            table.render({
+                elem: '#workFlowInstanceLogTable',
+                height: "300px",
+                method: "post",
+                url: '@Url.Content("~/Api/WorkFlow/WorkFlowChart/GetWorkFlowInstanceLogs")',
+                page: GLOBAL_TABLE_PAGE, //开启分页
+                cols: [[
+
+                    { field: 'LineName', title: '提交方式',width:150, sort: true }
+                    , { field: 'FromStepName', title: '上个节点', width: 150, sort: true }
+                    , { field: 'CreateUser', title: '创建人员', width: 150, sort: true }
+                    , { field: 'Remark', title: '备注', width: 150, sort: true }
+                    , { field: 'CreateTime', title: '提交时间', width: 200, sort: true }
+
+                ]],
+                where: { WorkFlowInstanceUniqueId: workFlowInstanceUniqueId },
+                toolbar: GLOBAL_TABLE_TOOBAR,
+                limit: GLOBAL_TABLE_LIMIT,
+                limits: GLOBAL_TABLE_LIMITS,
+                loading: true,
+                skin: GLOBAL_TABLE_SKIN, //行边框风格
+                even: GLOBAL_TABLE_EVEN //开启隔行背景
+        });
+
+        //获取提交按钮的select
+        GetWorkFlowInstanceSubmitSelectItem();
+
+
+
+        var property = {
+            toolBtns: ["start round mix", "end round", "node"],
+            haveHead: false,
+            // headLabel: true,
+            headBtns: ["undo", "redo"],//如果haveHead=true，则定义HEAD区的按钮
+            haveTool: false,
+            //haveDashed: true,
+            // haveGroup: true,
+            useOperStack: true
+        };
+
+        GooFlow.prototype.color = {
+            main: "#20A0FF",   //绘图器HEAD/图标的颜色
+            font: "#15428B",   //默认文字颜色
+            node: "#C0CCDA",   //结点背景色
+            line: "#1D8CE0",   //连线/结点选中时边框颜色
+            lineFont: "#15428B",   //连线上文字的颜色（优先级大于“默认文字颜色”）
+            mark: "#FFFF00",   //连线被选中/元素都标注时颜色
+            mix: "#B6F700",   //复合结点自定义背景颜色
+            mixFont: "#777"   //复合结点自定义文字颜色
+        };
+
+
+     
+        GooFlow.prototype.remarks.extendRight = "工作区向右扩展";
+        GooFlow.prototype.remarks.extendBottom = "工作区向下扩展";
+
+
+        form.on('select(submitOption)', function (data) {
+            var lineUniqueId = data.value;
+
+
+            if (lineUniqueId) {
+                $.ajax({
+                    url: '@Url.Content("~/WorkFlow/WorkFlowInstance/InputForm?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId + "&lineUniqueId=" + lineUniqueId,
+                    type: "get",
+                    dataType: "html",
+                    success: function (result) {
+                        layer.open({
+                            type: 1,
+                            title: "提交",
+                            content: result,
+                            area: ["400px", "250px"],
+                            shade: 0.3, //不显示遮罩
+                            end: function () {
+
+                            }
+                        });
+                    }
+                });
+            } else {
+                layer.msg('请选择提交方式');
+
+            }
+           
 
            
-        </div>
-</div>
+        });
+
+       
+
+
+       
+        gooFlowChart = $.createGooFlow($("#workFlowChart"), property);
+
+        GetWorkFlowInstanceChart();
+
+
+    });
+
+    //------------------------------------获取提交按钮的select------------------------------------
+    function GetWorkFlowInstanceSubmitSelectItem()
+    {
+        debugger
+        $.ajax({
+            type: "Get",
+             url: '@Url.Content("~/api/WorkFlow/WorkFlowInstance/GetWorkFlowInstanceSubmitSelectItem?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                //赋值
+                var html = "";
+                for (var i = 0; i < data.length; i++) {
+                    html += '<option value="' + data[i].Value + '" id="' + data[i].Value + '" >' + data[i].Text + '</option>';
+                };
+                $("#submitOption").append(html);
+                form.render();
+            }
+        });
+
+    }
+
+     //------------------------------------获取流程图------------------------------------
+    function GetWorkFlowInstanceChart()
+    {
+        debugger
+        $.ajax({
+            type: "Get",
+             url: '@Url.Content("~/api/WorkFlow/WorkFlowInstance/GetWorkFlowInstanceChart?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                debugger
+                gooFlowChart.loadData(JSON.parse(data.ChartContent));
+
+                $("#" + data.MarkedId).css("background-color", "yellow");
+
+                gooFlowChart.resetScale(1);
+
+
+
+            }
+        });
+
+        }
+
+
+
+
+
+    </script>
+
+
+}
+
 

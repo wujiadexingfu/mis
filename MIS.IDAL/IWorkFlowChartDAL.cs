@@ -1,6 +1,7 @@
 ﻿using MIS.Model.Page;
 using MIS.Model.Result;
 using MIS.Model.WorkFlow.WorkFlowChart;
+using MIS.Model.WorkFlow.WorkFlowInstanceLog;
 using MIS.Model.WorkFlow.WorkFlowLine;
 using MIS.Model.WorkFlow.WorkFlowStep;
 using System;
@@ -92,5 +93,13 @@ namespace MIS.IDAL
         /// <param name="lineId"></param>
         /// <returns></returns>
         WorkFlowLineInputForm GetWorkFlowLineByLineId(string lineId);
+
+
+        /// <summary>
+        /// 获取流程日志
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        PageData GetWorkFlowInstanceLogs(WorkFlowInstanceLogParameter parameter);
     }
 }

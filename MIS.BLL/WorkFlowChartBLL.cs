@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MIS.Utility.Serialize;
+using MIS.Model.WorkFlow.WorkFlowInstanceLog;
 
 namespace MIS.BLL
 {
@@ -159,6 +160,17 @@ namespace MIS.BLL
         public WorkFlowLineInputForm GetWorkFlowLineByLineId(string lineId)
         {
             return _workFlowChartDAL.GetWorkFlowLineByLineId(lineId);
+        }
+
+
+        /// <summary>
+        /// 获取流程日志
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public PageData GetWorkFlowInstanceLogs(WorkFlowInstanceLogParameter parameter)
+        {
+            return _workFlowChartDAL.GetWorkFlowInstanceLogs(parameter);
         }
 
     }
