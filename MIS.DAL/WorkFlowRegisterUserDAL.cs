@@ -15,7 +15,7 @@ using static MIS.Utility.EnumUtility.SystemEnums;
 
 namespace MIS.DAL
 {
-   public class WorkFlowRegisterUserDAL
+   public class WorkFlowRegisterUserDAL: IWorkFlowRegisterUserDAL
     {
         private ISysLogDAL _sysLogDAL;
         private IWorkFlowInstanceDAL _workFlowInstanceDAL;

@@ -52,6 +52,7 @@
     <Compile Include="ISysUserBLL.cs" />
     <Compile Include="IWorkFlowChartBLL.cs" />
     <Compile Include="IWorkFlowInstanceBLL.cs" />
+    <Compile Include="IWorkFlowRegisterUserBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

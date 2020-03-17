@@ -53,6 +53,7 @@
     <Compile Include="SysUserBLL.cs" />
     <Compile Include="WorkFlowChartBLL.cs" />
     <Compile Include="WorkFlowInstanceBLL.cs" />
+    <Compile Include="WorkFlowRegisterUserBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MIS.IBLL\MIS.IBLL.csproj">

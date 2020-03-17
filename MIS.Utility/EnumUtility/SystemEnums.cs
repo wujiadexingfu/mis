@@ -224,7 +224,7 @@ namespace MIS.Utility.EnumUtility
             /// <summary>
             /// 注册用户
             /// </summary>
-            RegisterUser
+            WorkFlow_ReginsterUser
         }
 
     }

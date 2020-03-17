@@ -36,9 +36,9 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="workFlowInstanceUniqueId"></param>
         /// <returns></returns>
-        public WorkFlowInstanceChart GetWorkFlowInstanceChart(Guid workFlowInstanceUniqueId)
+        public WorkFlowInstanceChart GetWorkFlowInstanceChart(Guid workFlowInstanceUniqueId, string workFlowChartType)
         {
-            return _workFlowInstanceDAL.GetWorkFlowInstanceChart(workFlowInstanceUniqueId);
+            return _workFlowInstanceDAL.GetWorkFlowInstanceChart(workFlowInstanceUniqueId, workFlowChartType);
         }
 
 

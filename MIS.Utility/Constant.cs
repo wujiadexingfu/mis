@@ -49,6 +49,8 @@ namespace MIS.Utility
 
         public const string Account = "Account";
 
+        public const string GuidEmpty = "00000000-0000-0000-0000-000000000000";
+
 
         #region  配置文件的目录
         public static string ConfigFile

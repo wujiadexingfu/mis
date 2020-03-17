@@ -83,15 +83,20 @@ namespace MIS.DAL
             MISEntities db = new MISEntities();
 
             var workFlowInstance = db.WorkFlow_Instance.Where(x => x.UniqueId == workFlowInstanceUniqueId).FirstOrDefault();
-            var currentStepUniqueId = workFlowInstance.CurrentStepUniqueId; //当前流程所在节点的状态
-            var stepLineList = db.view_workflowStepLine.Where(x => x.FromStepUniqueId == currentStepUniqueId).ToList();
-            foreach (var item in stepLineList)
+            if (workFlowInstance != null)
             {
-                WorkFlowInstanceSubmitSelectItem selectItem = new WorkFlowInstanceSubmitSelectItem();
-                selectItem.Text = item.Name;
-                selectItem.Value = item.LineUniqueId.ToString();
-                list.Add(selectItem);
+                var currentStepUniqueId = workFlowInstance.CurrentStepUniqueId; //当前流程所在节点的状态
+                var stepLineList = db.view_workflowStepLine.Where(x => x.FromStepUniqueId == currentStepUniqueId).ToList();
+                foreach (var item in stepLineList)
+                {
+                    WorkFlowInstanceSubmitSelectItem selectItem = new WorkFlowInstanceSubmitSelectItem();
+                    selectItem.Text = item.Name;
+                    selectItem.Value = item.LineUniqueId.ToString();
+                    list.Add(selectItem);
+                }
             }
+
+           
             return list;
         }
 
@@ -99,18 +104,35 @@ namespace MIS.DAL
         /// 获取流程图和当前节点的信息
         /// </summary>
         /// <param name="workFlowInstanceUniqueId"></param>
+        /// <param name="workFlowChartType"></param>
         /// <returns></returns>
-        public WorkFlowInstanceChart GetWorkFlowInstanceChart(Guid workFlowInstanceUniqueId)
+        public WorkFlowInstanceChart GetWorkFlowInstanceChart(Guid workFlowInstanceUniqueId,string workFlowChartType)
         {
 
             MISEntities db = new MISEntities();
             WorkFlowInstanceChart item = new WorkFlowInstanceChart();
-            var instance = db.WorkFlow_Instance.Where(x => x.UniqueId == workFlowInstanceUniqueId).FirstOrDefault();
+            if (workFlowInstanceUniqueId.ToString() == Constant.GuidEmpty)
+            {
+                var workFlowChart = db.WorkFlow_Chart.Where(x => x.WorkFlowType == workFlowChartType).FirstOrDefault();
+                item.ChartContent = workFlowChart.FlowChartContent;
+                var firstStep = db.WorkFlow_Step.Where(x => x.WorkFlowChartUniqueId == workFlowChart.UniqueId && x.IsBegin == true).FirstOrDefault();
+                item.MarkedId = firstStep.StepId;
 
-            item.ChartContent = db.WorkFlow_Chart.Where(x => x.UniqueId == instance.WorkFlowChartUniqueId.Value).FirstOrDefault().FlowChartContent;
 
-            var step = db.WorkFlow_Step.Where(x => x.UniqueId == instance.CurrentStepUniqueId).FirstOrDefault();
-            item.MarkedId = step.StepId;
+            }
+            else
+            {
+                var instance = db.WorkFlow_Instance.Where(x => x.UniqueId == workFlowInstanceUniqueId).FirstOrDefault();
+
+                item.ChartContent = db.WorkFlow_Chart.Where(x => x.UniqueId == instance.WorkFlowChartUniqueId.Value).FirstOrDefault().FlowChartContent;
+
+                var step = db.WorkFlow_Step.Where(x => x.UniqueId == instance.CurrentStepUniqueId).FirstOrDefault();
+                item.MarkedId = step.StepId;
+            }
+
+
+
+           
 
             return item;
         }

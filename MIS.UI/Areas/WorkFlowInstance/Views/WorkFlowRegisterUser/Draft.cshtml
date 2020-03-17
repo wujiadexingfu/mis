@@ -4,5 +4,121 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Draft</h2>
+<form class="layui-form" action="" lay-filter="RegisterUserForm" id="RegisterUserForm">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <button class="layui-btn layui-btn-sm" type="button" id="btnRegisterUserSave">保存草稿</button>
+        </div>
+    </div>
 
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">客户编号:</label>
+            <div class="layui-input-inline">
+                <input name="Id" id="Id"  class="layui-input" placeholder="请输入客户编号" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">客户名称:</label>
+            <div class="layui-input-inline">
+                <input name="Name" id="Name"  class="layui-input" placeholder="请输入客户名称" autocomplete="off">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">生日:</label>
+            <div class="layui-input-inline">
+
+                <input name="BirthDay" id="BirthDay"  class="layui-input" placeholder="请输入生日" autocomplete="off">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">备注:</label>
+            <div class="layui-input-inline">
+
+                <input name="Remark" id="Remark"  class="layui-input" placeholder="请输入生日" autocomplete="off">
+
+            </div>
+        </div>
+    </div>
+
+
+
+</form>
+
+<script type="text/javascript">
+    layui.use(['form', 'laydate'], function () {
+        form = layui.form;
+        $ = layui.jquery;
+        var laydate = layui.laydate;
+
+
+        laydate.render({
+            elem: '#BirthDay',
+            trigger: 'click'
+        });
+
+
+        form.on('submit(btnRegisterUserSave)', function (data) {
+          
+            var data = JSON.stringify(data.field);
+
+           
+            if (uniqueId) {
+                  $.ajax({
+                    url: '@Url.Content("~/api/Sys/User/Edit")',
+                    type: "post",
+                    dataType: "json",
+                    headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                      data: data,
+                      async: false,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('修改成功');
+                              layer.closeAll();
+                          } else {
+                              debugger
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+            } else {
+                debugger
+                  $.ajax({
+                    url: '@Url.Content("~/api/Sys/User/Add")',
+                      type: "post",
+                      dataType: "json",
+                      async: false,
+                      headers: {
+                          "Content-Type": "application/json",
+                          "X-HTTP-Method-Override": "POST"
+                      },
+                    data: data,
+                      success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('新增成功');
+                              layer.closeAll();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+            }
+            return false;
+        });
+
+ 
+
+    });
+
+</script>

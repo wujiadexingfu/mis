@@ -48,10 +48,10 @@ namespace MIS.UI.Areas.WorkFlow.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage GetWorkFlowInstanceChart(Guid workFlowInstanceUniqueId)
+        public HttpResponseMessage GetWorkFlowInstanceChart(Guid workFlowInstanceUniqueId,string workFlowChartType)
         {
 
-            var result = JosnNetHelper.ObjectToJson(_workFlowInstanceBLL.GetWorkFlowInstanceChart(workFlowInstanceUniqueId));
+            var result = JosnNetHelper.ObjectToJson(_workFlowInstanceBLL.GetWorkFlowInstanceChart(workFlowInstanceUniqueId, workFlowChartType));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),

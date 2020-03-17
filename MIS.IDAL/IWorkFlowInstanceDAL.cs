@@ -28,13 +28,13 @@ namespace MIS.IDAL
         /// <returns></returns>
         List<WorkFlowInstanceSubmitSelectItem> GetWorkFlowInstanceSubmitSelectItem(Guid workFlowInstanceUniqueId);
 
-
         /// <summary>
         /// 获取流程图和当前节点的信息
         /// </summary>
         /// <param name="workFlowInstanceUniqueId"></param>
+        /// <param name="workFlowChartType"></param>
         /// <returns></returns>
-        WorkFlowInstanceChart GetWorkFlowInstanceChart(Guid workFlowInstanceUniqueId);
+        WorkFlowInstanceChart GetWorkFlowInstanceChart(Guid workFlowInstanceUniqueId, string workFlowChartType);
 
 
 

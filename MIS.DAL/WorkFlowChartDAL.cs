@@ -476,30 +476,32 @@ namespace MIS.DAL
 
                 var count = query.Count();
                 var list = query.OrderByDescending(x => x.CreateTime).Skip((parameter.Page - 1) * parameter.Limit).Take(parameter.Limit).Select(x => x).ToList();
-
+                PageData pageData = null;
 
                 var workFlowInstance = db.WorkFlow_Instance.Where(x => x.UniqueId == parameter.WorkFlowInstanceUniqueId).FirstOrDefault();
-
-                var stepList = db.WorkFlow_Step.Where(x => x.WorkFlowChartUniqueId == workFlowInstance.WorkFlowChartUniqueId).ToList();
-                var lineList = db.WorkFlow_Line.Where(x => x.WorkFlowChartUniqueId == workFlowInstance.WorkFlowChartUniqueId).ToList();
-                var userList = db.Sys_User.ToList();
-
-
-                List<WorkFlowInstanceLogGrid> result = new List<WorkFlowInstanceLogGrid>();
-                foreach (var item in list)
+                if (workFlowInstance != null)
                 {
-                    WorkFlowInstanceLogGrid workFlowInstanceLogGrid = new WorkFlowInstanceLogGrid();
-                    workFlowInstanceLogGrid.UniqueId = item.UniqueId;
-                    workFlowInstanceLogGrid.FromStepName = stepList.Where(x => x.UniqueId == item.FromStepUniqueId).FirstOrDefault().Name; 
-                    workFlowInstanceLogGrid.LineName = lineList.Where(x=>x.UniqueId==item.LineUniqueId).FirstOrDefault().Name;
-                    workFlowInstanceLogGrid.CreateUser = userList.Where(x => x.UniqueId == item.CreateUser).FirstOrDefault().Name;
-                    workFlowInstanceLogGrid.Remark = item.Remark;
-                    workFlowInstanceLogGrid.CreateTime = item.CreateTime.Value.ToString(DateTimeFormatter.YYYYMMDDHHMMSS);
+                    var stepList = db.WorkFlow_Step.Where(x => x.WorkFlowChartUniqueId == workFlowInstance.WorkFlowChartUniqueId).ToList();
+                    var lineList = db.WorkFlow_Line.Where(x => x.WorkFlowChartUniqueId == workFlowInstance.WorkFlowChartUniqueId).ToList();
+                    var userList = db.Sys_User.ToList();
+                    List<WorkFlowInstanceLogGrid> result = new List<WorkFlowInstanceLogGrid>();
+                    foreach (var item in list)
+                    {
+                        WorkFlowInstanceLogGrid workFlowInstanceLogGrid = new WorkFlowInstanceLogGrid();
+                        workFlowInstanceLogGrid.UniqueId = item.UniqueId;
+                        workFlowInstanceLogGrid.FromStepName = stepList.Where(x => x.UniqueId == item.FromStepUniqueId).FirstOrDefault().Name;
+                        workFlowInstanceLogGrid.LineName = lineList.Where(x => x.UniqueId == item.LineUniqueId).FirstOrDefault().Name;
+                        workFlowInstanceLogGrid.CreateUser = userList.Where(x => x.UniqueId == item.CreateUser).FirstOrDefault().Name;
+                        workFlowInstanceLogGrid.Remark = item.Remark;
+                        workFlowInstanceLogGrid.CreateTime = item.CreateTime.Value.ToString(DateTimeFormatter.YYYYMMDDHHMMSS);
 
-                    result.Add(workFlowInstanceLogGrid);
+                        result.Add(workFlowInstanceLogGrid);
+                    }
+                     pageData = new PageData(count, result);
+                }else
+                 {
+                     pageData = new PageData(0, null);
                 }
-
-                PageData pageData = new PageData(count, result);
                 return pageData;
             }
 

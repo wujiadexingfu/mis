@@ -13,6 +13,8 @@
 <script src="~/Content/gooflow/codebase/GooFlow.js"></script>
 <script src="~/Content/gooflow/codebase/GooFlow.export.js"></script>
 <script src="~/Content/gooflow/codebase/GooFlow.color.js"></script>
+@using MIS.Utility.EnumUtility
+
 
 <div style="padding: 20px; background-color: #F2F2F2;">
     <div class="layui-row layui-col-space15">
@@ -65,8 +67,9 @@
 
 
 @section scripts{
-    <script type="text/javascript">
+<script type="text/javascript">
         var workFlowInstanceUniqueId = "@ViewBag.workFlowInstanceUniqueId";
+        var workFlowChartType = "@ViewBag.WorkFlowChartType";
         var gooFlowChart;
     var form = null;
    var table = "";
@@ -126,7 +129,7 @@
         };
 
 
-     
+
         GooFlow.prototype.remarks.extendRight = "工作区向右扩展";
         GooFlow.prototype.remarks.extendBottom = "工作区向下扩展";
 
@@ -157,19 +160,37 @@
                 layer.msg('请选择提交方式');
 
             }
-           
 
-           
+
+
         });
 
-       
 
 
-       
+
+
         gooFlowChart = $.createGooFlow($("#workFlowChart"), property);
 
         GetWorkFlowInstanceChart();
 
+
+        //var iframe = document.createElement('iframe');
+        //iframe.src = "/WorkFlowInstance/WorkFlowRegisterUser/Draft";
+        //iframe.scrolling = "no";
+        //iframe.frameBorder = 0;
+        //iframe.width = "100%";
+        //iframe.height = "100%";
+        //$("#workFlowForm").html(iframe);
+
+             $.ajax({
+                     url: '@Url.Content("~//WorkFlowInstance/WorkFlowRegisterUser/Draft")',
+                     type: "get",
+                     dataType:"html",
+                     success: function (result) {
+                         $("#workFlowForm").html(result);
+                   
+                 }
+             });
 
     });
 
@@ -201,7 +222,7 @@
         debugger
         $.ajax({
             type: "Get",
-             url: '@Url.Content("~/api/WorkFlow/WorkFlowInstance/GetWorkFlowInstanceChart?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId,
+            url: '@Url.Content("~/api/WorkFlow/WorkFlowInstance/GetWorkFlowInstanceChart?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId +"&workFlowChartType="+workFlowChartType,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             async: false,
@@ -224,7 +245,7 @@
 
 
 
-    </script>
+</script>
 
 
 }

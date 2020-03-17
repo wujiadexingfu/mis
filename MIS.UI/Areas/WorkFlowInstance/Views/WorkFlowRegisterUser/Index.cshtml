@@ -4,5 +4,184 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+@using MIS.UI.Filters
+
+<div style="padding: 20px;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <i class="layui-icon layui-icon-link"></i>
+                查询条件
+            </div>
+            <div class="layui-card-body">
+                <div class="layui-inline layui-show-xs-block">
+                    <input class="layui-input" autocomplete="off" placeholder="请输入关键字" name="Keyword" id="Keyword">
+                </div>
+
+                @if (CheckOperationFilterAttribute.CheckQuery())
+                {
+                    <button class="layui-btn" lay-filter="btnReginsterUserQuery" id="btnReginsterUserQuery"><i class="layui-icon"></i></button>
+                }
+
+                <div class="layui-inline layui-show-xs-block">
+
+                    @if (CheckOperationFilterAttribute.CheckAdd())
+                    {
+
+                        <button class="layui-btn" lay-filter="btnAddReginsterUser" id="btnAddReginsterUser"><i class="layui-icon"></i>添加</button>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="layui-row layui-col-space15;" style="padding: 20px;">
+
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <i class="layui-icon layui-icon-table" style="font-size:20px"></i>
+            查询结果
+        </div>
+        <div class="layui-card-body layui-table-body layui-table-main">
+            <table id="reginsterUserTable" class="layui-table layui-form" lay-filter="reginsterUserTable"></table>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script type="text/javascript">
+   var table = "";
+    layui.use(["layer", "table", "element"], function () {
+        table = layui.table;
+        var form = layui.form;
+  
+            table.render({
+                elem: '#reginsterUserTable',
+                height: GLOBAL_TABLE_HEIGHT,
+
+                method: "post",
+                url: '@Url.Content("~/Api/WorkFlowInstance/WorkFlowRegisterUser/Query")',
+                page: GLOBAL_TABLE_PAGE, //开启分页
+                cols: [[
+                    { field: 'Id', title: '编号',  sort: true }
+                    , { field: 'Name', title: '姓名', sort: true }
+                    , { field: 'BirthDay', title: '生日', sort: true }
+                    , { field: 'Remark', title: '备注',  sort: true }
+                    , { field: 'WorkFlowStep', title: '当前节点', sort: true }
+                    , { fixed: 'right',  title: "操作", align: 'center', toolbar: '#bar' }
+                ]],
+                where: { keyWord: $("#Keyword").val() },
+                toolbar: GLOBAL_TABLE_TOOBAR,
+                limit: GLOBAL_TABLE_LIMIT,
+                limits: GLOBAL_TABLE_LIMITS,
+                loading: true,
+                skin: GLOBAL_TABLE_SKIN, //行边框风格
+                even: GLOBAL_TABLE_EVEN //开启隔行背景
+            });
+
+        table.on('tool(reginsterUserTable)', function (obj) {
+            debugger
+            var data = obj.data;
+            var uniqueId = data.UniqueId;
+            @*if (obj.event === 'edit') {
+
+             $.ajax({
+                     url: '@Url.Content("~/WorkFlowInstance/WorkFlowRegisterUser/InputForm?uniqueId=")' + uniqueId,
+                     type: "get",
+                     dataType:"html",
+                     success: function (result) {
+                         layer.open({
+                         type: 1,
+                         title: "修改用户信息",
+                         content: result,
+                         area: ["800px", "500px"],
+                         shade: 0.3, //不显示遮罩
+                         end: function () {
+                         refreshUserTable();
+                         }
+                     });
+                 }
+             });
+            } else if (obj.event === 'delete') {
+                layer.confirm('是否删除数据', function (index) {
+
+                    $.ajax({
+                        url: '@Url.Content("~/api/Sys/User/Delete")?uniqueId=' + uniqueId ,
+                        type: "get",
+                         success: function (result) {
+                          if (result.IsSuccess) {
+                              layer.msg('删除成功');
+                              refreshUserTable();
+                          } else {
+                              layer.msg(result.Message);
+                          }
+                    }
+                });
+
+                });
+            }*@
+        });
+
+        $("#btnReginsterUserQuery").click(function () {
+                table.reload('reginsterUserTable', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: { keyWord: $("#Keyword").val() },
+                }, 'data');
+
+
+            });
+
+            function refreshUserTable() {
+                table.reload('reginsterUserTable', {
+                    where: { keyWord: $("#Keyword").val() },
+                }, 'data');
+            }
+
+        $("#btnAddReginsterUser").click(function () {
+                   @*$.ajax({
+                       url: '@Url.Content("~/WorkFlow/WorkFlowInstance/Index?workFlowInstanceUniqueId=")' + "00000000-0000-0000-0000-000000000000" + "&workFlowChartType=" +"WorkFlow_ReginsterUser",
+                     type: "get",
+                     dataType:"html",
+                       success: function (result) {
+                           debugger
+
+                            layer.open({
+                                type:2,
+                                title: "新增注册用户信息",
+                                content: result ,
+                                area: ["800px", "500px"],
+                                shade: 0.3, //不显示遮罩
+                                end: function () {
+                             
+                        }
+                           });
+
+                          
+
+                 }
+             });*@
+               var index= layer.open({
+                               type: 2,
+                               content:'@Url.Content("~/WorkFlow/WorkFlowInstance/Index?workFlowInstanceUniqueId=")' + "00000000-0000-0000-0000-000000000000" + "&workFlowChartType=" +"WorkFlow_ReginsterUser",
+            });
+            layer.full(index);
+            });
+
+
+        });
+
+
+    </script>
+
+
+}
 

@@ -26,7 +26,7 @@ namespace MIS.IBLL
         /// </summary>
         /// <param name="workFlowInstanceUniqueId"></param>
         /// <returns></returns>
-        WorkFlowInstanceChart GetWorkFlowInstanceChart(Guid workFlowInstanceUniqueId);
+        WorkFlowInstanceChart GetWorkFlowInstanceChart(Guid workFlowInstanceUniqueId, string workFlowChartType);
 
 
         /// <summary>

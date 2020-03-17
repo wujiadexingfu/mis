@@ -51,6 +51,7 @@
     <Compile Include="ISysUserDAL.cs" />
     <Compile Include="IWorkFlowChartDAL.cs" />
     <Compile Include="IWorkFlowInstanceDAL.cs" />
+    <Compile Include="IWorkFlowRegisterUserDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
