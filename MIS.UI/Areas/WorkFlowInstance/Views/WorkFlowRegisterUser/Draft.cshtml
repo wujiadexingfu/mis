@@ -1,13 +1,15 @@
 ﻿
 @{
     ViewBag.Title = "Draft";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
+
+<button id="btnQuery"> 查询</button>
 <form class="layui-form" action="" lay-filter="RegisterUserForm" id="RegisterUserForm">
     <div class="layui-form-item">
         <div class="layui-inline">
-            <button class="layui-btn layui-btn-sm" type="button" id="btnRegisterUserSave">保存草稿</button>
+            <button class="layui-btn layui-btn-sm" type="button" id="btnRegisterUserSave" lay-filter="btnRegisterUserSave">保存草稿</button>
         </div>
     </div>
 
@@ -15,15 +17,14 @@
         <div class="layui-inline">
             <label class="layui-form-label">客户编号:</label>
             <div class="layui-input-inline">
-                <input name="Id" id="Id"  class="layui-input" placeholder="请输入客户编号" autocomplete="off">
+                <input name="Id" id="Id" class="layui-input" placeholder="请输入客户编号" autocomplete="off">
             </div>
         </div>
-    </div>
-    <div class="layui-form-item">
+
         <div class="layui-inline">
             <label class="layui-form-label">客户名称:</label>
             <div class="layui-input-inline">
-                <input name="Name" id="Name"  class="layui-input" placeholder="请输入客户名称" autocomplete="off">
+                <input name="Name" id="Name" class="layui-input" placeholder="请输入客户名称" autocomplete="off">
             </div>
         </div>
     </div>
@@ -32,29 +33,35 @@
             <label class="layui-form-label">生日:</label>
             <div class="layui-input-inline">
 
-                <input name="BirthDay" id="BirthDay"  class="layui-input" placeholder="请输入生日" autocomplete="off">
+                <input name="BirthDay" id="BirthDay" class="layui-input" placeholder="请输入生日" autocomplete="off">
 
             </div>
         </div>
-    </div>
 
-    <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">备注:</label>
             <div class="layui-input-inline">
 
-                <input name="Remark" id="Remark"  class="layui-input" placeholder="请输入生日" autocomplete="off">
+                <input name="Remark" id="Remark" class="layui-input" placeholder="请输入备注" autocomplete="off">
 
             </div>
         </div>
     </div>
+ 
 
 
 
 </form>
 
 <script type="text/javascript">
-    layui.use(['form', 'laydate'], function () {
+
+
+    function SaveRegisterUser() {
+        alert("OK");
+    }
+
+
+   layui.use(['form', 'laydate'], function () {
         form = layui.form;
         $ = layui.jquery;
         var laydate = layui.laydate;
@@ -64,13 +71,16 @@
             elem: '#BirthDay',
             trigger: 'click'
         });
+   
 
 
-        form.on('submit(btnRegisterUserSave)', function (data) {
-          
+
+
+       form.on('submit(btnRegisterUserSave)', function (data) {
+
             var data = JSON.stringify(data.field);
 
-           
+
             if (uniqueId) {
                   $.ajax({
                     url: '@Url.Content("~/api/Sys/User/Edit")',
@@ -115,9 +125,9 @@
                 });
             }
             return false;
-        });
+       });
 
- 
+
 
     });
 

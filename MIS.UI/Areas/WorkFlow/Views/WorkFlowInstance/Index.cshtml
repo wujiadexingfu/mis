@@ -72,10 +72,12 @@
         var workFlowChartType = "@ViewBag.WorkFlowChartType";
         var gooFlowChart;
     var form = null;
-   var table = "";
+    var table = "";
+    var laydate = "";
     layui.use(["layer", "table", "element"], function () {
         table = layui.table;
         form = layui.form;
+        laydate = layui.laydate;
 
             table.render({
                 elem: '#workFlowInstanceLogTable',
@@ -166,7 +168,7 @@
         });
 
 
-
+  
 
 
         gooFlowChart = $.createGooFlow($("#workFlowChart"), property);
@@ -191,6 +193,11 @@
                    
                  }
              });
+
+
+
+
+
 
     });
 
