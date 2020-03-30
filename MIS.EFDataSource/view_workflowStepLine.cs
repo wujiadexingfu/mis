@@ -19,7 +19,9 @@ namespace MIS.EFDataSource
         public Nullable<System.Guid> WorkFlowChartUniqueId { get; set; }
         public System.Guid FromStepUniqueId { get; set; }
         public string FromStepName { get; set; }
+        public Nullable<bool> IsBegin { get; set; }
         public System.Guid ToStepUniqueId { get; set; }
         public string ToStepName { get; set; }
+        public string WorkFlowType { get; set; }
     }
 }

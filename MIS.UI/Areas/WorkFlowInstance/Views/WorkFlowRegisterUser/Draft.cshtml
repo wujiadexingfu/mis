@@ -5,11 +5,15 @@
 }
 
 
-<button id="btnQuery"> 查询</button>
+<button id="btnSaveForm">保存</button>
+
+
 <form class="layui-form" action="" lay-filter="RegisterUserForm" id="RegisterUserForm">
     <div class="layui-form-item">
         <div class="layui-inline">
-            <button class="layui-btn layui-btn-sm" type="button" id="btnRegisterUserSave" lay-filter="btnRegisterUserSave">保存草稿</button>
+            <button type="submit" class="layui-btn layui-btn-sm"  lay-submit="" id="btnRegisterUserSave" lay-filter="btnRegisterUserSave">保存草稿</button>
+        
+
         </div>
     </div>
 
@@ -17,14 +21,14 @@
         <div class="layui-inline">
             <label class="layui-form-label">客户编号:</label>
             <div class="layui-input-inline">
-                <input name="Id" id="Id" class="layui-input" placeholder="请输入客户编号" autocomplete="off">
+                <input name="Id" id="Id" class="layui-input" placeholder="请输入客户编号" autocomplete="off"  lay-verify="required">
             </div>
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">客户名称:</label>
             <div class="layui-input-inline">
-                <input name="Name" id="Name" class="layui-input" placeholder="请输入客户名称" autocomplete="off">
+                <input name="Name" id="Name" class="layui-input" placeholder="请输入客户名称" autocomplete="off"  lay-verify="required">
             </div>
         </div>
     </div>
@@ -33,7 +37,7 @@
             <label class="layui-form-label">生日:</label>
             <div class="layui-input-inline">
 
-                <input name="BirthDay" id="BirthDay" class="layui-input" placeholder="请输入生日" autocomplete="off">
+                <input name="BirthDay" id="BirthDay" class="layui-input" placeholder="请输入生日" autocomplete="off"  lay-verify="required">
 
             </div>
         </div>
@@ -42,7 +46,7 @@
             <label class="layui-form-label">备注:</label>
             <div class="layui-input-inline">
 
-                <input name="Remark" id="Remark" class="layui-input" placeholder="请输入备注" autocomplete="off">
+                <input name="Remark" id="Remark" class="layui-input" placeholder="请输入备注" autocomplete="off"  lay-verify="required">
 
             </div>
         </div>
@@ -55,9 +59,17 @@
 
 <script type="text/javascript">
 
+    var isValid = false;
+   
+    function SaveRegisterUser(data) {
 
-    function SaveRegisterUser() {
-        alert("OK");
+        isValid = false;
+        $("#btnRegisterUserSave").trigger("click");
+        if (isValid) {
+            alert("提交")
+        } else {
+            alert("确认异常！");
+        }
     }
 
 
@@ -73,57 +85,59 @@
         });
    
 
+      
 
 
 
        form.on('submit(btnRegisterUserSave)', function (data) {
+           debugger
 
-            var data = JSON.stringify(data.field);
+           isValid = true;
 
-
-            if (uniqueId) {
-                  $.ajax({
-                    url: '@Url.Content("~/api/Sys/User/Edit")',
-                    type: "post",
-                    dataType: "json",
-                    headers: {
-                          "Content-Type": "application/json",
-                          "X-HTTP-Method-Override": "POST"
-                      },
-                      data: data,
-                      async: false,
-                      success: function (result) {
-                          if (result.IsSuccess) {
-                              layer.msg('修改成功');
-                              layer.closeAll();
-                          } else {
-                              debugger
-                              layer.msg(result.Message);
-                          }
+           var data = JSON.stringify(data.field);
+         if (workFlowInstanceUniqueId =="00000000-0000-0000-0000-000000000000") {
+            $.ajax({
+                url: '@Url.Content("~/api/WorkFlowInstance/WorkFlowRegisterUser/Add")',
+                type: "post",
+                dataType: "json",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-HTTP-Method-Override": "POST"
+                },
+                data: data,
+                async: false,
+                success: function (result) {
+                    if (result.IsSuccess) {
+                        layer.msg('新增成功');
+                        workFlowInstanceUniqueId = result.Data;
+                    } else {
+                        debugger
+                        layer.msg(result.Message);
                     }
-                });
-            } else {
-                debugger
-                  $.ajax({
-                    url: '@Url.Content("~/api/Sys/User/Add")',
-                      type: "post",
-                      dataType: "json",
-                      async: false,
-                      headers: {
-                          "Content-Type": "application/json",
-                          "X-HTTP-Method-Override": "POST"
-                      },
-                    data: data,
-                      success: function (result) {
-                          if (result.IsSuccess) {
-                              layer.msg('新增成功');
-                              layer.closeAll();
-                          } else {
-                              layer.msg(result.Message);
-                          }
+                }
+            });
+        } else {
+            debugger
+            $.ajax({
+                 url: '@Url.Content("~/api/WorkFlowInstance/WorkFlowRegisterUser/Edit")',
+                type: "post",
+                dataType: "json",
+                async: false,
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-HTTP-Method-Override": "POST"
+                },
+                data: data,
+                success: function (result) {
+                    if (result.IsSuccess) {
+                        layer.msg('修改成功');
+                    } else {
+                        layer.msg(result.Message);
                     }
-                });
-            }
+                }
+            });
+        }
+
             return false;
        });
 

@@ -361,8 +361,10 @@
           <Property Name="WorkFlowChartUniqueId" Type="uniqueidentifier" />
           <Property Name="FromStepUniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FromStepName" Type="varchar" MaxLength="50" />
+          <Property Name="IsBegin" Type="bit" />
           <Property Name="ToStepUniqueId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ToStepName" Type="varchar" MaxLength="50" />
+          <Property Name="WorkFlowType" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityContainer Name="MISModelStoreContainer">
           <EntitySet Name="Sys_Announcement" EntityType="Self.Sys_Announcement" Schema="dbo" store:Type="Tables" />
@@ -418,8 +420,10 @@
     [view_workflowStepLine].[WorkFlowChartUniqueId] AS [WorkFlowChartUniqueId], 
     [view_workflowStepLine].[FromStepUniqueId] AS [FromStepUniqueId], 
     [view_workflowStepLine].[FromStepName] AS [FromStepName], 
+    [view_workflowStepLine].[IsBegin] AS [IsBegin], 
     [view_workflowStepLine].[ToStepUniqueId] AS [ToStepUniqueId], 
-    [view_workflowStepLine].[ToStepName] AS [ToStepName]
+    [view_workflowStepLine].[ToStepName] AS [ToStepName], 
+    [view_workflowStepLine].[WorkFlowType] AS [WorkFlowType]
     FROM [dbo].[view_workflowStepLine] AS [view_workflowStepLine]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
@@ -803,8 +807,10 @@
           <Property Name="WorkFlowChartUniqueId" Type="Guid" />
           <Property Name="FromStepUniqueId" Type="Guid" Nullable="false" />
           <Property Name="FromStepName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsBegin" Type="Boolean" />
           <Property Name="ToStepUniqueId" Type="Guid" Nullable="false" />
           <Property Name="ToStepName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WorkFlowType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1170,8 +1176,10 @@
           <EntitySetMapping Name="view_workflowStepLine">
             <EntityTypeMapping TypeName="MISModel.view_workflowStepLine">
               <MappingFragment StoreEntitySet="view_workflowStepLine">
+                <ScalarProperty Name="WorkFlowType" ColumnName="WorkFlowType" />
                 <ScalarProperty Name="ToStepName" ColumnName="ToStepName" />
                 <ScalarProperty Name="ToStepUniqueId" ColumnName="ToStepUniqueId" />
+                <ScalarProperty Name="IsBegin" ColumnName="IsBegin" />
                 <ScalarProperty Name="FromStepName" ColumnName="FromStepName" />
                 <ScalarProperty Name="FromStepUniqueId" ColumnName="FromStepUniqueId" />
                 <ScalarProperty Name="WorkFlowChartUniqueId" ColumnName="WorkFlowChartUniqueId" />

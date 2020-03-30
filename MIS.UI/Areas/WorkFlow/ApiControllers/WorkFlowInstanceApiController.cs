@@ -31,10 +31,10 @@ namespace MIS.UI.Areas.WorkFlow.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage GetWorkFlowInstanceSubmitSelectItem(Guid workFlowInstanceUniqueId)
+        public HttpResponseMessage GetWorkFlowInstanceSubmitSelectItem(Guid workFlowInstanceUniqueId, string workFlowChartType)
         {
 
-            var result = JosnNetHelper.ObjectToJson(_workFlowInstanceBLL.GetWorkFlowInstanceSubmitSelectItem(workFlowInstanceUniqueId));
+            var result = JosnNetHelper.ObjectToJson(_workFlowInstanceBLL.GetWorkFlowInstanceSubmitSelectItem(workFlowInstanceUniqueId, workFlowChartType));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),

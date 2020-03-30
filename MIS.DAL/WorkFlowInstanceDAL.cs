@@ -77,7 +77,7 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="workFlowInstanceUniqueId"></param>
         /// <returns></returns>
-        public List<WorkFlowInstanceSubmitSelectItem> GetWorkFlowInstanceSubmitSelectItem(Guid workFlowInstanceUniqueId)
+        public List<WorkFlowInstanceSubmitSelectItem> GetWorkFlowInstanceSubmitSelectItem(Guid workFlowInstanceUniqueId,string workFlowChartType)
         {
             List<WorkFlowInstanceSubmitSelectItem> list = new List<WorkFlowInstanceSubmitSelectItem>();
             MISEntities db = new MISEntities();
@@ -94,6 +94,18 @@ namespace MIS.DAL
                     selectItem.Value = item.LineUniqueId.ToString();
                     list.Add(selectItem);
                 }
+            }
+            else
+            {
+                var stepLineList = db.view_workflowStepLine.Where(x => x.WorkFlowType == workFlowChartType && x.IsBegin == true).ToList();
+                foreach (var item in stepLineList)
+                {
+                    WorkFlowInstanceSubmitSelectItem selectItem = new WorkFlowInstanceSubmitSelectItem();
+                    selectItem.Text = item.Name;
+                    selectItem.Value = item.LineUniqueId.ToString();
+                    list.Add(selectItem);
+                }
+
             }
 
            

@@ -26,9 +26,9 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="workFlowInstanceUniqueId"></param>
         /// <returns></returns>
-        public List<WorkFlowInstanceSubmitSelectItem> GetWorkFlowInstanceSubmitSelectItem(Guid workFlowInstanceUniqueId)
+        public List<WorkFlowInstanceSubmitSelectItem> GetWorkFlowInstanceSubmitSelectItem(Guid workFlowInstanceUniqueId, string workFlowChartType)
         {
-            return _workFlowInstanceDAL.GetWorkFlowInstanceSubmitSelectItem(workFlowInstanceUniqueId);
+            return _workFlowInstanceDAL.GetWorkFlowInstanceSubmitSelectItem(workFlowInstanceUniqueId, workFlowChartType);
         }
 
         /// <summary>

@@ -11,14 +11,14 @@ namespace MIS.IBLL
 {
    public  interface IWorkFlowInstanceBLL
     {
-  
+
 
         /// <summary>
         /// 获取流程图的提交按钮
         /// </summary>
         /// <param name="workFlowInstanceUniqueId"></param>
         /// <returns></returns>
-        List<WorkFlowInstanceSubmitSelectItem> GetWorkFlowInstanceSubmitSelectItem(Guid workFlowInstanceUniqueId);
+        List<WorkFlowInstanceSubmitSelectItem> GetWorkFlowInstanceSubmitSelectItem(Guid workFlowInstanceUniqueId, string workFlowChartType);
 
 
         /// <summary>

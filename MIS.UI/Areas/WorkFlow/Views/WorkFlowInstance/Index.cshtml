@@ -138,9 +138,9 @@
 
         form.on('select(submitOption)', function (data) {
             var lineUniqueId = data.value;
+            SaveRegisterUser();
 
-
-            if (lineUniqueId) {
+            @*if (lineUniqueId) {
                 $.ajax({
                     url: '@Url.Content("~/WorkFlow/WorkFlowInstance/InputForm?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId + "&lineUniqueId=" + lineUniqueId,
                     type: "get",
@@ -153,7 +153,7 @@
                             area: ["400px", "250px"],
                             shade: 0.3, //不显示遮罩
                             end: function () {
-
+                                
                             }
                         });
                     }
@@ -161,7 +161,7 @@
             } else {
                 layer.msg('请选择提交方式');
 
-            }
+            }*@
 
 
 
@@ -207,7 +207,7 @@
         debugger
         $.ajax({
             type: "Get",
-             url: '@Url.Content("~/api/WorkFlow/WorkFlowInstance/GetWorkFlowInstanceSubmitSelectItem?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId,
+            url: '@Url.Content("~/api/WorkFlow/WorkFlowInstance/GetWorkFlowInstanceSubmitSelectItem?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId + "&workFlowChartType=" + workFlowChartType,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             success: function (data) {
