@@ -129,6 +129,7 @@ namespace MIS.DAL
                 item.ChartContent = workFlowChart.FlowChartContent;
                 var firstStep = db.WorkFlow_Step.Where(x => x.WorkFlowChartUniqueId == workFlowChart.UniqueId && x.IsBegin == true).FirstOrDefault();
                 item.MarkedId = firstStep.StepId;
+                item.SaveFunction = firstStep.SaveFunction;
 
 
             }
@@ -140,6 +141,7 @@ namespace MIS.DAL
 
                 var step = db.WorkFlow_Step.Where(x => x.UniqueId == instance.CurrentStepUniqueId).FirstOrDefault();
                 item.MarkedId = step.StepId;
+                item.SaveFunction = step.SaveFunction;
             }
 
 

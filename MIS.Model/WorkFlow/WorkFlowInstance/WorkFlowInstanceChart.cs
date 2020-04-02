@@ -18,5 +18,11 @@ namespace MIS.Model.WorkFlow.WorkFlowInstance
         /// </summary>
         public string MarkedId { get; set; }
 
+
+        /// <summary>
+        /// 保存方法
+        /// </summary>
+        public string SaveFunction { get; set; }
+
     }
 }
