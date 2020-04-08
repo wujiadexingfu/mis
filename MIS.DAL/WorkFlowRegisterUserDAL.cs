@@ -114,20 +114,26 @@ namespace MIS.DAL
                 }
                 else
                 {
-                    WorkFlow_ReginsterUser item = new WorkFlow_ReginsterUser();
-                    item.UniqueId = GuidUtils.NewGuid();
-                    item.Id = inputForm.Id;
-                    item.Name = inputForm.Name;
-                    item.Remark = inputForm.Remark;
-                    item.BirthDay = inputForm.BirthDay;
-                    item.CreateTime = DateTime.Now;
-                    item.CreateUser = SessionUtils.GetAccountUnqiueId();
-                    db.WorkFlow_ReginsterUser.Add(item);
-                    db.SaveChanges();
-
-                    var objectUniqueId = item.UniqueId;
-
-                    result.Success();
+                    var addInstanceDraftStepResult = _workFlowInstanceDAL.AddInstanceDraftStep(inputForm.Name + "申请流程", WorkFlowChartType.WorkFlow_ReginsterUser);
+;
+                    if (addInstanceDraftStepResult.IsSuccess)
+                    {
+                        WorkFlow_ReginsterUser item = new WorkFlow_ReginsterUser();
+                        item.UniqueId = GuidUtils.NewGuid();
+                        item.Id = inputForm.Id;
+                        item.Name = inputForm.Name;
+                        item.Remark = inputForm.Remark;
+                        item.BirthDay = inputForm.BirthDay;
+                        item.CreateTime = DateTime.Now;
+                        item.CreateUser = SessionUtils.GetAccountUnqiueId();
+                        item.WorkFlowInstanceUniqueId =new Guid(addInstanceDraftStepResult.Data.ToString());
+                        db.WorkFlow_ReginsterUser.Add(item);
+                        db.SaveChanges();
+                        result.ReturnData(addInstanceDraftStepResult.Data.ToString());
+                    }
+                    else {
+                        result = addInstanceDraftStepResult;
+                    }
                 }
 
             }

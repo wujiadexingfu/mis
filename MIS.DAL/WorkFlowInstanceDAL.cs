@@ -40,8 +40,6 @@ namespace MIS.DAL
                 var workFlowChart = db.WorkFlow_Chart.Where(x => x.WorkFlowType == workFlowChartType.ToString()).FirstOrDefault();
 
                 
-
-
                 var firstStep = db.WorkFlow_Step.Where(x => x.WorkFlowChartUniqueId == workFlowChart.UniqueId && x.IsBegin == true).FirstOrDefault();
                 if (firstStep == null)
                 {

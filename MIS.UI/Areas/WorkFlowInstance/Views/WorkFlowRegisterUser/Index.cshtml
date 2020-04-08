@@ -147,31 +147,16 @@
             }
 
         $("#btnAddReginsterUser").click(function () {
-                   @*$.ajax({
-                       url: '@Url.Content("~/WorkFlow/WorkFlowInstance/Index?workFlowInstanceUniqueId=")' + "00000000-0000-0000-0000-000000000000" + "&workFlowChartType=" +"WorkFlow_ReginsterUser",
-                     type: "get",
-                     dataType:"html",
-                       success: function (result) {
-                           debugger
-
-                            layer.open({
-                                type:2,
-                                title: "新增注册用户信息",
-                                content: result ,
-                                area: ["800px", "500px"],
-                                shade: 0.3, //不显示遮罩
-                                end: function () {
-                             
-                        }
-                           });
-
-                          
-
+                  
+             var index= layer.open({
+                    type: 2,
+                 content: '@Url.Content("~/WorkFlow/WorkFlowInstance/Index?workFlowInstanceUniqueId=")' + "00000000-0000-0000-0000-000000000000" + "&workFlowChartType=" + "WorkFlow_ReginsterUser",
+                 end: function () { //此处用于演示
+                 
+                     refreshUserTable();
                  }
-             });*@
-               var index= layer.open({
-                               type: 2,
-                               content:'@Url.Content("~/WorkFlow/WorkFlowInstance/Index?workFlowInstanceUniqueId=")' + "00000000-0000-0000-0000-000000000000" + "&workFlowChartType=" +"WorkFlow_ReginsterUser",
+
+
             });
             layer.full(index);
             });

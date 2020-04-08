@@ -70,7 +70,8 @@
 <script type="text/javascript">
         var workFlowInstanceUniqueId = "@ViewBag.workFlowInstanceUniqueId";
         var workFlowChartType = "@ViewBag.WorkFlowChartType";
-        var gooFlowChart;
+    var gooFlowChart;
+    var saveFunction;
     var form = null;
     var table = "";
     var laydate = "";
@@ -240,6 +241,8 @@
                 $("#" + data.MarkedId).css("background-color", "yellow");
 
                 gooFlowChart.resetScale(1);
+
+                saveFunction = data.SaveFunction;
 
 
 
