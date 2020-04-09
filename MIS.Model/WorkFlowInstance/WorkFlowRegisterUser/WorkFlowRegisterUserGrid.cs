@@ -40,5 +40,11 @@ namespace MIS.Model.WorkFlowInstance.WorkFlowRegisterUser
         /// 流程状态
         /// </summary>
         public string WorkFlowStep { get; set; }
+
+
+        /// <summary>
+        /// 流程实例的唯一编码
+        /// </summary>
+        public Guid? WorkFlowInstanceUniqueId { get; set; }
     }
 }

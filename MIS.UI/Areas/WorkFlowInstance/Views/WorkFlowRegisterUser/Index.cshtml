@@ -89,26 +89,21 @@
         table.on('tool(reginsterUserTable)', function (obj) {
             debugger
             var data = obj.data;
-            var uniqueId = data.UniqueId;
-            @*if (obj.event === 'edit') {
+            var workFlowInstanceUniqueId = data.WorkFlowInstanceUniqueId;
+            if (obj.event === 'edit') {
 
-             $.ajax({
-                     url: '@Url.Content("~/WorkFlowInstance/WorkFlowRegisterUser/InputForm?uniqueId=")' + uniqueId,
-                     type: "get",
-                     dataType:"html",
-                     success: function (result) {
-                         layer.open({
-                         type: 1,
-                         title: "修改用户信息",
-                         content: result,
-                         area: ["800px", "500px"],
-                         shade: 0.3, //不显示遮罩
-                         end: function () {
-                         refreshUserTable();
-                         }
-                     });
+             var index= layer.open({
+                    type: 2,
+                 content: '@Url.Content("~/WorkFlow/WorkFlowInstance/Index?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId + "&workFlowChartType=" + "WorkFlow_ReginsterUser",
+                 end: function () { //此处用于演示
+                 
+                     refreshUserTable();
                  }
-             });
+
+
+            });
+            layer.full(index);
+      
             } else if (obj.event === 'delete') {
                 layer.confirm('是否删除数据', function (index) {
 
@@ -126,7 +121,7 @@
                 });
 
                 });
-            }*@
+            }
         });
 
         $("#btnReginsterUserQuery").click(function () {

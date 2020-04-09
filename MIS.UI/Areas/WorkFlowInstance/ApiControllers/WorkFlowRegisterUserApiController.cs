@@ -82,10 +82,10 @@ namespace MIS.UI.Areas.WorkFlowInstance.ApiControllers
         /// <returns></returns>
         [HttpGet]
         [HttpPost]
-        public HttpResponseMessage GetItemByUniqueId(Guid uniqueId)
+        public HttpResponseMessage GetItemByUniqueId(Guid workFlowInstanceUniqueId)
         {
 
-            var result = JosnNetHelper.ObjectToJson(_workFlowRegisterUserBLL.GetItemByUniqueId(uniqueId));
+            var result = JosnNetHelper.ObjectToJson(_workFlowRegisterUserBLL.GetItemByUniqueId(workFlowInstanceUniqueId));
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),

@@ -65,9 +65,9 @@ namespace MIS.BLL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public WorkFlowRegisterUserInputForm GetItemByUniqueId(Guid uniqueId)
+        public WorkFlowRegisterUserInputForm GetItemByUniqueId(Guid workFlowInstanceUniqueId)
         {
-            return _workFlowRegisterUserDAL.GetItemByUniqueId(uniqueId);
+            return _workFlowRegisterUserDAL.GetItemByUniqueId(workFlowInstanceUniqueId);
         }
 
 

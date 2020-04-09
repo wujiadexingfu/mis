@@ -64,6 +64,9 @@ namespace MIS.DAL
                     model.Remark = item.Remark;
                     model.BirthDay = item.BirthDay.Value.ToString(DateTimeFormatter.YYYYMMDD);
                     model.WorkFlowStep = (from x in db.WorkFlow_Instance join x1 in db.WorkFlow_Step on x.CurrentStepUniqueId equals x1.UniqueId where x.UniqueId == item.WorkFlowInstanceUniqueId select x1).FirstOrDefault().Name;
+                    model.WorkFlowInstanceUniqueId = item.WorkFlowInstanceUniqueId;
+
+
                     workFlowRegisterUserGrids.Add(model);
 
                 }
@@ -79,10 +82,10 @@ namespace MIS.DAL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public WorkFlowRegisterUserInputForm GetItemByUniqueId(Guid uniqueId)
+        public WorkFlowRegisterUserInputForm GetItemByUniqueId(Guid workFlowInstanceUniqueId)
         {
             MISEntities db = new MISEntities();
-            var item = db.WorkFlow_ReginsterUser.Where(x => x.UniqueId == uniqueId).FirstOrDefault();
+            var item = db.WorkFlow_ReginsterUser.Where(x => x.WorkFlowInstanceUniqueId == workFlowInstanceUniqueId).FirstOrDefault();
             WorkFlowRegisterUserInputForm inputForm = new WorkFlowRegisterUserInputForm()
             {
                 UniqueId = item.UniqueId,

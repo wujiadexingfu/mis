@@ -20,11 +20,11 @@ namespace MIS.IBLL
 
 
         /// <summary>
-        /// 根据UniqueId获取角色信息
+        /// 根据workFlowInstanceUniqueId获取信息
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        WorkFlowRegisterUserInputForm GetItemByUniqueId(Guid uniqueId);
+        WorkFlowRegisterUserInputForm GetItemByUniqueId(Guid workFlowInstanceUniqueId);
 
 
         /// <summary>

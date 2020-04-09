@@ -23,7 +23,7 @@ namespace MIS.IDAL
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-         WorkFlowRegisterUserInputForm GetItemByUniqueId(Guid uniqueId);
+         WorkFlowRegisterUserInputForm GetItemByUniqueId(Guid workFlowInstanceUniqueId);
 
 
         /// <summary>
