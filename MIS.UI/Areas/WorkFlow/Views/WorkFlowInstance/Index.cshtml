@@ -139,9 +139,9 @@
 
         form.on('select(submitOption)', function (data) {
             var lineUniqueId = data.value;
-            SaveRegisterUser();
+        
 
-            @*if (lineUniqueId) {
+            if (lineUniqueId) {
                 $.ajax({
                     url: '@Url.Content("~/WorkFlow/WorkFlowInstance/InputForm?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId + "&lineUniqueId=" + lineUniqueId,
                     type: "get",
@@ -154,7 +154,7 @@
                             area: ["400px", "250px"],
                             shade: 0.3, //不显示遮罩
                             end: function () {
-                                
+                                SaveRegisterUser();
                             }
                         });
                     }
@@ -162,7 +162,7 @@
             } else {
                 layer.msg('请选择提交方式');
 
-            }*@
+            }
 
 
 
