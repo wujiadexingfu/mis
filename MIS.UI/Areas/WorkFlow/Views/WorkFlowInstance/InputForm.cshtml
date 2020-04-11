@@ -54,6 +54,8 @@
                           if (result.IsSuccess) {
                               layer.msg('提交成功');
                               layer.closeAll();
+                              var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                              parent.layer.close(index); //再执行关闭
                           } else {
                               debugger
                               layer.msg(result.Message);

@@ -22,11 +22,15 @@
             <div class="layui-card">
                 <div class="layui-card-header">
                     <form class="layui-form" action="" style="width:100px">
-                        <select id="submitOption" lay-filter="submitOption">
+                        <div id="divSubmitOption">
 
-                            <option></option>
+                            <select id="submitOption" lay-filter="submitOption">
 
-                        </select>
+                                <option></option>
+
+                            </select>
+                        </div>
+                       
                     </form>
                 </div>
                 <div class="layui-card-body">
@@ -75,6 +79,8 @@
     var form = null;
     var table = "";
     var laydate = "";
+    var actionUrl = "";
+    var isEnd = false;
     layui.use(["layer", "table", "element"], function () {
         table = layui.table;
         form = layui.form;
@@ -104,8 +110,7 @@
                 even: GLOBAL_TABLE_EVEN //开启隔行背景
         });
 
-        //获取提交按钮的select
-        GetWorkFlowInstanceSubmitSelectItem();
+     
 
 
 
@@ -139,30 +144,38 @@
 
         form.on('select(submitOption)', function (data) {
             var lineUniqueId = data.value;
-        
+            //SaveRegisterUser();
+           // go("SaveRegisterUser");
+           
+            var result = eval(saveFunction + "()");
 
-            if (lineUniqueId) {
-                $.ajax({
-                    url: '@Url.Content("~/WorkFlow/WorkFlowInstance/InputForm?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId + "&lineUniqueId=" + lineUniqueId,
-                    type: "get",
-                    dataType: "html",
-                    success: function (result) {
-                        layer.open({
-                            type: 1,
-                            title: "提交",
-                            content: result,
-                            area: ["400px", "250px"],
-                            shade: 0.3, //不显示遮罩
-                            end: function () {
-                                SaveRegisterUser();
-                            }
-                        });
-                    }
-                });
+            if (result) {
+                if (lineUniqueId) {
+                    $.ajax({
+                        url: '@Url.Content("~/WorkFlow/WorkFlowInstance/InputForm?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId + "&lineUniqueId=" + lineUniqueId,
+                        type: "get",
+                        dataType: "html",
+                        success: function (result) {
+                            layer.open({
+                                type: 1,
+                                title: "提交",
+                                content: result,
+                                area: ["400px", "250px"],
+                                shade: 0.3, //不显示遮罩
+                                end: function () {
+                                    
+                                }
+                            });
+                        }
+                    });
             } else {
                 layer.msg('请选择提交方式');
 
             }
+            }
+            
+
+            
 
 
 
@@ -175,17 +188,11 @@
         gooFlowChart = $.createGooFlow($("#workFlowChart"), property);
 
         GetWorkFlowInstanceChart();
+        //获取提交按钮的select
+        GetWorkFlowInstanceSubmitSelectItem();
 
 
-        //var iframe = document.createElement('iframe');
-        //iframe.src = "/WorkFlowInstance/WorkFlowRegisterUser/Draft";
-        //iframe.scrolling = "no";
-        //iframe.frameBorder = 0;
-        //iframe.width = "100%";
-        //iframe.height = "100%";
-        //$("#workFlowForm").html(iframe);
-
-             $.ajax({
+             @*$.ajax({
                      url: '@Url.Content("~//WorkFlowInstance/WorkFlowRegisterUser/Draft")',
                      type: "get",
                      dataType:"html",
@@ -193,7 +200,7 @@
                          $("#workFlowForm").html(result);
                    
                  }
-             });
+             });*@
 
 
 
@@ -211,6 +218,7 @@
             url: '@Url.Content("~/api/WorkFlow/WorkFlowInstance/GetWorkFlowInstanceSubmitSelectItem?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId + "&workFlowChartType=" + workFlowChartType,
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
+            async: false,
             success: function (data) {
                 //赋值
                 var html = "";
@@ -243,13 +251,63 @@
                 gooFlowChart.resetScale(1);
 
                 saveFunction = data.SaveFunction;
+                actionUrl = data.ActionUrl;
+                isEnd = data.IsEnd;
+
+
+                   $.ajax({
+                       url: actionUrl,
+                     type: "get",
+                     dataType:"html",
+                     success: function (result) {
+                         $("#workFlowForm").html(result);
+                   
+                 }
+                });
 
 
 
             }
         });
 
-        }
+    }
+
+
+       function GetWorkFlowInstanceSubmitSelectItem()
+        {
+           debugger
+           if (isEnd) {
+
+               $("#divSubmitOption").hide();
+
+           } else {
+                $.ajax({
+            type: "Get",
+            url: '@Url.Content("~/api/WorkFlow/WorkFlowInstance/GetWorkFlowInstanceSubmitSelectItem?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId + "&workFlowChartType=" + workFlowChartType,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (data) {
+                //赋值
+                var html = "";
+                for (var i = 0; i < data.length; i++) {
+                    html += '<option value="' + data[i].Value + '" id="' + data[i].Value + '" >' + data[i].Text + '</option>';
+                };
+                $("#submitOption").append(html);
+                form.render();
+            }
+        });
+
+           }
+
+
+
+       
+
+    }
+
+
+
+
 
 
 

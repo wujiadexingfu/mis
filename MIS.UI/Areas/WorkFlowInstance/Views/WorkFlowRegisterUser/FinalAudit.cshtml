@@ -1,8 +1,172 @@
 ﻿
 @{
     ViewBag.Title = "FinalAudit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
-<h2>FinalAudit</h2>
+
+<form class="layui-form" action="" lay-filter="RegisterUserForm" id="RegisterUserForm">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <button type="submit" class="layui-btn layui-btn-sm" lay-submit="" id="btnRegisterUserSave" lay-filter="btnRegisterUserSave">保存草稿</button>
+
+
+            <input type="hidden" name="UniqueId" id="UniqueId" />
+            <input type="hidden" name="ResisterUserType" value="FinalAudit" />
+
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">客户编号:</label>
+            <div class="layui-input-inline">
+                <input name="Id" id="Id" class="layui-input" placeholder="请输入客户编号" autocomplete="off" lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">客户名称:</label>
+            <div class="layui-input-inline">
+                <input name="Name" id="Name" class="layui-input" placeholder="请输入客户名称" autocomplete="off" lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">生日:</label>
+            <div class="layui-input-inline">
+
+                <input name="BirthDay" id="BirthDay" class="layui-input" placeholder="请输入生日" autocomplete="off" lay-verify="required">
+
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">备注:</label>
+            <div class="layui-input-inline">
+
+                <input name="Remark" id="Remark" class="layui-input" placeholder="请输入备注" autocomplete="off" lay-verify="required">
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+</form>
+
+<script type="text/javascript">
+
+    var isValid = false;
+
+    function SaveRegisterUser(data) {
+
+        isValid = false;
+        $("#btnRegisterUserSave").trigger("click");
+        if (isValid) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+   layui.use(['form', 'laydate'], function () {
+        form = layui.form;
+        $ = layui.jquery;
+        var laydate = layui.laydate;
+
+
+        laydate.render({
+            elem: '#BirthDay',
+            trigger: 'click'
+        });
+
+
+
+       if (workFlowInstanceUniqueId != "00000000-0000-0000-0000-000000000000") {
+
+             $.ajax({
+                 url: '@Url.Content("~/api/WorkFlowInstance/WorkFlowRegisterUser/GetItemByUniqueId?workFlowInstanceUniqueId=")' + workFlowInstanceUniqueId,
+                type: "get",
+                dataType: "json",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-HTTP-Method-Override": "POST"
+                },
+                 success: function (data) {
+                     data.BirthDay = data.BirthDay.substring(0, 10);
+                     data.ResisterUserType = "FinalAudit";
+
+                     form.val("RegisterUserForm", data);
+                }
+            });
+
+
+       }
+
+
+
+
+       form.on('submit(btnRegisterUserSave)', function (data) {
+           debugger
+
+           isValid = true;
+
+           var data = JSON.stringify(data.field);
+         if (workFlowInstanceUniqueId =="00000000-0000-0000-0000-000000000000") {
+            $.ajax({
+                url: '@Url.Content("~/api/WorkFlowInstance/WorkFlowRegisterUser/Add")',
+                type: "post",
+                dataType: "json",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-HTTP-Method-Override": "POST"
+                },
+                data: data,
+                async: false,
+                success: function (result) {
+                    if (result.IsSuccess) {
+                        layer.msg('新增成功');
+                        workFlowInstanceUniqueId = result.Data;
+                    } else {
+                        debugger
+                        layer.msg(result.Message);
+                    }
+                }
+            });
+        } else {
+            debugger
+            $.ajax({
+                 url: '@Url.Content("~/api/WorkFlowInstance/WorkFlowRegisterUser/Edit")',
+                type: "post",
+                dataType: "json",
+                async: false,
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-HTTP-Method-Override": "POST"
+                },
+                data: data,
+                success: function (result) {
+                    if (result.IsSuccess) {
+                        layer.msg('修改成功');
+                    } else {
+                        layer.msg(result.Message);
+                    }
+                }
+            });
+        }
+
+            return false;
+       });
+
+
+
+    });
+
+</script>
+
+
 

@@ -68,9 +68,9 @@
         isValid = false;
         $("#btnRegisterUserSave").trigger("click");
         if (isValid) {
-            alert("提交")
+            return true;
         } else {
-            alert("确认异常！");
+            return false;
         }
     }
 

@@ -24,5 +24,15 @@ namespace MIS.Model.WorkFlow.WorkFlowInstance
         /// </summary>
         public string SaveFunction { get; set; }
 
+        /// <summary>
+        /// 当前action方法
+        /// </summary>
+        public string ActionUrl { get; set; }
+        
+        /// <summary>
+        /// 是否结束
+        /// </summary>
+        public bool IsEnd { get; set; }
+
     }
 }
