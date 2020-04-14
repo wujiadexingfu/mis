@@ -2936,6 +2936,7 @@
     <Content Include="Areas\WorkFlowInstance\Views\WorkFlowRegisterUser\FinalAudit.cshtml" />
     <Content Include="Areas\WorkFlowInstance\Views\WorkFlowRegisterUser\End.cshtml" />
     <Content Include="Areas\WorkFlowInstance\Views\WorkFlowRegisterUser\Index.cshtml" />
+    <Content Include="Areas\Sys\Views\User\ResetPassword.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\common.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

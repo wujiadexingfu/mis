@@ -34,5 +34,10 @@ namespace MIS.UI.Areas.Sys.Controllers
             ViewBag.SelectedUser = selectedUser;
             return View();
         }
+
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
     }
 }
