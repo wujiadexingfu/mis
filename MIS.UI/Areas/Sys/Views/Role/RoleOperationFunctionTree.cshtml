@@ -71,9 +71,9 @@
         ///递归查询获取数据
         function getData(data) {
             //判断是否为操作节点
-            if (data.NodeType == "@MIS.Utility.EnumUtility.SystemEnums.TreeNodeType.Operation.ToString()") {
+           // if (data.NodeType == "@MIS.Utility.EnumUtility.SystemEnums.TreeNodeType.Operation.ToString()") {
                 selectedOperationFunctionArray.push(data.id);
-            }
+           // }
             if (data.children) {
                 for (var i = 0; i < data.children.length; i++) {
                     getData(data.children[i]);

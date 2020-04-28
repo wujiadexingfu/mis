@@ -33,7 +33,13 @@ namespace MIS.DAL
             RequestResult result = new RequestResult();
             MISEntities db = new MISEntities();
             var allFunctionList = db.Sys_Function.ToList();
+            var selectedFunctionId = (from x in db.Sys_UserRole
+                                      join x1 in db.Sys_RoleOperationFunction on x.RoleUniqueId equals x1.RoleUniqueId
+                                      join x2 in db.Sys_OperationFunction on x1.OperationFunctionUniqueId equals x2.UniqueId
+                                      select x2.FunctionId
+                                    ).Distinct().ToList();
 
+           // var functionList = GetFunctionTreeBySelectedFunctionId("*", allFunctionList, selectedFunctionId);
             var functionList = GetFunctionTree("*", allFunctionList);
             result.ReturnData(functionList);
             return result;
@@ -75,6 +81,50 @@ namespace MIS.DAL
                 return result;
             }
         }
+
+
+        /// <summary>
+        /// 获取菜单树结构（递归）
+        /// </summary>
+        /// <param name="parentId"></param>
+        /// <param name="allFunctionList"></param>
+        /// <returns></returns>
+        private List<AccountFuntion> GetFunctionTreeBySelectedFunctionId(string parentId, List<Sys_Function> allFunctionList,List<string> selectedFunctionId)
+        {
+            List<Sys_Function> childFunctionList = allFunctionList.Where(x => x.ParentId == parentId).OrderBy(x => x.Sort).ToList();
+            List<AccountFuntion> result = new List<AccountFuntion>();
+
+
+            if (childFunctionList.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                foreach (var item in childFunctionList)
+                {
+                    if (selectedFunctionId.Contains(item.Id))
+                    {
+                        var model = new AccountFuntion();
+                        model.Id = item.Id;
+                        model.Area = item.Area;
+                        model.Controller = item.Controller;
+                        model.Action = item.Action;
+                        model.Icon = item.Icon;
+                        model.Sort = item.Sort;
+                        model.Description = item.Description;
+                        var childAccountFuntion = GetFunctionTree(item.Id, allFunctionList);
+                        model.ChildAccountFuntion = childAccountFuntion != null ? childAccountFuntion.OrderBy(x => x.Sort).ToList() : null;
+                        result.Add(model);
+                    }
+                }
+                return result;
+            }
+        }
+
+
+
+
 
 
         /// <summary>
