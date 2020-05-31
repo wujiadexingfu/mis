@@ -45,9 +45,6 @@ namespace MIS.UI.Areas.Sys.ApiControllers
             response.Headers.Add("FileName", HttpUtility.UrlEncode(attachment.FullFileName));
             return response;
 
-
-
-          
         }
 
 
