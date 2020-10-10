@@ -11,7 +11,13 @@ namespace MIS.UI
             filters.Add(new HandleErrorAttribute());
             filters.Add( DependencyResolver.Current.GetService<ExceptionHandleFilterAttribute>());
             filters.Add(new AccountFilterAttribute());
-         
+            filters.Add(new GetOperationFilterAttribute());
+
+
+
+            
+
+
         }
     }
 }

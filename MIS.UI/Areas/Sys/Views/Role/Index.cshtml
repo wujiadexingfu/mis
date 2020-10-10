@@ -19,17 +19,11 @@
                     </div>
 
                     <div class="layui-inline layui-show-xs-block">
-                        @if (CheckOperationFilterAttribute.CheckQuery())
-                        {
 
-                            <button class="layui-btn" lay-filter="btnRoleQuery" id="btnRoleQuery"><i class="layui-icon"></i></button>
-                        }
 
-                        @if (CheckOperationFilterAttribute.CheckAdd())
-                        {
-                            <button class="layui-btn" lay-filter="btnAddRole" id="btnAddRole"><i class="layui-icon"></i>添加</button>
-                        }
-
+                            <button class="layui-btn authorization" lay-filter="btnRoleQuery" action-id="Query" id="btnRoleQuery"><i class="layui-icon"></i></button>
+                       
+                            <button class="layui-btn authorization" lay-filter="btnAddRole" id="btnAddRole" action-id="Add"><i class="layui-icon"></i>添加</button>
 
                     </div>
 

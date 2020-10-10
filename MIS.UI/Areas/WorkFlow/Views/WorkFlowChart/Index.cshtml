@@ -18,20 +18,13 @@
                     <input class="layui-input" autocomplete="off" placeholder="请输入关键字" name="Keyword" id="Keyword">
                 </div>
 
-                @if (CheckOperationFilterAttribute.CheckQuery())
-                {
-                    <button class="layui-btn" lay-filter="btnWorkFlowChartQuery" id="btnWorkFlowChartQuery"><i class="layui-icon"></i></button>
-                }
+               
+                    <button class="layui-btn authorization" lay-filter="btnWorkFlowChartQuery" id="btnWorkFlowChartQuery" action-id="Query"><i class="layui-icon"></i></button>
+          
 
                 <div class="layui-inline layui-show-xs-block">
 
-                    @if (CheckOperationFilterAttribute.CheckAdd())
-                    {
-
-                        <button class="layui-btn" lay-filter="btnAddWorkFlowChart" id="btnAddWorkFlowChart"><i class="layui-icon"></i>添加</button>
-                    }
-
-
+                    <button class="layui-btn authorization" lay-filter="btnAddWorkFlowChart" id="btnAddWorkFlowChart" action-id="Add"><i class="layui-icon"></i>添加</button>
                 </div>
             </div>
         </div>

@@ -35,8 +35,9 @@
 
 
 <script type="text/javascript">
+         var module = "@Url.Content("~/Content/layui/lay/modules/")";
     layui.config({
-        base: '/Content/layui/lay/modules/',　
+        base: module,　
     }).use(['form','treeSelect'], function () {
         var form = layui.form;
         var uniqueId = "@ViewBag.UniqueId";

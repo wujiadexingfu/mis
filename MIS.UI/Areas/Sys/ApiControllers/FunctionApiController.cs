@@ -1,4 +1,5 @@
 ﻿using MIS.IBLL;
+using MIS.Model.Account;
 using MIS.Model.Result;
 using MIS.Model.Sys.SysFunction;
 using MIS.UI.Filters;
@@ -31,7 +32,19 @@ namespace MIS.UI.Areas.Sys.ApiControllers
         [HttpPost]
         public HttpResponseMessage GetFunctionTreeByAccount()
         {
-            var result = JosnNetHelper.ObjectToJson(_sysFunctionBLL.GetFunctionTreeByAccount()); 
+            var results = _sysFunctionBLL.GetFunctionTreeByAccount();
+            var data = (List<AccountFuntion>)_sysFunctionBLL.GetFunctionTreeByAccount().Data;
+
+            foreach (var item in data)
+            {
+                GetUrl(item);
+
+
+            }
+            results.Data = data;
+
+            var result = JosnNetHelper.ObjectToJson(results);
+
             return new HttpResponseMessage()
             {
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
@@ -54,7 +67,30 @@ namespace MIS.UI.Areas.Sys.ApiControllers
                 Content = new StringContent(result, Encoding.UTF8, "application/json"),
             };
         }
+        private void GetUrl(AccountFuntion item)
+        {
+            if (!string.IsNullOrEmpty(item.Controller))
+            {
+                if (!string.IsNullOrEmpty(item.Area))
+                {
+                    item.Url = Url.Content(string.Format("~/{0}/{1}/{2}", item.Area, item.Controller, item.Action));
+                }
+                else
 
+                {
+                    item.Url = Url.Content(string.Format("~/{0}/{1}", item.Area, item.Controller));
+                }
+            }
+            if (item.ChildAccountFuntion != null)
+            {
+                foreach (var items in item.ChildAccountFuntion)
+                {
+                    GetUrl(items);
+                }
+            }
+
+
+        }
 
         /// <summary>
         /// 根据唯一编码获取菜单信息

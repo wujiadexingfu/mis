@@ -30,8 +30,83 @@
 
 </style>
 
-<script type="text/html" id="bar">
+<script type="text/html" id="bar" class="bar">
 
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+    <a class="layui-btn layui-btn-xs authorization" lay-event="edit" action-id="Edit" >编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs authorization" lay-event="delete" action-id="Delete">删除</a>
+</script>
+<script type="text/javascript">
+    var actions = '@Html.Raw(ViewBag.Actions)';
+
+
+
+    layui.use(['jquery', 'table', 'laydate', 'form', 'tree'], function () {
+
+        var strimgTurnDom = function (txt) {
+            try //Internet Explorer
+            {
+                xmlDoc = new ActiveXObject("Microsoft.HTMLDOM");
+                xmlDoc.async = "false";
+                xmlDoc.loadXML(txt);
+                alert("ie");
+                return (xmlDoc);
+            }
+            catch (e) {
+                try //Firefox, Mozilla, Opera, etc.
+                {
+                    parser = new DOMParser();
+                    xmlDoc = parser.parseFromString(txt, "text/html");
+                    return (xmlDoc);
+                }
+                catch (e) { alert(e.message) }
+            }
+            return (null);
+        }
+
+        debugger
+        var $ = layui.jquery;
+
+        $('.authorization').each(function (index, item) {
+            var actionId = $(item).attr('action-id') || '';
+
+            if (actions && actions.indexOf(actionId) >= 0) {
+                isPermit = true;
+            } else {
+                $(item).remove();
+            }
+
+        });
+
+
+        var elements = strimgTurnDom($('.bar').html());
+        var result = "";
+
+        $(elements).find('.authorization').each(function (index, item) {
+            debugger
+            var html = $(item).prop("outerHTML");
+
+            var actionId = $(item).attr('action-id') || '';
+            if (actions && actions.indexOf(actionId) >= 0) {
+                result += html;
+            } else {
+
+            }
+
+        });
+
+        $(".bar").html(result);
+
+
+
+
+    });
+
+
+  
+
+
+   
+
+
+
 </script>

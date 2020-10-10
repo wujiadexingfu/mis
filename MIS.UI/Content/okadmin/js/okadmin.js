@@ -1,9 +1,7 @@
 
 var objOkTab = "";
 
-layui.config({
-    base: '/Content/okadmin/lib/layui/lay/okmodules/',
-}).use(["element", "layer", "okUtils", "okTab", "okLayer", "jQContextMenu"], function () {
+layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "jQContextMenu"], function () {
   var okUtils = layui.okUtils;
   var $ = layui.jquery;
   var layer = layui.layer;

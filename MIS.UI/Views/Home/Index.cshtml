@@ -59,7 +59,7 @@
                         <dd><a lay-id="u-1" href="javascript:" data-url="pages/member/user.html">个人中心<span class="layui-badge-dot"></span></a></dd>
                         <dd><a lay-id="u-2" href="javascript:" data-url="pages/member/user-info.html">基本资料</a></dd>
                         <dd><a lay-id="u-3" href="javascript:" data-url="/Sys/User/ResetPassword">修改密码</a></dd>
-                 
+
                         <dd>
                             <hr />
                         </dd>
@@ -74,7 +74,7 @@
         <div class="layui-side layui-side-menu okadmin-bg-20222A ok-left">
             <div class="layui-side-scroll okadmin-side">
                 <div class="okadmin-logo">MIS</div>
-               
+
                 <!--左侧导航菜单-->
                 <ul id="navBar" class="layui-nav okadmin-nav okadmin-bg-20222A layui-nav-tree">
                     <li class="layui-nav-item layui-this">
@@ -113,19 +113,23 @@
                 </ul>
                 <div id="tabContent" class="layui-tab-content ok-tab-content">
                     <div class="layui-tab-item layui-show">
-                        <iframe src='@Url.Action("Chart","Home")' frameborder="0" scrolling="yes" width="100%"  height="100%"></iframe>
+                        <iframe src='@Url.Action("Chart","Home")' frameborder="0" scrolling="yes" width="100%" height="100%"></iframe>
                     </div>
                 </div>
             </div>
         </div>
         <!--底部信息-->
         @*<div class="layui-footer okadmin-text-center">
-        
-        </div>*@
+
+            </div>*@
     </div>
     <div class="yy"></div>
+    <script type="text/javascript">
+        var accountFuntion = "@Url.Content("~/Api/Sys/Function/GetFunctionTreeByAccount")";
+
+    </script>
     <!--js逻辑-->
-    <script src="~/Content/layui/layui.js"></script>
+    <script src="~/Content/okadmin/lib/layui/layui.js"></script>
     <script src="~/Content/okadmin/js/okadmin.js"></script>
 </body>
 </html>

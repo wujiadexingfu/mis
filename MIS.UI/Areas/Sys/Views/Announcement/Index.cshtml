@@ -18,19 +18,16 @@
                     <input class="layui-input" autocomplete="off" placeholder="请输入关键字" name="keyword" id="keyword">
                 </div>
 
-                @if (CheckOperationFilterAttribute.CheckQuery())
-                {
-                    <button class="layui-btn" lay-filter="btnSysAnnouncementQuery" id="btnSysAnnouncementQuery"><i class="layui-icon"></i></button>
-                }
+              
+                    <button class="layui-btn authorization " lay-filter="btnSysAnnouncementQuery" id="btnSysAnnouncementQuery" action-id="Query" ><i class="layui-icon"></i></button>
+              
 
                 <div class="layui-inline layui-show-xs-block">
 
-                    @if (CheckOperationFilterAttribute.CheckAdd())
-                    {
+                   
 
-                        <button class="layui-btn" lay-filter="btnAddSysAnnouncement" id="btnAddSysAnnouncement"><i class="layui-icon"></i>添加</button>
-                    }
-
+                     <button class="layui-btn authorization" lay-filter="btnAddSysAnnouncement" id="btnAddSysAnnouncement" action-id="Add"><i class="layui-icon"></i>添加</button>
+   
 
                 </div>
             </div>

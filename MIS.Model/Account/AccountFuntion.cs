@@ -73,20 +73,7 @@ namespace MIS.Model.Account
 
 
         [JsonProperty("href")]
-        public string Url
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(Area))
-                {
-                    return  string.Format("/{0}/{1}",Controller,Action);
-                }
-                else
-                {
-                    return string.Format("/{0}/{1}/{2}",Area, Controller, Action);
-                }
-            }
-        }
+        public string Url{ get;set;}
 
         /// <summary>
         /// 菜单数据

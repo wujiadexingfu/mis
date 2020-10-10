@@ -17,19 +17,11 @@
                     <input class="layui-input" autocomplete="off" placeholder="请输入关键字" name="userParameterKeyword" id="userParameterKeyword">
                 </div>
 
-                @if (CheckOperationFilterAttribute.CheckQuery())
-                {
-                    <button class="layui-btn" lay-filter="btnUserQuery" id="btnUserQuery"><i class="layui-icon"></i></button>
-                }
-
+               
+                    <button class="layui-btn authorization" lay-filter="btnUserQuery" id="btnUserQuery" action-id="Query"><i class="layui-icon"></i></button>
                 <div class="layui-inline layui-show-xs-block">
 
-                    @if (CheckOperationFilterAttribute.CheckAdd())
-                    {
-
-                        <button class="layui-btn" lay-filter="btnAddUser" id="btnAddUser"><i class="layui-icon"></i>添加</button>
-                    }
-
+                    <button class="layui-btn authorization" lay-filter="btnAddUser" action-id="Add" id="btnAddUser"><i class="layui-icon"></i>添加</button>
 
                 </div>
             </div>

@@ -185,6 +185,7 @@
     <Compile Include="Filters\AccountFilterAttribute.cs" />
     <Compile Include="Filters\CheckOperationFilterAttribute.cs" />
     <Compile Include="Filters\ExceptionHandleFilterAttribute.cs" />
+    <Compile Include="Filters\GetOperationFilterAttribute.cs" />
     <Compile Include="Filters\OperationFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2944,7 +2945,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

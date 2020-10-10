@@ -32,11 +32,9 @@
                             查询结果
                         </div>
                         <div class="layui-col-md2  layui-col-sm6 layui-col-xs6">
-                            @if (CheckOperationFilterAttribute.CheckAdd())
-                            {
-                                <button class="layui-btn " lay-filter="btnAddFunction" id="btnAddFunction" onclick="Add('')"><i class="layui-icon"></i>添加</button>
-                            }
-
+                            
+                                <button class="layui-btn authorization" action-id="Add" action-name="添加" lay-filter="btnAddFunction" id="btnAddFunction" onclick="Add('')"><i class="layui-icon"></i>添加</button>
+                         
                         </div>
                     </div>
 
